@@ -1,0 +1,84 @@
+﻿@using TaskManager.Helpers
+@{
+    ViewBag.Title = "Администрирование";
+    Layout = "~/Views/Admin/AdminLayout.cshtml";
+}
+<div class="container">
+    
+    <h3 class="center">Управление пользователями и ролями</h3>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Имя пользователя</td>
+                <td>Логин</td>
+                <td>Роли в системе</td>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in ModelHelper.GetAllUsers().OrderByDescending(ModelHelper.IsNewUser).ThenBy(x => x.UserFullName))
+            {
+                if (!user.UserName.Equals("admin") && user.IsActive)
+                {
+                    string rowClass = ModelHelper.IsNewUser(user) ? "info" : "";
+                
+                    <tr class="@rowClass">
+                        <td>@user.UserFullName</td>
+                        <td>@user.UserName</td>
+                        <td>@foreach (var role in ModelHelper.GetRolesForUser(user.UserName))
+                            {
+                                <p>@role</p>
+                            } </td>
+                        <td>
+                            <button type="button" class="btn btn-sm btn-default" onclick=" location.href = '@Url.Action("Edit", new { id = user.UserId })' ">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                            </button>
+                            <button class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-window" data-id="@user.UserFullName" data-href="@Url.Action("Delete", new { id = user.UserId })">
+                                <span class="glyphicon glyphicon-remove"></span>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="modal-window" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Подтверждение действия</h4>
+                </div>
+                <div class="modal-body">
+                    Вы действительно хотите удалить пользователя
+                    <p style="display: inline; font-weight: bold; font-style: italic;" id="userName"></p>
+                    ?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                    <a href="#" class="btn btn-danger danger">Удалить</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('button[data-toggle=modal]').click(function () {
+                var data_id = '';
+                if (typeof $(this).data('id') !== 'undefined') {
+                    data_id = $(this).data('id');
+                }
+                $('#userName').text(data_id);
+            });
+            $('#modal-window').on('show.bs.modal', function (e) {
+                $(this).find('.danger').attr('href', $(e.relatedTarget).data('href'));
+            });
+        });
+
+
+
+
+    </script>
+</div>

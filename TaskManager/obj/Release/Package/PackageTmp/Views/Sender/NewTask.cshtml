@@ -1,0 +1,19 @@
+﻿@using TaskManager.Helpers
+@model TaskManager.Models.NewTaskViewModel
+
+@{
+    ViewBag.Title = "Новая заявка";
+    Layout = "~/Views/Sender/SenderLayout.cshtml";
+}
+
+<div class="container">
+    <h4 class="center">Создание новой заявки</h4>
+    <form role="form" method="POST">
+        <div class="panel-body">
+            @Html.TextAreaGroupFor(x => x.TaskText, "Текст заявки", "task-text", "Текст заявки")
+        </div>
+        <div style="text-align: right;">
+            <button type="submit" class="btn btn-primary" style="margin: -15px 15px 15px 0;">Создать</button>
+        </div>
+    </form>
+</div>

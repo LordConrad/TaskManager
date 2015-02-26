@@ -1,0 +1,139 @@
+﻿@using TaskManager.Helpers
+@model TaskManager.Models.ChiefTaskEditViewModel
+@{
+    ViewBag.Title = "Просмотр заявки";
+    Layout = "~/Views/RootLayout.cshtml";
+}
+<div class="container">
+    <h4>Заявка</h4>
+        <div class="task-text-view">
+            <p>@Model.TaskText</p>
+        </div>
+    <div class="panel-group" id="accordion" style="margin-top: 15px">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#details">Подробно</a>
+                </h5>
+            </div>
+            <div id="details" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <p>Заявка подана: @Model.CreationDate.ToString(ModelHelper.DateTimeFormatFull)</p>
+                    <p>Отправитель: @Model.SenderName</p>
+                    @if (Model.RecipientId != "0")
+                    {
+                        <p>Исполнитель: @Model.RecipientName</p>
+                        <p>Исполнитель назначен: @Model.AssignDate</p>
+                        <p>Установлен срок выполнения до: @Model.Deadline</p>
+                        <p>Приоритет выполнения: @Model.PriorityName</p>
+                    }
+                    @if (Model.CompleteDate != null)
+                    {
+                        <p>Заявка выполнена: @Model.CompleteDate.Value.ToString(ModelHelper.DateTimeFormatFull)</p>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h5 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#comments">Комментарии к заявке @(Model.CommentsCount != 0 ? Html.Raw("("+Model.CommentsCount+")") : Html.Raw(""))</a>
+                </h5>
+            </div>
+            <div id="comments" class="panel-collapse collapse">
+                <div class="panel-body">
+                    <form method="POST" action="#">
+                        @Html.ValidationSummary(true)
+                        @Html.TextAreaGroupFor(x => x.NewComment, "Добавить комментарий к заявке", "new-comment-id", "Новый комментарий к заявке", 120)
+                        <div class="right">
+                            <button type="button" class=" btn btn-primary" onclick=" addNewComment() ">Добавить</button>
+                        </div>
+                    </form>
+                    <div id="comments-update-panel"></div>
+                    <script type="text/javascript">
+                        (function commentsUpdate() {
+                            $.ajax({
+                                url: '@Url.Action("GetCommentsForTask", "Comment")',
+                                data: { taskId: '@Model.TaskId' },
+                                success: function(data) {
+                                    $('#comments-update-panel').html(data);
+                                },
+                                complete: function() {
+                                    setTimeout(commentsUpdate, upd_interval);
+                                }
+                            });
+                        })();
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    function addNewComment() {
+        $.ajax({
+            url: '@Url.Action("AddNewComment", "Comment")',
+            type: "POST",
+            data: JSON.stringify({
+                text: $('#new-comment-id').val(),
+                authorId: @WebSecurity.CurrentUserId,
+                taskId: @Model.TaskId
+                }),
+            contentType: 'application/json; charset=utf-8',
+            accepts: 'application/json',
+            success: function(data) {
+                if(data.result == "success") {
+                    switchValidationErrorFor(false, "NewComment", "");
+                    $('#new-comment-id').val('');
+                    commentsUpdate();
+                    scrollToNewComment();
+                } else if (data.result == "maxLenghtError") {
+                    switchValidationErrorFor(true, "NewComment", data.message);
+                } else {
+                    switchValidationErrorFor(false, "NewComment", "");
+                }
+            },
+            complete: function() {
+
+            },
+            error: function() {
+                alert('Произошла ошибка при создании комментария');
+            }
+        });
+    }
+    
+    function switchValidationErrorFor(isError, property, errorMessage) {
+        if(isError){
+            $("span[data-valmsg-for='" + property + "']").removeClass("field-validation-valid");
+            $("span[data-valmsg-for='" + property + "']").addClass("field-validation-error");
+            $("span[data-valmsg-for='" + property + "']").html(errorMessage);
+        } else {
+            $("span[data-valmsg-for='" + property + "']").html("");
+            $("span[data-valmsg-for='" + property + "']").removeClass("field-validation-error");
+            $("span[data-valmsg-for='" + property + "']").addClass("field-validation-valid");
+        }
+    }
+
+    function scrollToNewComment() {
+        var target = $('.thread-item-sent:last');
+        if (target.length) {
+            $('html,body').animate({
+                scrollTop: target.offset().top
+            }, 1000);
+        }
+    }
+
+    function commentsUpdate() {
+        $.ajax({
+            url: '@Url.Action("GetCommentsForTask", "Comment")',
+            data: { taskId: '@Model.TaskId' },
+            success: function (data) {
+                $('#comments-update-panel').html(data);
+            },
+            complete: function () {
+                                    
+            }
+        });
+    }
+</script>

@@ -1,0 +1,93 @@
+﻿@using TaskManager.Models
+@model IEnumerable<TaskManager.Models.Comment>
+@if (Model != null && Model.Any())
+{
+    
+    <div>
+        <ul id="thread-list">
+            @foreach (Comment comment in Model)
+            {
+                if (comment.AuthorId != WebSecurity.CurrentUserId)
+                {
+
+                <li class="thread-item-received">
+                    <div class="thread-item-wrapper">
+                        <div class="thread-item-horiz thread-item-top-received">
+                            <div class="thread-item-corner thread-item-topleft"></div>
+                            <div class="thread-item-corner thread-item-topright"></div>
+                        </div>
+                        <div class="thread-item-clear"></div>
+                        <div class="thread-item-middle">
+                            <div class="thread-item-content-wrapper-received">
+                                <div class="thread-item-label">@comment.Author.UserFullName</div>
+                                <div class="thread-item-content">
+                                    <div class="thread-item-msg-received">
+                                        <div class="thread-item-content-top"></div>
+                                        <p>@comment.CommentText</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="thread-item-clear"></div>
+                        <div class="thread-item-horiz thread-item-bottom-received">
+                            <div class="thread-item-corner thread-item-bottomleft"></div>
+                            <div class="thread-item-corner thread-item-bottomright"></div>
+                        </div>
+                        <div class="thread-item-clear"></div>
+                        <div class="thread-item-date">@comment.CommentDate</div>
+                    </div>
+                </li>
+                }
+                else
+                {
+                <li class="thread-item-sent">
+
+                    <div class="thread-item-wrapper">
+                        <div class="thread-item-horiz thread-item-top-sent">
+                            <div class="thread-item-corner thread-item-topleft"></div>
+                            <div class="thread-item-corner thread-item-topright"></div>
+                        </div>
+                        <div class="thread-item-clear"></div>
+                        <div class="thread-item-middle">
+                            <div class="thread-item-content-wrapper-sent">
+                                <div class="thread-item-label">Я</div>
+                                <div class="thread-item-content">
+                                    <div class="thread-item-msg-sent">
+                                        <div class="thread-item-content-top"></div>
+                                        <p>@comment.CommentText</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="thread-item-clear"></div>
+                        <div class="thread-item-horiz thread-item-bottom-send">
+                            <div class="thread-item-corner thread-item-bottomleft"></div>
+                            <div class="thread-item-corner thread-item-bottomright"></div>
+                        </div>
+                        <div class="thread-item-clear"></div>
+                        <div class="thread-item-date">@comment.CommentDate</div>
+                    </div>
+
+                </li>
+                }
+            }
+        </ul>
+    </div>
+            string key = string.Format("Task-{0}_comments_count", Model.FirstOrDefault().TaskId);
+            if (Session[key] != null && ((int)Session[key]) < Model.Count())
+            {
+                <script type="text/javascript">
+                    $(document).ready(function () {
+                        $.playSound('@Url.Content("~/Media/NewMessage")');
+                     });
+                </script>
+            }
+            Session[key] = Model.Count();
+}
+else
+{
+        
+    <div class="center no-elements-message">
+        комментариев нет
+    </div>
+}

@@ -1,0 +1,85 @@
+﻿@using System.EnterpriseServices
+@using TaskManager.Helpers
+@using TaskManager.Models
+@model TaskManager.Models.UserModel
+
+@{
+    ViewBag.Title = "Редактирование пользователя";
+    Layout = "~/Views/Admin/AdminLayout.cshtml";
+}
+<div class="container">
+    <h3 class="center">Редактирование пользователя <i>@Html.Display("Login")</i></h3>
+    <div style="width: 400px">
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            @Html.HiddenFor(x => x.UserId)
+            @Html.HiddenFor(x => x.Login)
+        
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName)
+                @Html.TextBoxFor(model => model.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
+
+            <div class="checkbox">
+                @Html.CheckBoxFor(model => model.IsAdmin)
+                @Html.LabelFor(model => model.IsAdmin)
+            </div>
+            var list = new List<SelectListItem>();
+            foreach (UserProfile chief in ModelHelper.GetChiefs())
+            {
+                list.Add(new SelectListItem
+                {
+                    Text = chief.UserFullName,
+                    Value = chief.UserId.ToString(),
+                    Selected = !string.IsNullOrEmpty(Model.ChiefId) && Model.ChiefId.Equals(chief.UserId.ToString())
+                });
+            }
+        
+            <div class="checkbox">
+                @Html.CheckBoxFor(model => model.IsSender)
+                @Html.LabelFor(model => model.IsSender)
+            </div>
+
+            <div class="checkbox" id="recipCheckPlaceholder">
+                @Html.CheckBoxFor(model => model.IsRecipient)
+                @Html.LabelFor(model => model.IsRecipient)
+            </div>
+        
+            //@Html.DropDownGroupFor(x => x.ChiefId, list, "Руководитель", "chiefId", "chiefGroupId", Model.IsRecipient)
+
+            <div class="checkbox">
+                @Html.CheckBoxFor(model => model.IsChief)
+                @Html.LabelFor(model => model.IsChief)
+            </div>
+
+            <div class="checkbox">
+                @Html.CheckBoxFor(model => model.IsMasterChief)
+                @Html.LabelFor(model => model.IsMasterChief)
+            </div>
+
+            <p>
+                <button type="submit" class="btn btn-default btn">
+                    <span style="margin: 0 10px 0 0" class="glyphicon glyphicon-floppy-save"></span>Сохранить
+                </button>
+            </p>
+        }
+
+    </div>
+
+    <script type="text/javascript">
+        //$(document).ready(function() {
+        //    $('#IsRecipient').click(function(e) {
+        //        $('#chiefGroupId').toggle(this.checked).next();
+
+        //    });
+        //});
+    </script>
+
+    @*@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}*@
+</div>

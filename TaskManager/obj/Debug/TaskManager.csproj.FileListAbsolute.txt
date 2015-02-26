@@ -1,0 +1,119 @@
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\TaskManager.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\TaskManager.pdb
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\EntityFramework.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\EntityFramework.SqlServer.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\Microsoft.Web.Infrastructure.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\Newtonsoft.Json.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Net.Http.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Net.Http.Formatting.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Net.Http.WebRequest.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.Helpers.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.Http.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.Http.WebHost.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.Mvc.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.Razor.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.WebPages.Deployment.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.WebPages.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.WebPages.Razor.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\EntityFramework.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\EntityFramework.SqlServer.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\Newtonsoft.Json.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Net.Http.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Net.Http.Formatting.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Net.Http.WebRequest.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.Helpers.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.Http.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.Http.WebHost.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.Mvc.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.Razor.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.WebPages.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.WebPages.Deployment.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\System.Web.WebPages.Razor.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\obj\Debug\TaskManager.csprojResolveAssemblyReference.cache
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\obj\Debug\TaskManager.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\obj\Debug\TaskManager.pdb
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\WebMatrix.WebData.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\WebMatrix.WebData.xml
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\WebMatrix.Data.dll
+c:\users\butkevich\documents\visual studio 2012\Projects\MVC\TaskManager\TaskManager\bin\WebMatrix.Data.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\TaskManager.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\TaskManager.pdb
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\EntityFramework.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\EntityFramework.SqlServer.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\Newtonsoft.Json.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Net.Http.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Net.Http.Formatting.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Net.Http.WebRequest.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.Helpers.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.Http.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.Http.WebHost.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.Mvc.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.Razor.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.WebPages.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.WebPages.Razor.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\WebMatrix.Data.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\WebMatrix.WebData.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\EntityFramework.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\EntityFramework.SqlServer.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\Newtonsoft.Json.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Net.Http.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Net.Http.Formatting.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Net.Http.WebRequest.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.Helpers.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.Http.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.Http.WebHost.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.Mvc.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.Razor.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.WebPages.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\System.Web.WebPages.Razor.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\WebMatrix.Data.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\WebMatrix.WebData.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\ru\WebMatrix.Data.resources.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\ru\WebMatrix.WebData.resources.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\obj\Debug\TaskManager.csprojResolveAssemblyReference.cache
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\obj\Debug\TaskManager.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\obj\Debug\TaskManager.pdb
+C:\Users\butkevich\Documents\Visual Studio 2012\Projects\MVC\TaskManager\TaskManager\bin\MvcPaging.dll
+C:\Users\butkevich\Documents\Visual Studio 2012\Projects\MVC\TaskManager\TaskManager\bin\MvcPaging.xml
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\MvcPaging.dll
+C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\MvcPaging.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\TaskManager.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\TaskManager.pdb
+H:\backup\Projects\Sanatorium\TaskManager\bin\EntityFramework.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\EntityFramework.SqlServer.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\Microsoft.Web.Infrastructure.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\MvcPaging.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\Newtonsoft.Json.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Net.Http.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Net.Http.WebRequest.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Web.Helpers.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Web.Mvc.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Web.Razor.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Web.WebPages.Deployment.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Web.WebPages.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Web.WebPages.Razor.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\WebMatrix.Data.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\WebMatrix.WebData.dll
+H:\backup\Projects\Sanatorium\TaskManager\bin\EntityFramework.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\EntityFramework.SqlServer.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\MvcPaging.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\Newtonsoft.Json.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Net.Http.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Net.Http.WebRequest.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Web.Helpers.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Web.Mvc.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Web.Razor.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Web.WebPages.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Web.WebPages.Deployment.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\System.Web.WebPages.Razor.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\WebMatrix.Data.xml
+H:\backup\Projects\Sanatorium\TaskManager\bin\WebMatrix.WebData.xml
+H:\backup\Projects\Sanatorium\TaskManager\obj\Debug\TaskManager.csprojResolveAssemblyReference.cache
+H:\backup\Projects\Sanatorium\TaskManager\obj\Debug\TaskManager.dll
+H:\backup\Projects\Sanatorium\TaskManager\obj\Debug\TaskManager.pdb

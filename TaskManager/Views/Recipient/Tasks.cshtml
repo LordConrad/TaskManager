@@ -1,0 +1,78 @@
+﻿@model IEnumerable<TaskManager.Models.RecipientTaskViewModel>
+@using TaskManager.Helpers
+
+@if (Model.Any())
+{
+    <table class="table table-hover" id="recipientTable">
+        <thead>
+            <tr>
+                <th>Текст заявки</th>
+                <th>Отправитель</th>
+                <th>Дата назначения</th>
+                <th>Приоритет</th>
+                <th>Срок исполнения</th>
+                <th>Результат</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in Model)
+            {
+                string rowClass = string.Empty;
+                if (task.IsViewed)
+                {
+                    if (task.IsComplete)
+                    {
+                        rowClass += " complete-row";
+                    }
+                    else
+                    {
+                        if (DateTime.Now.Date == task.Deadline.Date)
+                        {
+                            rowClass += " warning-row";
+                        }
+                        if (DateTime.Now.Date > task.Deadline.Date)
+                        {
+                            rowClass += " alert-row";
+                        }
+                    }
+
+                }
+                else
+                {
+                    rowClass += " new-task-row";
+                }
+                
+                <tr class="link-row @rowClass" onclick=" window.location.href = '@Url.Action("Edit", new { taskId = task.TaskId })' ">
+                    <td>@task.TaskText</td>
+                    <td>@task.SenderName</td>
+                    <td>@task.AssignDateTime.ToString(ModelHelper.DateTimeFormatFull)</td>
+                    <td class="task-priority-@task.PriorityId">@task.PriorityName</td>
+                    <td>@task.Deadline.ToString(ModelHelper.DateFormat)
+                        @if (DateTime.Now.Date == task.Deadline.Date && !task.IsComplete)
+                        {
+                            <img height="20" src="@Url.Content("~/Images/clock-yellow.png")" alt="Сегодня"/>
+                        }
+                        @if (DateTime.Now.Date > task.Deadline.Date && !task.IsComplete)
+                        {
+                            <img height="20" src="@Url.Content("~/Images/clock-red.png")" alt="Просрочено"/>
+                        }
+                    </td>
+                    <td>@(task.IsComplete ? (!string.IsNullOrEmpty(task.ResultComment) ? Html.Raw(task.ResultComment) : Html.Raw("выполнено")) : Html.Raw(string.Empty))</td>
+
+                </tr>
+
+            }
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.table').tablesorter();
+        });
+    </script>
+}
+else
+{
+    <div class="container center no-elements-message">
+        заявок пока нет
+    </div>
+}
