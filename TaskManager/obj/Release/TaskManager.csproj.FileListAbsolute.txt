@@ -81,3 +81,47 @@ c:\Users\butkevich\Documents\Visual Studio 2012\Projects\MVC\TaskManager\TaskMan
 C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\MvcPaging.dll
 C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\bin\MvcPaging.xml
 C:\Users\Conrad\Documents\Visual Studio 2012\Projects\Sanatorium\TaskManager\obj\Release\TaskManager.csprojResolveAssemblyReference.cache
+D:\Projects\TaskManager\TaskManager\bin\TaskManager.dll
+D:\Projects\TaskManager\TaskManager\bin\TaskManager.pdb
+D:\Projects\TaskManager\TaskManager\bin\EntityFramework.dll
+D:\Projects\TaskManager\TaskManager\bin\EntityFramework.SqlServer.dll
+D:\Projects\TaskManager\TaskManager\bin\Microsoft.Web.Infrastructure.dll
+D:\Projects\TaskManager\TaskManager\bin\Microsoft.Web.Mvc.FixedDisplayModes.dll
+D:\Projects\TaskManager\TaskManager\bin\MvcPaging.dll
+D:\Projects\TaskManager\TaskManager\bin\Newtonsoft.Json.dll
+D:\Projects\TaskManager\TaskManager\bin\System.Net.Http.dll
+D:\Projects\TaskManager\TaskManager\bin\System.Net.Http.WebRequest.dll
+D:\Projects\TaskManager\TaskManager\bin\System.Web.Helpers.dll
+D:\Projects\TaskManager\TaskManager\bin\System.Web.Mvc.dll
+D:\Projects\TaskManager\TaskManager\bin\System.Web.Razor.dll
+D:\Projects\TaskManager\TaskManager\bin\System.Web.WebPages.Deployment.dll
+D:\Projects\TaskManager\TaskManager\bin\System.Web.WebPages.dll
+D:\Projects\TaskManager\TaskManager\bin\System.Web.WebPages.Razor.dll
+D:\Projects\TaskManager\TaskManager\bin\WebMatrix.Data.dll
+D:\Projects\TaskManager\TaskManager\bin\WebMatrix.WebData.dll
+D:\Projects\TaskManager\TaskManager\bin\EntityFramework.xml
+D:\Projects\TaskManager\TaskManager\bin\EntityFramework.SqlServer.xml
+D:\Projects\TaskManager\TaskManager\bin\MvcPaging.xml
+D:\Projects\TaskManager\TaskManager\bin\Newtonsoft.Json.xml
+D:\Projects\TaskManager\TaskManager\bin\System.Net.Http.xml
+D:\Projects\TaskManager\TaskManager\bin\System.Net.Http.WebRequest.xml
+D:\Projects\TaskManager\TaskManager\bin\System.Web.Helpers.xml
+D:\Projects\TaskManager\TaskManager\bin\System.Web.Mvc.xml
+D:\Projects\TaskManager\TaskManager\bin\System.Web.Razor.xml
+D:\Projects\TaskManager\TaskManager\bin\System.Web.WebPages.xml
+D:\Projects\TaskManager\TaskManager\bin\System.Web.WebPages.Deployment.xml
+D:\Projects\TaskManager\TaskManager\bin\System.Web.WebPages.Razor.xml
+D:\Projects\TaskManager\TaskManager\bin\WebMatrix.Data.xml
+D:\Projects\TaskManager\TaskManager\bin\WebMatrix.WebData.xml
+D:\Projects\TaskManager\TaskManager\obj\Release\TaskManager.csprojResolveAssemblyReference.cache
+D:\Projects\TaskManager\TaskManager\obj\Release\TaskManager.Migrations.InitialCreate.resources
+D:\Projects\TaskManager\TaskManager\obj\Release\TaskManager.Models.extendUserProfile.resources
+D:\Projects\TaskManager\TaskManager\obj\Release\TaskManager.csproj.GenerateResource.Cache
+D:\Projects\TaskManager\TaskManager\obj\Release\TaskManager.dll
+D:\Projects\TaskManager\TaskManager\obj\Release\TaskManager.pdb
+D:\Projects\TaskManager\TaskManager\bin\System.Web.Http.WebHost.dll
+D:\Projects\TaskManager\TaskManager\bin\System.Web.Http.WebHost.xml
+D:\Projects\TaskManager\TaskManager\bin\System.Web.Http.dll
+D:\Projects\TaskManager\TaskManager\bin\System.Web.Http.xml
+D:\Projects\TaskManager\TaskManager\bin\System.Net.Http.Formatting.dll
+D:\Projects\TaskManager\TaskManager\bin\System.Net.Http.Formatting.xml

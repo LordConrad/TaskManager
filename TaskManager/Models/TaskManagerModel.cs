@@ -6,6 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.ModelConfiguration.Configuration;
+using TaskManager.Migrations;
 using WebMatrix.WebData;
 
 namespace TaskManager.Models

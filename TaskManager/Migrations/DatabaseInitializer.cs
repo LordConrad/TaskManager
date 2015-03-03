@@ -1,25 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Web;
+﻿using System.Data.Entity;
 using System.Web.Security;
+using TaskManager.Models;
 using WebMatrix.WebData;
 
-namespace TaskManager.Models
+namespace TaskManager.Migrations
 {
-    public class DatabaseInitializer : DropCreateDatabaseIfModelChanges<TaskManagerContext>
+    internal sealed class DatabaseInitializer : MigrateDatabaseToLatestVersion<TaskManagerContext, Configuration> 
     {
         
         public override void InitializeDatabase(TaskManagerContext context)
         {
             base.InitializeDatabase(context);
             SeedMembership();
-        }
-
-        protected override void Seed(TaskManagerContext context)
-        {
-            base.Seed(context);
         }
 
         private void SeedMembership()

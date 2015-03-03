@@ -84,6 +84,7 @@
     </Reference>
     <Reference Include="System.Net.Http.Formatting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.4.0.20710.0\lib\net40\System.Net.Http.Formatting.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Net.Http.WebRequest">
       <Private>True</Private>
@@ -95,9 +96,11 @@
     </Reference>
     <Reference Include="System.Web.Http, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.4.0.20710.0\lib\net40\System.Web.Http.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.4.0.20710.0\lib\net40\System.Web.Http.WebHost.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
@@ -141,6 +144,15 @@
     <Compile Include="Helpers\BootstrapHtml.cs" />
     <Compile Include="Helpers\ModelHelper.cs" />
     <Compile Include="Helpers\RequiredIf.cs" />
+    <Compile Include="Migrations\201502261627085_InitialCreate.cs" />
+    <Compile Include="Migrations\201502261627085_InitialCreate.Designer.cs">
+      <DependentUpon>201502261627085_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201502262040548_extendUserProfile.cs" />
+    <Compile Include="Migrations\201502262040548_extendUserProfile.Designer.cs">
+      <DependentUpon>201502262040548_extendUserProfile.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BadgeModel.cs" />
     <Compile Include="Models\ChiefTaskEditViewModel.cs" />
     <Compile Include="Models\CommentAddModel.cs" />
@@ -152,7 +164,7 @@
     <Compile Include="Models\RecipTaskEditModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\TaskManagerModel.cs" />
-    <Compile Include="Models\DatabaseInitializer.cs" />
+    <Compile Include="Migrations\DatabaseInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -259,12 +271,21 @@
     <Content Include="Views\MasterChief\OverdueTasksCount.cshtml" />
     <Content Include="Views\MasterChief\Edit.cshtml" />
     <Content Include="Views\Sender\SenderCompleteTasksCount.cshtml" />
+    <Content Include="Views\CommentsView.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201502261627085_InitialCreate.resx">
+      <DependentUpon>201502261627085_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201502262040548_extendUserProfile.resx">
+      <DependentUpon>201502262040548_extendUserProfile.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

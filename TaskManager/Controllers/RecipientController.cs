@@ -29,7 +29,7 @@ namespace TaskManager.Controllers
                 List<Task> tasks;
                 using (var context = new TaskManagerContext())
                 {
-                    tasks = context.Tasks.Where(x => x.RecipientId == WebSecurity.CurrentUserId)
+                    tasks = context.Tasks.Where(x => x.RecipientId == WebSecurity.CurrentUserId && !x.AcceptCpmpleteDate.HasValue)
                         .Include(x => x.Comments)
                         .Include(x => x.TaskPriority)
                         .Include(x => x.TaskSender)

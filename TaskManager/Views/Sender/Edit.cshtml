@@ -9,163 +9,68 @@
 {
     
     <div class="container">
-        <h4>Заявка</h4>
-        <p style="margin: 30px 0">
-            @Model.TaskText
-        </p>
-
-        @if (Model.IsComlete)
-        {
-            <h4>Результат выполнения</h4>
-            <p style="margin: 30px 0">
-                @(!string.IsNullOrEmpty(Model.ResultComment) ? Html.Raw("выполнено") : Html.Raw(Model.ResultComment))
-            </p>
-            <div class="right">
-                <button onclick="location.href='@Url.Action("ConfirmTask", new {id = Model.TaskId})'" class="btn btn-primary" style="margin-bottom: 30px" id="confirm-btn">Подтвердить выполнение</button>
-                </div>
-        }
-        <div class="panel-group" id="accordion">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h5 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#details">Подробно</a>
-                    </h5>
-                </div>
-                <div id="details" class="panel-collapse collapse in">
-                    <div class="panel-body">
-                        <p>Заявка подана: @Model.CreationDate</p>
-                        <p>Ответственный: @Model.RecipientName</p>
-                        @if (!string.IsNullOrEmpty(@Model.AssignDate))
-                        {
-                            <p>Ответственный назначен: @Model.AssignDate</p>
-                        }
-                        @if (!string.IsNullOrEmpty(@Model.Deadline))
-                        {
-                            <p>Установлен срок выполнения до: @Model.Deadline</p>
-                        }
-
-
-                    </div>
-                </div>
+        <div class="col-md-8">
+            <div class="task-text-view">
+                <h4>Заявка #@Model.TaskId</h4>
+                @Model.TaskText
             </div>
 
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h5 class="panel-title">
-                        <a data-toggle="collapse" data-parent="#accordion" href="#comments">Комментарии к заявке @(Model.CommentsCount != 0 ? Html.Raw("("+Model.CommentsCount+")") : Html.Raw(""))</a>
-                    </h5>
-                </div>
-                <div id="comments" class="panel-collapse collapse">
-
-                    <div class="panel-body">
-                        @Html.TextAreaGroupFor(x => x.NewComment, "Добавить комментарий к заявке", "new-comment-id", "Новый комментарий к заявке", 120)
-                        <div class="right">
-                            <button type="button" class=" btn btn-primary" onclick="addNewComment()">Добавить</button>
-                        </div>
-
-                        <div id="comments-update-panel"></div>
-                        <script type="text/javascript">
-                            (function commentsUpdate() {
-                                $.ajax({
-                                    url: '@Url.Action("GetCommentsForTask", "Comment")',
-                                    data: { taskId: '@Model.TaskId' },
-                                    success: function (data) {
-                                        $('#comments-update-panel').html(data);
-                                    },
-                                    complete: function () {
-                                        setTimeout(commentsUpdate, upd_interval);
-                                    }
-                                });
-                            })();
-                        </script>
-
+            @if (Model.IsComlete)
+            {
+                <div class="task-text-view">
+                    <h4>Результат выполнения</h4>
+                    @(!string.IsNullOrEmpty(Model.ResultComment) ? Html.Raw("выполнено") : Html.Raw(Model.ResultComment))
+                    <div class="right">
+                        <button onclick="location.href='@Url.Action("ConfirmTask", new { id = Model.TaskId })'" class="btn btn-primary" id="confirm-btn">Подтвердить выполнение</button>
                     </div>
                 </div>
-            </div>
+            }
+            @Html.Partial("~/Views/CommentsView.cshtml", Model)
+
 
         </div>
+        <div class="col-md-4 margin-top-30">
+            <div class="panel-group" id="accordion">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h5 class="panel-title">
+                            <a data-toggle="collapse" data-parent="#accordion" href="#details">Подробно</a>
+                        </h5>
+                    </div>
+                    <div id="details" class="panel-collapse collapse in">
+                        <div class="panel-body">
+                            <p>Заявка подана: @Model.CreationDate</p>
+                            <p>Ответственный: @Model.RecipientName</p>
+                            @if (!string.IsNullOrEmpty(@Model.AssignDate))
+                            {
+                                <p>Ответственный назначен: @Model.AssignDate</p>
+                            }
+                            @if (!string.IsNullOrEmpty(@Model.Deadline))
+                            {
+                                <p>Установлен срок выполнения до: @Model.Deadline</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <script type="text/javascript">
-        // ajax добавления нового коммента
-        function addNewComment() {
-            $.ajax({
-                url: '@Url.Action("AddNewComment", "Comment")',
-                type: "POST",
-                data: JSON.stringify({
-                    text: $('#new-comment-id').val(),
-                    authorId: @WebSecurity.CurrentUserId,
-                    taskId: @Model.TaskId
-                    }),
-                contentType: 'application/json; charset=utf-8',
-                accepts: 'application/json',
-                success: function(data) {
-                    switchValidationErrorFor(false, "NewComment", "");
-                    $('#new-comment-id').val('');
-                    commentsUpdate();
-                    scrollToNewComment();
-                },
-                complete: function() {
-
-                },
-                error: function() {
-                    alert('error creationg comment');
-                }                
-            });
-        }
-
-        function switchValidationErrorFor(isError, property, errorMessage) {
-            if(isError){
-                $("span[data-valmsg-for='" + property + "']").removeClass("field-validation-valid");
-                $("span[data-valmsg-for='" + property + "']").addClass("field-validation-error");
-                $("span[data-valmsg-for='" + property + "']").html(errorMessage);
-            } else {
-                $("span[data-valmsg-for='" + property + "']").html("");
-                $("span[data-valmsg-for='" + property + "']").removeClass("field-validation-error");
-                $("span[data-valmsg-for='" + property + "']").addClass("field-validation-valid");
-            }
-        }
-
-        function scrollToNewComment() {
-            var target = $('.thread-item-sent:last');
-            if (target.length) {
-                $('html,body').animate({
-                    scrollTop: target.offset().top
-                }, 1000);
-            }
-        }
-
-        // дополнительный апдейт комментов после добавления нового
-        function commentsUpdate() {
-            $.ajax({
-                url: '@Url.Action("GetCommentsForTask", "Comment")',
-                data: { taskId: '@Model.TaskId' },
-                success: function(data) {
-                    $('#comments-update-panel').html(data);
-                },
-                complete: function() {
-
-                }
-            });
-        }
-        
-    </script>
+    
 }
 else
 {
     <div class="container">
-        <div class="right" style="margin-right: 15px">
-            <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#modal-window" data-href = '@Url.Action("Delete", new { taskId = Model.TaskId })' >
-                <span class="glyphicon glyphicon-remove"></span>
-            </button>
-        </div>
-        <form role="form" method="POST">
-            <div class="panel-body">
+        <div class="col-md-12">
+            <h4 class="center">Редактирование заявки</h4>
+            <form role="form" method="POST">
                 @Html.TextAreaGroupFor(x => x.TaskText, "Текст заявки", "task-text", "Текст заявки")
-            </div>
-            <div style="text-align: right;">
-                <button type="submit" class="btn btn-primary" style="margin: -15px 15px 15px 0;">Сохранить</button>
-            </div>
-        </form>
+                <div style="text-align: right;">
+                    <button type="button" class="btn btn-danger margin-right-15" data-toggle="modal" data-target="#modal-window" data-href = '@Url.Action("Delete", new { taskId = Model.TaskId })'>Удалить</button>
+                    <button type="submit" class="btn btn-primary" >Сохранить</button>
+                </div>
+            </form>
+            @Html.Partial("~/Views/CommentsView.cshtml", Model)
+        </div>
     </div>
 }
 
@@ -187,12 +92,29 @@ else
     </div>
 </div>
 
-<script type="text/javascript">        
+<script type="text/javascript">
     // вешаем удаление на кнопку модального окна
     $(document).ready(function () {
         $('#modal-window').on('show.bs.modal', function (e) {
             $(this).find('.danger').attr('href', $(e.relatedTarget).data('href'));
         });
     });
-    
+
+
+
+    function switchValidationErrorFor(isError, property, errorMessage) {
+        if (isError) {
+            $("span[data-valmsg-for='" + property + "']").removeClass("field-validation-valid");
+            $("span[data-valmsg-for='" + property + "']").addClass("field-validation-error");
+            $("span[data-valmsg-for='" + property + "']").html(errorMessage);
+        } else {
+            $("span[data-valmsg-for='" + property + "']").html("");
+            $("span[data-valmsg-for='" + property + "']").removeClass("field-validation-error");
+            $("span[data-valmsg-for='" + property + "']").addClass("field-validation-valid");
+        }
+    }
+
+
+
+
 </script>

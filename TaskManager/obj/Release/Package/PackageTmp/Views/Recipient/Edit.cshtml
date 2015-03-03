@@ -8,11 +8,24 @@
 }
 
 <div class="container">
-    <h4>Заявка</h4>
-    <p style="margin: 30px 0">
-        @Model.TaskText
-    </p>
-    <div class="panel-group" id="accordion">
+    <div class="col-md-8">
+        <div class="task-text-view">
+            <h4>Заявка #@Model.TaskId</h4>
+            @Model.TaskText
+        </div>
+
+        <div id="comments">
+            <div id="comments-update-panel"></div>
+            <form method="POST" action="#">
+                @Html.ValidationSummary(true)
+                @Html.TextAreaGroupFor(x => x.NewComment, String.Empty, "new-comment-id", "Новый комментарий к заявке", 120)
+                <div class="right">
+                    <button type="button" class=" btn btn-primary" onclick="addNewComment()">Отправить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="panel-group col-md-4 margin-top-30" id="accordion">
         <div class="panel panel-default">
             <div class="panel-heading">
                 <h5 class="panel-title">
@@ -26,7 +39,7 @@
                     <p>Адресована мне: @Model.AssignDateTime.ToString(ModelHelper.DateTimeFormatFull)</p>
                     <p>Установлен срок выполнения до: @Model.Deadline.ToString(ModelHelper.DateFormat)</p>
                     <p>Приоритет выполнения: @Model.PriorityName</p>
-                    @if(Model.CompleteDate != null)
+                    @if (Model.CompleteDate != null)
                     {
                         <p>Заявка выполнена: @Model.CompleteDate.Value.ToString(ModelHelper.DateTimeFormatFull)</p>
                     }
@@ -52,58 +65,25 @@
                         <div class="right">
                             @if (Model.CompleteDate.HasValue)
                             {
-                                <a href="#" class="btn btn-danger danger" style="margin-right: 25px" onclick="location.href = '@Url.Action("UndoComplete", new { taskId = Model.TaskId})'">Отменить выполнение</a>
+                                <a href="#" class="btn btn-danger danger" style="margin-right: 25px" onclick="location.href = '@Url.Action("UndoComplete", new { taskId = Model.TaskId })'">Отменить выполнение</a>
                             }
-                            
+
                             <button class=" btn btn-primary">@(Model.CompleteDate == null ? Html.Raw("Выполнено") : Html.Raw("Сохранить"))</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
-
-
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h5 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#comments">Комментарии к заявке @(Model.CommentsCount != 0 ? Html.Raw("("+Model.CommentsCount+")") : Html.Raw(""))</a>
-                </h5>
-            </div>
-            <div id="comments" class="panel-collapse collapse">
-
-                <div class="panel-body">
-                    <form method="POST" action="#">
-                        @Html.ValidationSummary(true)
-                        @Html.TextAreaGroupFor(x => x.NewComment, "Добавить комментарий к заявке", "new-comment-id", "Новый комментарий к заявке", 120)
-                        <div class="right">
-                            <button type="button" class=" btn btn-primary" onclick="addNewComment()">Добавить</button>
-                        </div>
-                    </form>
-                    <div id="comments-update-panel"></div>
-                    <script type="text/javascript">
-                        (function commentsUpdate() {
-                            $.ajax({
-                                url: '@Url.Action("GetCommentsForTask", "Comment")',
-                                data: { taskId: '@Model.TaskId' },
-                                success: function (data) {
-                                    $('#comments-update-panel').html(data);
-                                },
-                                complete: function () {
-                                    setTimeout(commentsUpdate, upd_interval);
-                                }
-                            });
-                        })();
-                    </script>
-
-                </div>
-            </div>
-        </div>
-
-
-
-
-
     </div>
+
+
+
+
+
+
+
+
+
 
 </div>
 <script type="text/javascript">
@@ -173,6 +153,10 @@
             }
         });
     }
+
+    $(function() {
+        commentsUpdate();
+    });
     
 </script>
 
