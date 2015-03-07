@@ -19,7 +19,7 @@ namespace TaskManager.Controllers
             IEnumerable<Task> tasks;
             using (var context = new TaskManagerContext())
             {
-                tasks = context.Tasks.Where(x => x.AcceptCpmpleteDate.HasValue)
+                tasks = context.Tasks.Where(x => x.AcceptCpmpleteDate.HasValue || x.AssignDateTime.HasValue)
                     .Include(x => x.TaskRecipient)
                     .ToList();
             }

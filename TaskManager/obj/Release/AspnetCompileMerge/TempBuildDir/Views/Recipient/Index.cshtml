@@ -1,0 +1,22 @@
+﻿@{
+    ViewBag.Title = "Входящие заявки";
+    Layout = "~/Views/Recipient/RecipientLayout.cshtml";
+}
+<div class="container-fluid">
+    <h4 class="center">Входящие заявки</h4>
+    <div id="tasksPlaceholderId"></div>
+</div>
+<script type="text/javascript">
+    (function updater() {
+        $.ajax({
+            url: '@Url.Action("Tasks", "Recipient")',
+            success: function (data) {
+                $('#tasksPlaceholderId').html(data);
+            },
+            complete: function () {
+                setTimeout(updater, upd_interval);
+            }
+        });
+    })();
+</script>
+

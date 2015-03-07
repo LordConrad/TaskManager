@@ -6,29 +6,23 @@
 <script type="text/javascript" src="@Url.Content("../../Scripts/Chart.js")"></script>
 <script type="text/javascript" src="@Url.Content("../../Scripts/knockout-3.3.0.js")"></script>
 <script type="text/javascript">
+
     var viewModel = {
-        selectedYear: ko.observable(new Date().getFullYear()),
-        chartDataCompleteTasks: ko.observableArray([]),
-        chartDataSendedTasks: ko.observableArray([]),
+        selectedYear: ko.observable("2015"),
+        chartData: ko.observableArray([]),
         lineChartData: ko.observable()
     };
-    var barChart;
+    
     var tasks = Array();
     @foreach (var task in @Model)
     {
-        @:tasks.push({ acceptDate: parseDate("@if (task.AcceptCpmpleteDate.HasValue)
-                                              {
-                                                  @task.AcceptCpmpleteDate.Value
-                                              }"), recipient: "@task.TaskRecipient.UserName", recipientFullName: "@task.TaskRecipient.UserFullName", sendDate: parseDate("@if (task.AssignDateTime.HasValue)
-                                                                                                                                                                          {
-                                                                                                                                                                              @task.AssignDateTime.Value
-                                                                                                                                                                          }") })
+        @:tasks.push({ acceptDate: parseDate("@task.AcceptCpmpleteDate"), recipient: "@task.TaskRecipient.UserName", recipientFullName: "@task.TaskRecipient.UserFullName" })
     }
 
     function chartDataUpdate() {
-        viewModel.chartDataCompleteTasks([]);
+        viewModel.chartData([]);
         for (var i = 0; i < 12; i++) {
-            viewModel.chartDataCompleteTasks.push(select(viewModel.selectedYear(), i));
+            viewModel.chartData.push(select(viewModel.selectedYear(), i));
         }
         viewModel.lineChartData({
             labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
@@ -42,13 +36,12 @@
                     pointStrokeColor: "#fff",
                     pointHighlightFill: "#fff",
                     pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: viewModel.chartDataCompleteTasks()
+                    data: viewModel.chartData()
                 }
             ]
         });
-        barChart = null;
         var ctx = document.getElementById("statisticChart").getContext("2d");
-        barChart = new Chart(ctx).Bar(viewModel.lineChartData(), {
+        window.myLine = new Chart(ctx).Line(viewModel.lineChartData(), {
             responsive: true
         });
     }
@@ -100,7 +93,7 @@
         return count;
     }
 
-
+    
 
     function parseDate(strDate) {
         var dateParts = strDate.split(/[\s\.]/);
@@ -110,8 +103,8 @@
 
     $(function () {
         chartDataUpdate();
-
-
+        
+        
         ko.applyBindings();
     });
 

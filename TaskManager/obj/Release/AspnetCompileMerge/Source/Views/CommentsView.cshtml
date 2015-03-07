@@ -1,0 +1,65 @@
+﻿@using TaskManager.Helpers
+@model TaskManager.Models.NewTaskViewModel
+
+<div id="comments-update-panel"></div>
+@Html.TextAreaGroupFor(x => x.NewComment, string.Empty, "new-comment-id", "Новый комментарий к заявке", 120)
+<div class="right">
+    <button type="button" class=" btn btn-primary" onclick="addNewComment()">Отправить</button>
+</div>
+
+<script type="text/javascript">
+    // ajax добавления нового коммента
+    function addNewComment() {
+        $.ajax({
+            url: '@Url.Action("AddNewComment", "Comment")',
+            type: "POST",
+            data: JSON.stringify({
+                text: $('#new-comment-id').val(),
+                authorId: @WebSecurity.CurrentUserId,
+                taskId: @Model.TaskId
+                }),
+            contentType: 'application/json; charset=utf-8',
+            accepts: 'application/json',
+            success: function(data) {
+                switchValidationErrorFor(false, "NewComment", "");
+                $('#new-comment-id').val('');
+                commentsUpdate();
+                scrollToNewComment();
+            },
+            complete: function() {
+
+            },
+            error: function() {
+                alert('error creationg comment');
+            }                
+        });
+    }
+    
+    function scrollToNewComment() {
+        var target = $('.thread-item-sent:last');
+        if (target.length) {
+            $('html,body').animate({
+                scrollTop: target.offset().top
+            }, 1000);
+        }
+    }
+
+    // дополнительный апдейт комментов после добавления нового
+    function commentsUpdate() {
+        $.ajax({
+            url: '@Url.Action("GetCommentsForTask", "Comment")',
+            data: { taskId: '@Model.TaskId' },
+            success: function(data) {
+                $('#comments-update-panel').html(data);
+            },
+            complete: function() {
+
+            }
+        });
+    }
+        
+    $(function (){
+        commentsUpdate();
+    });
+
+</script>

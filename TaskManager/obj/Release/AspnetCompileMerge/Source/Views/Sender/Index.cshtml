@@ -1,0 +1,50 @@
+﻿@model IEnumerable<TaskManager.Models.Task>
+@using TaskManager.Helpers 
+
+@{
+    ViewBag.Title = "Исходящие заявки";
+    Layout = "~/Views/Sender/SenderLayout.cshtml";
+}
+<h4 class="center">Исходящие заявки</h4>
+@if (Model != null && Model.Any())
+{
+    <table class="table table-hover" id="sender-table">
+        <thead>
+            <tr>
+                <th>Текст заявки</th>
+                <th>Дата подачи</th>
+                <th>Ответственный</th>
+                <th>Результат</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var task in Model.OrderByDescending(x => x.CompleteDate.HasValue).ThenByDescending(x => x.CreateDate))
+            {
+                string rowClass = "link-row";
+                if (task.CompleteDate.HasValue)
+                {
+                    rowClass += " complete-row";
+                }
+                <tr class="@rowClass" onclick="window.location.href = '@Url.Action("Edit", new { taskId = task.TaskId })'">
+                    <td>@task.TaskText</td>
+                    <td>@task.CreateDate.ToString(ModelHelper.DateTimeFormatFull)</td>
+                    <td>@(task.TaskRecipient != null ? task.TaskRecipient.UserFullName : "не назначен")</td>
+                    <td>@(task.CompleteDate.HasValue ? (!string.IsNullOrEmpty(task.ResultComment) ? Html.Raw(task.ResultComment) : Html.Raw("выполнено")) : Html.Raw(string.Empty))</td>
+                </tr>
+            
+            }
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#sender-table').tablesorter();
+        });
+    </script>
+}
+else
+{
+    <div class="center no-elements-message">
+        заявок нет
+    </div>
+}
+

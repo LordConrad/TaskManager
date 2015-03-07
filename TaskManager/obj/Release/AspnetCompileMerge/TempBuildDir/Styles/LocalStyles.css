@@ -1,0 +1,377 @@
+﻿body {
+    /*background-image: url(/Images/logo_1.png);
+    background-repeat: no-repeat;
+    
+    background-position: 100% 100%;*/
+}
+
+.pager {
+    position: fixed;
+    width: 800px;
+    left: 50%;
+    margin-left: -400px;
+    bottom: 50px;
+}
+
+.well {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    left: 0;
+    bottom: 14px;
+    height: 38px;
+    padding: 8px;
+}
+
+.footer {
+    position: fixed;
+    bottom: 0px;
+    right: 0px;
+    color: #444;
+    background: white;
+    font-size: 8pt;
+    width: 100%;
+    padding: 4px;
+    text-align: center;
+}
+
+.v-align-middle > * {
+    vertical-align: top;
+}
+
+.v-align-bottom > * {
+    vertical-align: bottom;
+}
+
+.task-text-view {
+    padding: 10px;
+    border: 1px solid #efefef;
+    border: 1px solid rgba(239, 239, 239, 1);
+    margin: 30px 0 25px 0;
+    border-radius: 8px;
+}
+
+.no-elements-message {
+    font-size: 14pt;
+    font-style: italic;
+    margin-top: 40px;
+    color: #9c1414;
+    color: rgba(156, 20, 20, 1);
+}
+
+.right {
+    text-align: right;
+}
+
+.center {
+    text-align: center;
+    margin-bottom: 18px;
+}
+
+.task-priority-1 {
+    color: green;
+}
+
+.task-priority-2 {
+    color: orange;
+}
+
+.task-priority-3 {
+    color: red;
+}
+
+.complete-row {
+    background-color: #deffd7;
+    background-color: rgba(222, 255, 215, 1);
+}
+
+.warning-row {
+    background-color: #fcfcd6;
+    background-color: rgba(252, 252, 214, 1);
+}
+
+.alert-row {
+    background-color: #FFE7E7;
+}
+
+.new-task-row {
+    background-color: #EDF1F5;
+}
+
+.date-form {
+    margin: 10px;
+}
+
+label.control-label span {
+    cursor: pointer;
+}
+
+.link-row {
+    cursor: pointer;
+}
+
+td button {
+    margin: 2px;
+}
+
+.navbar {
+    background: #f5f5f5;
+    border-bottom: solid 1px #e5e5e5;
+    color: #333;
+}
+
+.navbar-nav > li > a {
+    color: #333;
+}
+
+    .navbar-nav > li > a:hover {
+        color: #4191D1;
+    }
+
+.nav > li > a:hover, .nav > li > a:focus {
+    background: transparent;
+}
+
+a span {
+    margin-left: 4px;
+}
+
+.validation-summary-errors {
+    color: red;
+    font-style: italic;
+    font-size: 10pt;
+}
+
+.field-validation-error {
+    color: red;
+    font-style: italic;
+    font-size: 10pt;
+}
+
+.center-form {
+    width: 300px;
+    height: 300px;
+    margin-top: -150px;
+    top: 40%;
+    position: absolute;
+    left: 50%;
+    margin-left: -150px;
+}
+
+    .center-form h3 {
+        text-align: center;
+        margin-bottom: 25px;
+    }
+
+    .center-form button {
+        padding: 8px 30px;
+        margin: 25px 0;
+    }
+
+    .center-form a {
+        font-size: 13pt;
+    }
+
+/*  Messages    */
+
+#thread-list {
+    list-style: none;
+    margin: 50px 50px 0 0;
+    padding: 0;
+    width: 100%;
+    /*border: 1px solid #ccc;*/
+}
+
+    #thread-list li {
+        float: left;
+        clear: left;
+        width: 100%;
+        margin-bottom: 10px;
+    }
+/*
+.thread-item-received {
+    padding: 0 55px 0 55px;
+}
+
+.thread-item-sent {
+    padding: 0 55px 0 55px;
+}
+        */
+.thread-item-wrapper {
+    float: left;
+    position: relative;
+    overflow: hidden;
+    min-width: 300px;
+}
+
+.thread-item-sent .thread-item-wrapper {
+    float: right;
+}
+
+.thread-item-clear {
+    clear: both;
+}
+
+.thread-item-horiz {
+    height: 20px;
+    width: 100%;
+    position: absolute;
+}
+
+.thread-item-corner {
+    position: absolute;
+    background-repeat: no-repeat;
+    background-image: url('../Images/Messages/balloon-received.png');
+    width: 20px;
+    height: 20px;
+}
+
+.thread-item-sent .thread-item-corner {
+    background-image: url('../Images/Messages/balloon-sent.png');
+}
+
+.thread-item-middle {
+    background-image: url('../Images/Messages/left-received.png');
+    background-repeat: repeat-y;
+}
+
+.thread-item-sent .thread-item-middle {
+    background-image: url('../Images/Messages/left-sent.png');
+}
+
+.thread-item-content-wrapper-received {
+    display: block;
+    background-image: url('../Images/Messages/right-received.png');
+    background-repeat: repeat-y;
+    background-position: right top;
+}
+
+.thread-item-content-wrapper-sent {
+    display: block;
+    background-image: url('../Images/Messages/right-sent.png');
+    background-repeat: repeat-y;
+    background-position: right top;
+}
+
+.thread-item-content {
+    padding: 0 20px;
+}
+
+.thread-item-top-received {
+    background-image: url('../Images/Messages/top-received.png');
+    background-repeat: repeat-x;
+}
+
+.thread-item-top-sent {
+    background-image: url('../Images/Messages/top-sent.png');
+    background-repeat: repeat-x;
+}
+
+.thread-item-topleft {
+    top: 0;
+    left: 0;
+    background-position: left top;
+}
+
+.thread-item-topright {
+    top: 0;
+    right: 0;
+    background-position: right top;
+}
+
+.thread-item-bottom-received {
+    background-image: url('../Images/Messages/bottom-received.png');
+    background-repeat: repeat-x;
+}
+
+.thread-item-bottom-send {
+    background-image: url('../Images/Messages/bottom-send.png');
+    background-repeat: repeat-x;
+}
+
+.thread-item-bottomleft {
+    bottom: 0;
+    left: 0;
+    background-position: left bottom;
+}
+
+.thread-item-bottomright {
+    bottom: 0;
+    right: 0;
+    background-position: right bottom;
+    position: absolute;
+}
+
+.thread-item-label {
+    font-weight: bold;
+    position: relative;
+    left: 30px;
+    top: 17px;
+}
+
+.thread-item-date {
+    color: #999;
+    font-size: 0.9em;
+}
+
+.thread-item-received .thread-item-date {
+    clear: right;
+    float: left;
+    margin: 20px 0 0 15px;
+}
+
+.thread-item-sent .thread-item-date {
+    clear: left;
+    float: right;
+    margin: 20px 15px 0 0;
+}
+/* <--- this line --- */
+
+.thread-item-content-top {
+    clear: both;
+    height: 10px;
+}
+
+.thread-item-msg-received {
+    background-color: #F1F1F1;
+    padding: 10px;
+}
+
+    .thread-item-msg-received p {
+        margin: 0;
+        background-color: #F1F1F1;
+    }
+
+.thread-item-msg-sent {
+    background-color: #95d5ff;
+    padding: 10px;
+}
+
+    .thread-item-msg-sent p {
+        margin: 0;
+        background-color: #95d5ff;
+    }
+
+.ui-widget {
+    font-size: 12px !important;
+}
+/*  =======     */
+.margin-top-30 {
+    margin-top: 30px;
+}
+
+.margin-top-110 {
+    margin-top: 110px;
+}
+
+.margin-right-15 {
+    margin: 0 15px 0 0;
+}
+
+.padding-0 {
+    padding: 0;
+}
+
+.center {
+    text-align: center;
+}
