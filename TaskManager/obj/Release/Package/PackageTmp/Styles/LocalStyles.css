@@ -371,3 +371,7 @@ a span {
 .padding-0 {
     padding: 0;
 }
+
+.center {
+    text-align: center;
+}

@@ -22,6 +22,7 @@ namespace TaskManager
     {
         protected void Application_Start()
         {
+      ModelBinders.Binders.DefaultBinder = new PerpetuumSoft.Knockout.KnockoutModelBinder();
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
