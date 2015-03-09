@@ -87,9 +87,9 @@ c:\Projects\TaskManager\TaskManager\bin\System.Web.WebPages.Deployment.xml
 c:\Projects\TaskManager\TaskManager\bin\System.Web.WebPages.Razor.xml
 c:\Projects\TaskManager\TaskManager\bin\WebMatrix.Data.xml
 c:\Projects\TaskManager\TaskManager\bin\WebMatrix.WebData.xml
-c:\Projects\TaskManager\TaskManager\obj\Debug\TaskManager.csprojResolveAssemblyReference.cache
 c:\Projects\TaskManager\TaskManager\obj\Debug\TaskManager.Migrations.InitialCreate.resources
 c:\Projects\TaskManager\TaskManager\obj\Debug\TaskManager.Models.extendUserProfile.resources
 c:\Projects\TaskManager\TaskManager\obj\Debug\TaskManager.csproj.GenerateResource.Cache
 c:\Projects\TaskManager\TaskManager\obj\Debug\TaskManager.dll
 c:\Projects\TaskManager\TaskManager\obj\Debug\TaskManager.pdb
+c:\Projects\TaskManager\TaskManager\obj\Debug\TaskManager.csprojResolveAssemblyReference.cache
