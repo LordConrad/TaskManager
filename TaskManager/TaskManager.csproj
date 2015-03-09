@@ -202,6 +202,7 @@
     <Content Include="Media\NewTask.mp3" />
     <Content Include="Media\NewTask.ogg" />
     <Content Include="Scripts\Chart.js" />
+    <Content Include="connectionStrings.config" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
