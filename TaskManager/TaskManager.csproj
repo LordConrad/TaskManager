@@ -157,15 +157,6 @@
     <Compile Include="Helpers\BootstrapHtml.cs" />
     <Compile Include="Helpers\ModelHelper.cs" />
     <Compile Include="Helpers\RequiredIf.cs" />
-    <Compile Include="Migrations\201502261627085_InitialCreate.cs" />
-    <Compile Include="Migrations\201502261627085_InitialCreate.Designer.cs">
-      <DependentUpon>201502261627085_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502262040548_extendUserProfile.cs" />
-    <Compile Include="Migrations\201502262040548_extendUserProfile.Designer.cs">
-      <DependentUpon>201502262040548_extendUserProfile.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\BadgeModel.cs" />
     <Compile Include="Models\ChiefTaskEditViewModel.cs" />
     <Compile Include="Models\CommentAddModel.cs" />
@@ -176,8 +167,6 @@
     <Compile Include="Models\RecipientTaskViewModel.cs" />
     <Compile Include="Models\RecipTaskEditModel.cs" />
     <Compile Include="Models\UserModel.cs" />
-    <Compile Include="Models\TaskManagerModel.cs" />
-    <Compile Include="Migrations\DatabaseInitializer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -300,14 +289,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201502261627085_InitialCreate.resx">
-      <DependentUpon>201502261627085_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502262040548_extendUserProfile.resx">
-      <DependentUpon>201502262040548_extendUserProfile.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

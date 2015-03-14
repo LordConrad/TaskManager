@@ -1,0 +1,4 @@
+C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\TaskManager.BusinessLogic.dll
+C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\TaskManager.BusinessLogic.pdb
+C:\Projects\TaskManager\TaskManager.BusinessLogic\obj\Debug\TaskManager.BusinessLogic.dll
+C:\Projects\TaskManager\TaskManager.BusinessLogic\obj\Debug\TaskManager.BusinessLogic.pdb
