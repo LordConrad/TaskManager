@@ -155,18 +155,19 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BootstrapHtml.cs" />
-    <Compile Include="Helpers\ModelHelper.cs" />
     <Compile Include="Helpers\RequiredIf.cs" />
     <Compile Include="Models\BadgeModel.cs" />
     <Compile Include="Models\ChiefTaskEditViewModel.cs" />
     <Compile Include="Models\CommentAddModel.cs" />
     <Compile Include="Models\FilterTaskViewModel.cs" />
+    <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\MasterChiefViewModel.cs" />
     <Compile Include="Models\NewTaskViewModel.cs" />
     <Compile Include="Models\ChiefTaskViewModel.cs" />
     <Compile Include="Models\RecipientTaskViewModel.cs" />
     <Compile Include="Models\RecipTaskEditModel.cs" />
-    <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\RegisterViewModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -191,7 +192,9 @@
     <Content Include="Media\NewTask.mp3" />
     <Content Include="Media\NewTask.ogg" />
     <Content Include="Scripts\Chart.js" />
-    <Content Include="connectionStrings.config" />
+    <Content Include="connectionStrings.config">
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />
     <Content Include="Scripts\jquery-2.1.1.min.js" />
@@ -289,6 +292,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\TaskManager.BusinessLogic\TaskManager.BusinessLogic.csproj">
+      <Project>{217c3fe3-e159-4d62-920e-6f7fdb16042d}</Project>
+      <Name>TaskManager.BusinessLogic</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

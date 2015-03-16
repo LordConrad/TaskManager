@@ -1,21 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
-using System.Data.Entity.Validation;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Text;
+using System.Threading.Tasks;
 using System.Web.Security;
-using TaskManager.Models;
 using WebMatrix.WebData;
 
-namespace TaskManager.Helpers
+namespace TaskManager.DataAccess.Providers
 {
-    public static class ModelHelper
+    public static class UserProvider
     {
-        public const string DateTimeFormatFull = "dd.MM.yy  HH:mm";
-        public const string DateFormat = "dd.MM.yy";
-
         public static string[] RolesArray = { "Admin", "Sender", "Recipient", "Chief", "MasterChief" };
 
         public static UserProfile CurrentUser
@@ -79,7 +73,7 @@ namespace TaskManager.Helpers
             {
                 try
                 {
-                return Roles.IsUserInRole("Recipient");
+                    return Roles.IsUserInRole("Recipient");
                 }
                 catch (Exception)
                 {
@@ -95,7 +89,7 @@ namespace TaskManager.Helpers
             {
                 try
                 {
-                return Roles.IsUserInRole("Sender");
+                    return Roles.IsUserInRole("Sender");
                 }
                 catch (Exception)
                 {
@@ -221,7 +215,7 @@ namespace TaskManager.Helpers
             }
             catch (Exception ex)
             {
-                
+
             }
             return false;
         }
@@ -245,7 +239,7 @@ namespace TaskManager.Helpers
                         {
                             Roles.RemoveUserFromRoles(user.UserName, Roles.GetRolesForUser(user.UserName));
                         }
-                        ((SimpleMembershipProvider) Membership.Provider).DeleteAccount(user.UserName);
+                        ((SimpleMembershipProvider)Membership.Provider).DeleteAccount(user.UserName);
                         //((SimpleMembershipProvider) Membership.Provider).DeleteUser(user.UserName, true);
                         user.IsActive = false;
                         context.SaveChanges();
@@ -291,131 +285,5 @@ namespace TaskManager.Helpers
         {
             return GetAllUsers().Where(user => Roles.IsUserInRole(user.UserName, "Chief"));
         }
-
-        public static bool AddTask(Task task)
-        {
-            try
-            {
-                using (var context = new TaskManagerContext())
-                {
-                    var newTask = context.Tasks.Add(task);
-                    if (newTask.TaskEeventLogs == null) newTask.TaskEeventLogs = new List<TaskEeventLog>();
-                    newTask.TaskEeventLogs.Add(new TaskEeventLog
-                    {
-                        EventDateTime = DateTime.Now,
-                        PropertyName = "CreateDate",
-                        UserId = WebSecurity.CurrentUserId,
-                        NewValue = newTask.CreateDate.ToString(DateTimeFormatFull),
-                    });
-                    context.SaveChanges();
-                }
-                return true;
-            }
-            catch (DbEntityValidationException ex)
-            {
-                return false;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
-        }
-
-        public static IEnumerable<Task> GetTasksBySender(int senderId)
-        {
-            try
-            {
-                using (var context = new TaskManagerContext())
-                {
-                    return context.Tasks.Where(x => x.SenderId == senderId)
-                        .Include(x => x.TaskRecipient)
-                        .Include(x => x.TaskSender)
-                        .ToList();
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public static Task GetTasksById(int taskId)
-        {
-            try
-            {
-                using (var context = new TaskManagerContext())
-                {
-                    return context.Tasks
-                        .Include(x => x.Comments)
-                        .Include(x => x.TaskPriority)
-                        .Include(x => x.TaskRecipient)
-                        .Include(x => x.TaskSender)
-                        .FirstOrDefault(x => x.TaskId == taskId);
-                }
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-        }
-
-        public static IEnumerable<SelectListItem> GetPrioritiesSelectedList(string selectedPriorityId, TaskManagerContext context = null)
-        {
-            bool needToDispose = false;
-            if (context == null)
-            {
-                context = new TaskManagerContext();
-                needToDispose = true;
-            }
-            var priorities = context.Priorities.ToList();
-            var priorList = new List<SelectListItem>();
-            priorities.ForEach(x => priorList.Add(new SelectListItem
-            {
-                Text = x.PriorityName,
-                Value = x.PriorityId.ToString(),
-                Selected =
-                    selectedPriorityId.Equals("0", StringComparison.InvariantCultureIgnoreCase)
-                    ? x.PriorityName.Equals("Средний", StringComparison.InvariantCultureIgnoreCase)
-                    : x.PriorityId.ToString().Equals(selectedPriorityId, StringComparison.InvariantCultureIgnoreCase)
-            }));
-            if (needToDispose)
-            {
-                context.Dispose();
-            }
-            return priorList;
-        }
-
-        public static IEnumerable<SelectListItem> GetRecipientsSelectedList(string firstElementTitle, string selectedRecipientId, TaskManagerContext context = null)
-        {
-            bool needToDispose = false;
-            if (context == null)
-            {
-                context = new TaskManagerContext();
-                needToDispose = true;
-            }
-            var recipients = context.Users.ToList().Where(user => Roles.IsUserInRole(user.UserName, "Recipient")).ToList();
-            var recipSelectList = new List<SelectListItem>();
-            recipSelectList.Add(new SelectListItem
-            {
-                Text = firstElementTitle,
-                Value = "0",
-                Selected = selectedRecipientId == "0"
-            });
-            recipients.ForEach(x => recipSelectList.Add(new SelectListItem
-            {
-                Text = x.UserFullName,
-                Value = x.UserId.ToString(),
-                Selected = selectedRecipientId == x.UserId.ToString()
-            }));
-            if (needToDispose)
-            {
-                context.Dispose();
-            }
-            return recipSelectList;
-        }
-
-        
     }
-
-
 }

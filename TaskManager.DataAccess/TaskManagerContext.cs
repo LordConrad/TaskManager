@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using TaskManager.DataAccess.Migrations;
 
-namespace TaskManager.DataAccess.Models
+namespace TaskManager.DataAccess
 {
     public class TaskManagerContext : DbContext
     {
@@ -197,35 +197,6 @@ namespace TaskManager.DataAccess.Models
         public string NewValue { get; set; }
     }
 
-    public class LoginModel
-    {
-        [Required(ErrorMessage = "Введите логин")]
-        [Display(Name = "Логин")]
-        public string UserName { get; set; }
 
-        [Required(ErrorMessage = "Введите пароль")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
-        public string Password { get; set; }
 
-        [Display(Name = "Запомнить меня")]
-        public bool RememberMe { get; set; }
-    }
-
-    public class RegisterModel
-    {
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Введите логин")]
-        [Display(Name = "Логин (ivanov)")]
-        public string UserName { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Введите пароль")]
-        [MinLength(3, ErrorMessage = "Минимальная длина пароля 3 символа")]
-        [DataType(DataType.Password)]
-        [Display(Name = "Пароль")]
-        public string Password { get; set; }
-
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Введите свои Ф.И.О.")]
-        [Display(Name = "Ф.И.О. (Иванов И.И.)")]
-        public string UserFullName { get; set; }
-    }
 }

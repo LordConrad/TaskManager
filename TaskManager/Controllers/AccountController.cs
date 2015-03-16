@@ -7,12 +7,15 @@ using System.Web.UI;
 using TaskManager.Helpers;
 using TaskManager.Models;
 using WebMatrix.WebData;
-
+using TaskManager.BusinessLogic.Services;
 namespace TaskManager.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
+
+        private UserService userService = new UserService();
+
         //
         // GET: /Account/
         [AllowAnonymous]
@@ -25,12 +28,12 @@ namespace TaskManager.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Login(LoginModel model, string returnUrl)
+        public ActionResult Login(LoginViewModel model, string returnUrl)
         {
             if (ModelState.IsValid)
             {
-                if (ModelHelper.GetUserByLogin(model.UserName) != null 
-                    && ModelHelper.GetUserByLogin(model.UserName).IsActive 
+                if (userService.GetUserByLogin(model.UserName) != null
+                    && userService.GetUserByLogin(model.UserName).IsActive 
                     && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
                 {
                     return RedirectToLocal(returnUrl);

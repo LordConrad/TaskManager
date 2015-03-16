@@ -2,3 +2,10 @@ C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\TaskManager.Business
 C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\TaskManager.BusinessLogic.pdb
 C:\Projects\TaskManager\TaskManager.BusinessLogic\obj\Debug\TaskManager.BusinessLogic.dll
 C:\Projects\TaskManager\TaskManager.BusinessLogic\obj\Debug\TaskManager.BusinessLogic.pdb
+C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\EntityFramework.dll
+C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\TaskManager.DataAccess.dll
+C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\System.Web.Mvc.dll
+C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\TaskManager.DataAccess.pdb
+C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\EntityFramework.xml
+C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\System.Web.Mvc.xml
+C:\Projects\TaskManager\TaskManager.BusinessLogic\obj\Debug\TaskManager.BusinessLogic.csprojResolveAssemblyReference.cache

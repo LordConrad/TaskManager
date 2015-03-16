@@ -1,9 +1,8 @@
 using System.Data.Entity.Migrations;
-using TaskManager.DataAccess.Models;
 
 namespace TaskManager.DataAccess.Migrations
 {
-    internal sealed class Configuration : DbMigrationsConfiguration<Models.TaskManagerContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<TaskManagerContext>
     {
         public Configuration()
         {

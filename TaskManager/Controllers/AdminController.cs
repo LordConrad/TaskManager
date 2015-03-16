@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI.WebControls;
+using TaskManager.BusinessLogic.Services;
 using TaskManager.Helpers;
 using TaskManager.Models;
 using WebMatrix.WebData;
@@ -14,6 +15,8 @@ namespace TaskManager.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
+        private UserService userService = new UserService();
+
         //
         // GET: /Admin/
 
@@ -24,15 +27,15 @@ namespace TaskManager.Controllers
 
         public ActionResult Edit(int id)
         {
-            var profileModel = ModelHelper.GetUserById(id);
+            var profileModel = userService.GetUserById(id);
             if (profileModel == null)
             {
                 return null;
             }
-            
 
 
-            UserModel model = new UserModel
+
+            UserViewModel model = new UserViewModel
             {
                 UserId = profileModel.UserId,
                 Login = profileModel.UserName,
@@ -48,21 +51,21 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(UserModel model)
+        public ActionResult Edit(UserViewModel model)
         {
-            ModelHelper.SaveEditedUser(model);
+            userService.SaveEditedUser(model);
             return RedirectToAction("Index");
         }
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            ModelHelper.DeleteUserById(id);
+            userService.DeleteUserById(id);
             return RedirectToAction("Index");
         }
 
         public ActionResult NewUsersCount()
         {
-            var count = ModelHelper.GetNewUsersCount();
+            var count = userService.GetNewUsersCount();
             var badge = new BadgeModel {Count = count};
             if (Session["NewUsersCount"] != null && ((int) Session["NewUsersCount"]) < count)
             {

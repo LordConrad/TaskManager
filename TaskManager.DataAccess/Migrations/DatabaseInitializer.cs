@@ -1,6 +1,5 @@
 ﻿using System.Data.Entity;
 using System.Web.Security;
-using TaskManager.DataAccess.Models;
 using WebMatrix.WebData;
 
 namespace TaskManager.DataAccess.Migrations

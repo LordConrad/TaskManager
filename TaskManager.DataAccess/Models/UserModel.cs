@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using TaskManager.Helpers;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace TaskManager.Models
+namespace TaskManager.DataAccess
 {
     public class UserModel
     {
