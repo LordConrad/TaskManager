@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using MvcPaging;
+using TaskManager.BusinessLogic.Interfaces;
 using TaskManager.Helpers;
 using TaskManager.Models;
 using WebMatrix.WebData;
@@ -16,6 +17,13 @@ namespace TaskManager.Controllers
     [Authorize(Roles = "Chief")]
     public class ChiefController : Controller
     {
+        private ITasksService tasksService;
+
+        public ChiefController(ITasksService ts)
+        {
+            tasksService = ts;
+        }
+
         public ActionResult Index(ChiefTaskViewModel model)
         {
             if (model == null)
@@ -41,7 +49,7 @@ namespace TaskManager.Controllers
                     SelectedRecipient = string.Empty
                 };
             }
-            List<Task> tasks;
+            List<TaskViewModel> tasks = tasksService.GetTasks();
             try
             {
                 using (var context = new TaskManagerContext())

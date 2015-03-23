@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using TaskManager.BusinessLogic.Services;
 using TaskManager.Helpers;
 using TaskManager.Models;
 using WebMatrix.WebData;
@@ -13,6 +15,8 @@ namespace TaskManager.Controllers
     [Authorize(Roles = "Recipient")]
     public class RecipientController : Controller
     {
+        private TasksService tasksService = new TasksService();
+
         //
         // GET: /Recipient/
         
@@ -23,37 +27,28 @@ namespace TaskManager.Controllers
 
         public ActionResult Tasks()
         {
-            var tasksViewModelList = new List<RecipientTaskViewModel>();
-            try
-            {
-                List<Task> tasks;
-                using (var context = new TaskManagerContext())
-                {
-                    tasks = context.Tasks.Where(x => x.RecipientId == WebSecurity.CurrentUserId && !x.AcceptCpmpleteDate.HasValue)
-                        .Include(x => x.Comments)
-                        .Include(x => x.TaskPriority)
-                        .Include(x => x.TaskSender)
-                        .ToList();
-                }
+            var tasks = tasksService.GetTasksForCurrrentUser();
 
-                tasks.ForEach(x => tasksViewModelList.Add(new RecipientTaskViewModel
-                {
-                    AssignDateTime = x.AssignDateTime.Value,
-                    CreationDate = x.CreateDate,
-                    Deadline = x.Deadline.Value,
-                    PriorityId = x.PriorityId.Value,
-                    PriorityName = x.TaskPriority.PriorityName,
-                    SenderName = x.TaskSender.UserFullName,
-                    TaskId = x.TaskId,
-                    TaskText = x.TaskText,
-                    IsViewed = x.IsRecipientViewed,
-                    IsComplete = x.CompleteDate.HasValue,
-                    ResultComment = x.ResultComment
-                }));
-            }
-            catch (Exception)
-            {
-            }
+            var tasksViewModelList = new List<RecipientTaskViewModel>();
+
+            foreach (var x in tasks) 
+                tasksViewModelList.Add(new RecipientTaskViewModel
+                    {
+                        AssignDateTime = x.AssignDateTime,
+                        CreationDate = x.CreateDate,
+                        Deadline = x.Deadline,
+                        PriorityId = x.PriorityId,
+                        PriorityName = x.TaskPriority.PriorityName,
+                        SenderName = x.TaskSender.UserFullName,
+                        TaskId = x.TaskId,
+                        TaskText = x.TaskText,
+                        IsViewed = x.IsRecipientViewed,
+                        IsComplete = x.CompleteDate.HasValue,
+                        ResultComment = x.ResultComment
+                    });
+
+
+
             return PartialView(tasksViewModelList.OrderBy(x => x.IsViewed).ThenBy(x => x.Deadline));
         }
 

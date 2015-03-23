@@ -5,7 +5,9 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
 using System.Web.UI.WebControls;
+using TaskManager.BusinessLogic.Interfaces;
 using TaskManager.BusinessLogic.Services;
+using TaskManager.Converters;
 using TaskManager.Helpers;
 using TaskManager.Models;
 using WebMatrix.WebData;
@@ -15,7 +17,12 @@ namespace TaskManager.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        private UserService userService = new UserService();
+        private IUserService userService;
+
+        public AdminController(UserService us)
+        {
+            userService = us;
+        }
 
         //
         // GET: /Admin/
@@ -32,8 +39,6 @@ namespace TaskManager.Controllers
             {
                 return null;
             }
-
-
 
             UserViewModel model = new UserViewModel
             {
@@ -53,7 +58,7 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Edit(UserViewModel model)
         {
-            userService.SaveEditedUser(model);
+            userService.SaveEditedUser(EntityConverter.ConverttoUserModelBl(model));
             return RedirectToAction("Index");
         }
         [HttpGet]
@@ -75,7 +80,5 @@ namespace TaskManager.Controllers
 
             return PartialView(badge);
         }
-
-
     }
 }

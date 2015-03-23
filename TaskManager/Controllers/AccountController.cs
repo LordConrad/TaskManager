@@ -4,17 +4,25 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.UI;
+using TaskManager.BusinessLogic.Interfaces;
+using TaskManager.BusinessLogic.Services;
 using TaskManager.Helpers;
 using TaskManager.Models;
 using WebMatrix.WebData;
-using TaskManager.BusinessLogic.Services;
+using TaskManager.Converters;
+
 namespace TaskManager.Controllers
 {
     [Authorize]
     public class AccountController : Controller
     {
 
-        private UserService userService = new UserService();
+        private IUserService userService;
+
+        public AccountController(UserService us)
+        {
+            userService = us;
+        }
 
         //
         // GET: /Account/
@@ -72,15 +80,12 @@ namespace TaskManager.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public ActionResult Register(RegisterModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                using (var context = new TaskManagerContext())
-                {
-                    var user =
-                        context.Users.FirstOrDefault(
-                            x => x.UserName.Equals(model.UserName, StringComparison.InvariantCultureIgnoreCase));
+                var user = userService.CheckUser(model.UserName);
+
                     if (user != null && user.IsActive)
                     {
                         ModelState.AddModelError("", "Пользователь с таким логином уже существует");
@@ -90,7 +95,8 @@ namespace TaskManager.Controllers
                     {
                         WebSecurity.CreateAccount(model.UserName, model.Password);
                         user.IsActive = true;
-                        context.SaveChanges();
+                        //userService.SaveChanges();
+                        
                     }
                     if (user == null)
                     {
@@ -102,7 +108,6 @@ namespace TaskManager.Controllers
                     }
                     WebSecurity.Login(model.UserName, model.Password);
                     return RedirectToAction("Index", "Home");
-                }
             }
             return View(model);
         }

@@ -13,17 +13,17 @@ namespace TaskManager.Models
 
         public string SenderName { get; set; }
 
-        public DateTime Deadline { get; set; }
+        public DateTime? Deadline { get; set; }
 
-        public DateTime AssignDateTime { get; set; }
+        public DateTime? AssignDateTime { get; set; }
 
-        public DateTime CreationDate { get; set; }
+        public DateTime? CreationDate { get; set; }
 
         public bool IsComplete { get; set; }
 
         public string ResultComment { get; set; }
 
-        public int PriorityId { get; set; }
+        public int? PriorityId { get; set; }
 
         public string PriorityName { get; set; }
 

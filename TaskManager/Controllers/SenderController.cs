@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using TaskManager.BusinessLogic.Services;
+using TaskManager.Converters;
 using TaskManager.Helpers;
 using TaskManager.Models;
 using WebMatrix.WebData;
@@ -12,13 +15,16 @@ namespace TaskManager.Controllers
     [Authorize(Roles = "Sender")]
     public class SenderController : Controller
     {
+        private TasksService tasksService = new TasksService();
+
         //
         // GET: /Task/
         [HttpGet]
         public ActionResult Index()
         {
-
-            return View(ModelHelper.GetTasksBySender(WebSecurity.CurrentUserId).Where(x => x.AcceptCpmpleteDate == null));
+            var query = tasksService.GetTasksBySender(WebSecurity.CurrentUserId)
+                .Where(x => x.AcceptCpmpleteDate == null);
+            return View(query.Select(EntityConverter.ConverttoTaskUi));
         }
 
         [HttpGet]
@@ -30,13 +36,13 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult NewTask(NewTaskViewModel model)
         {
-            var newTask = new Task
+            var newTask = new TaskBL
             {
                 CreateDate = DateTime.Now,
                 SenderId = WebSecurity.CurrentUserId,
                 TaskText = model.TaskText.Trim()
             };
-            if (!ModelHelper.AddTask(newTask))
+            if (!tasksService.AddTask(newTask))
             {
                 ModelState.AddModelError("", "Произошла ошибка при добавлении новой заявки. Повторите попытку позже или обратитесь к администратору.");
                 return View(model);
@@ -49,7 +55,7 @@ namespace TaskManager.Controllers
 
         public ActionResult Edit(int taskId)
         {
-            var task = ModelHelper.GetTasksById(taskId);
+            var task = tasksService.GetTasksById(taskId);
             if (task == null)
             {
                 //ModelState.AddModelError("","Указанная заявка не найдена");
@@ -62,11 +68,11 @@ namespace TaskManager.Controllers
                 IsComlete = task.CompleteDate.HasValue,
                 IsReadOnly = task.TaskRecipient != null,
                 RecipientName = task.TaskRecipient != null ? task.TaskRecipient.UserFullName : "не назначен",
-                AssignDate = task.AssignDateTime.HasValue ? task.AssignDateTime.Value.ToString(ModelHelper.DateTimeFormatFull) : string.Empty,
-                CompleteDate  = task.CompleteDate.HasValue ? task.CompleteDate.Value.ToString(ModelHelper.DateTimeFormatFull) : string.Empty,
-                Deadline = task.Deadline.HasValue ? task.Deadline.Value.ToString(ModelHelper.DateFormat) : string.Empty,
+                AssignDate = task.AssignDateTime.HasValue ? task.AssignDateTime.Value.ToString("dd.MM.yy  HH:mm") : string.Empty,
+                CompleteDate = task.CompleteDate.HasValue ? task.CompleteDate.Value.ToString("dd.MM.yy  HH:mm") : string.Empty,
+                Deadline = task.Deadline.HasValue ? task.Deadline.Value.ToString("dd.MM.yy") : string.Empty,
                 ResultComment = (task.CompleteDate.HasValue && string.IsNullOrEmpty(task.ResultComment)) ? "выполнено" : task.ResultComment,
-                CreationDate = task.CreateDate.ToString(ModelHelper.DateTimeFormatFull),
+                CreationDate = task.CreateDate.ToString("dd.MM.yy  HH:mm"),
                 CommentsCount = task.Comments.Count
             };
 
@@ -76,96 +82,30 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Edit(NewTaskViewModel model)
         {
-            try
+            tasksService.UpdateTaskText(new TaskBL
             {
-                using (var context = new TaskManagerContext())
-                {
-                    var task = context.Tasks.FirstOrDefault(x => x.TaskId == model.TaskId);
-                    if (task != null && !task.TaskText.Trim().Equals(model.TaskText.Trim(), StringComparison.InvariantCultureIgnoreCase))
-                    {
-                        task.TaskEeventLogs.Add(new TaskEeventLog
-                        {
-                            EventDateTime = DateTime.Now,
-                            PropertyName = "TaskText",
-                            UserId = WebSecurity.CurrentUserId,
-                            OldValue = task.TaskText,
-                            NewValue = model.TaskText
-                        });
-                        task.TaskText = model.TaskText;
-                        
-                        context.SaveChanges();
-                    }
-                }
-            }
-            catch (Exception)
-            {
-            }
+                TaskId = model.TaskId,
+                TaskText = model.TaskText
+            });
             return RedirectToAction("Index");
         }
 
         public ActionResult Delete(int taskId)
         {
-            try
-            {
-                using (var context = new TaskManagerContext())
-                {
-                    var task = context.Tasks.FirstOrDefault(x => x.TaskId == taskId);
-                    
-                    if (task != null)
-                    {
-                        context.Tasks.Remove(task);
-                        context.SaveChanges();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-            }
+            tasksService.DeleteTask(taskId);
             return RedirectToAction("Index");
         }
 
         public ActionResult ConfirmTask(int id)
         {
-            try
-            {
-                using (var context = new TaskManagerContext())
-                {
-                    var task = context.Tasks.FirstOrDefault(x => x.TaskId == id);
-                    if (task != null)
-                    {
-                        task.TaskEeventLogs.Add(new TaskEeventLog
-                        {
-                            EventDateTime = DateTime.Now,
-                            PropertyName = "AcceptCpmpleteDate",
-                            UserId = WebSecurity.CurrentUserId,
-                            OldValue = task.AcceptCpmpleteDate.ToString(),
-                            NewValue = DateTime.Now.ToString()
-                        });
-                        task.AcceptCpmpleteDate = DateTime.Now;
-                    }
-                    context.SaveChanges();
-                }
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            tasksService.ConfirmTask(id);
             return RedirectToAction("Index");
         }
 
         public ActionResult SenderCompleteTasksCount()
         {
-            int count = 0;
-            try
-            {
-                using (var context = new TaskManagerContext())
-                {
-                    count = context.Tasks.Count(x => x.SenderId == WebSecurity.CurrentUserId && x.CompleteDate.HasValue && !x.AcceptCpmpleteDate.HasValue);
-                }
-            }
-            catch (Exception)
-            {
-            }
+            var count = tasksService.SenderCompleteTasksCount();
+
             var badge = new BadgeModel { Count = count };
             if (Session["SenderCompleteTasksCount"] != null && ((int)Session["SenderCompleteTasksCount"]) < count)
             {

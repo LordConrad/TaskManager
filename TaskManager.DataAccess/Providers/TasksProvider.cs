@@ -5,16 +5,16 @@ using System.Data.Entity.Validation;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TaskManager.DataAccess.Interfaces;
 using WebMatrix.WebData;
 using Task = TaskManager.DataAccess.Task;
 
 namespace TaskManager.DataAccess.Providers
 {
-    public static class TasksProvider
+    public class TasksProvider : ITasksProvider
     {
 
-        public const string DateTimeFormatFull = "dd.MM.yy  HH:mm";
-        public static bool AddTask(Task task)
+        public bool AddTask(Task task)
         {
             try
             {
@@ -27,7 +27,7 @@ namespace TaskManager.DataAccess.Providers
                         EventDateTime = DateTime.Now,
                         PropertyName = "CreateDate",
                         UserId = WebSecurity.CurrentUserId,
-                        NewValue = newTask.CreateDate.ToString(DateTimeFormatFull),
+                        NewValue = newTask.CreateDate.ToString("dd.MM.yy  HH:mm"),
                     });
                     context.SaveChanges();
                 }
@@ -43,7 +43,7 @@ namespace TaskManager.DataAccess.Providers
             }
         }
 
-        public static IEnumerable<Task> GetTasksBySender(int senderId)
+        public IEnumerable<Task> GetTasksBySender(int senderId)
         {
             try
             {
@@ -61,7 +61,7 @@ namespace TaskManager.DataAccess.Providers
             }
         }
 
-        public static Task GetTasksById(int taskId)
+        public Task GetTasksById(int taskId)
         {
             try
             {
@@ -80,5 +80,92 @@ namespace TaskManager.DataAccess.Providers
                 return null;
             }
         }
+
+        public IEnumerable<Task> GetTasks()
+        {
+            using (var context = new TaskManagerContext())
+            {
+                return context.Tasks.Where(x => x.AcceptCpmpleteDate.HasValue)
+                    .Include(x => x.TaskRecipient)
+                    .ToList();
+            }
+        }
+
+        public IList<Task> GetTasksForCurrrentUser()
+        {
+            using (var context = new TaskManagerContext())
+            {
+                return context.Tasks.Where(x => x.RecipientId == WebSecurity.CurrentUserId && !x.AcceptCpmpleteDate.HasValue)
+                    .Include(x => x.Comments)
+                    .Include(x => x.TaskPriority)
+                    .Include(x => x.TaskSender)
+                    .ToList();
+            }
+        } 
+
+        public void UpdateTaskText(Task model)
+        {
+            using (var context = new TaskManagerContext())
+            {
+                var task = context.Tasks.FirstOrDefault(x => x.TaskId == model.TaskId);
+                if (task != null && !task.TaskText.Trim().Equals(model.TaskText.Trim(), StringComparison.InvariantCultureIgnoreCase))
+                {
+                    task.TaskEeventLogs.Add(new TaskEeventLog
+                    {
+                        EventDateTime = DateTime.Now,
+                        PropertyName = "TaskText",
+                        UserId = WebSecurity.CurrentUserId,
+                        OldValue = task.TaskText,
+                        NewValue = model.TaskText
+                    });
+                    task.TaskText = model.TaskText;
+
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public void DeleteTask(int taskId)
+        {
+            using (var context = new TaskManagerContext())
+            {
+                var task = context.Tasks.FirstOrDefault(x => x.TaskId == taskId);
+
+                if (task != null)
+                {
+                    context.Tasks.Remove(task);
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public void ConfirmTask(int id)
+        {
+            using (var context = new TaskManagerContext())
+            {
+                var task = context.Tasks.FirstOrDefault(x => x.TaskId == id);
+                if (task != null)
+                {
+                    task.TaskEeventLogs.Add(new TaskEeventLog
+                    {
+                        EventDateTime = DateTime.Now,
+                        PropertyName = "AcceptCpmpleteDate",
+                        UserId = WebSecurity.CurrentUserId,
+                        OldValue = task.AcceptCpmpleteDate.ToString(),
+                        NewValue = DateTime.Now.ToString()
+                    });
+                    task.AcceptCpmpleteDate = DateTime.Now;
+                }
+                context.SaveChanges();
+            }
+        }
+
+        public int SenderCompleteTasksCount()
+        {
+            using (var context = new TaskManagerContext())
+            {
+                return context.Tasks.Count(x => x.SenderId == WebSecurity.CurrentUserId && x.CompleteDate.HasValue && !x.AcceptCpmpleteDate.HasValue);
+            }
+        } 
     }
 }

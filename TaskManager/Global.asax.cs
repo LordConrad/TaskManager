@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Globalization;
@@ -10,6 +11,9 @@ using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Security;
+using Microsoft.Practices.Unity;
+using TaskManager.BusinessLogic.Services;
+using TaskManager.BusinessLogic.Interfaces;
 using TaskManager.Helpers;
 using TaskManager.Models;
 using WebMatrix.WebData;
@@ -22,39 +26,78 @@ namespace TaskManager
     {
         protected void Application_Start()
         {
-      ModelBinders.Binders.DefaultBinder = new PerpetuumSoft.Knockout.KnockoutModelBinder();
+            ModelBinders.Binders.DefaultBinder = new PerpetuumSoft.Knockout.KnockoutModelBinder();
             AreaRegistration.RegisterAllAreas();
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
 
+
             //CultureInfo culture = new CultureInfo("ru-RU");
             //Thread.CurrentThread.CurrentCulture = culture;
 
-            if (!Database.Exists("DefaultConnection"))
-            {
-                using (var context = new TaskManagerContext())
-                {
-                    try
-                    {
-                        ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
-                    }
-                    catch (Exception)
-                    {
-                        
-                    }
-                    
-                }
-            }
+            UnityContainer container = new UnityContainer();
+            container.RegisterType<IUserService, UserService>();
+            container.RegisterType<ITasksService, TasksService>();
+
+            DependencyResolver.SetResolver(new UnityDepResolver(container));
+            //            if (!Database.Exists("DefaultConnection"))
+//            {
+//                using (var context = new TaskManagerContext())
+//                {
+//                    try
+//                    {
+//                        ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
+//                    }
+//                    catch (Exception)
+//                    {
+//                        
+//                    }
+//                    
+//                }
+//            }
 
             if (!WebSecurity.Initialized)
             {
                 WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", true);
             }
-            DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(RequiredIfAttribute), typeof(RequiredIfValidator));
+            DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof (RequiredIfAttribute),
+                typeof (RequiredIfValidator));
         }
 
-        
+        public class UnityDepResolver : IDependencyResolver
+        {
+            private IUnityContainer container;
+
+            public UnityDepResolver(IUnityContainer container)
+            {
+                this.container = container;
+            }
+
+            public object GetService(Type serviceType)
+            {
+                try
+                {
+                    return container.Resolve(serviceType);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+
+            public IEnumerable<object> GetServices(Type serviceType)
+            {
+                try
+                {
+                    return container.ResolveAll(serviceType);
+                }
+                catch
+                {
+                    return null;
+                }
+            }
+        }
     }
 }

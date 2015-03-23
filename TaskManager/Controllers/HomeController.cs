@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TaskManager.BusinessLogic.Services;
 using TaskManager.Helpers;
 using WebMatrix.WebData;
 
@@ -10,33 +11,37 @@ namespace TaskManager.Controllers
 {
     public class HomeController : Controller
     {
+        private UserService userService = new UserService();
+
         //
         // GET: /Home/
         [Authorize]
         public ActionResult Index()
         {
+            
+
             if (!WebSecurity.IsAuthenticated)
             {
                 return RedirectToAction("Login", "Account");
             }
             
-            if (ModelHelper.IsMasterChief)
+            if (userService.IsMasterChief())
             {
                 return RedirectToAction("Index", "MasterChief");
             }
-            if (ModelHelper.IsChief)
+            if (userService.IsChief())
             {
                 return RedirectToAction("Index", "Chief");
             }
-            if (ModelHelper.IsRecipient)
+            if (userService.IsRecipient())
             {
                 return RedirectToAction("Index", "Recipient");
             }
-            if (ModelHelper.IsSender)
+            if (userService.IsSender())
             {
                 return RedirectToAction("Index", "Sender");
             }
-            if (ModelHelper.IsAdmin)
+            if (userService.IsAdmin())
             {
                 return RedirectToAction("Index", "Admin");
             }

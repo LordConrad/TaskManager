@@ -3,119 +3,104 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Mvc;
 using System.Web.Security;
+using TaskManager.DataAccess.Interfaces;
 using WebMatrix.WebData;
 
 namespace TaskManager.DataAccess.Providers
 {
-    public static class UserProvider
+    public class UserProvider : IUserProvider
     {
         public static string[] RolesArray = { "Admin", "Sender", "Recipient", "Chief", "MasterChief" };
 
-        public static UserProfile CurrentUser
+        public UserProfile CurrentUser()
         {
-            get
+            try
             {
-                try
+                using (var context = new TaskManagerContext())
                 {
-                    using (var context = new TaskManagerContext())
+                    var curUser = context.Users.FirstOrDefault(x => x.UserId == WebSecurity.CurrentUserId);
+                    if (curUser != null)
                     {
-                        var curUser = context.Users.FirstOrDefault(x => x.UserId == WebSecurity.CurrentUserId);
-                        if (curUser != null)
-                        {
-                            return curUser;
-                        }
+                        return curUser;
                     }
                 }
-                catch (Exception)
-                {
-                    WebSecurity.Logout();
-                }
-                return null;
             }
-        }
-
-        public static bool IsAdmin
-        {
-            get
+            catch (Exception)
             {
-                try
-                {
-                    return Roles.IsUserInRole("Admin");
-                }
-                catch (Exception)
-                {
-                    WebSecurity.Logout();
-                    return false;
-                }
+                WebSecurity.Logout();
             }
+            return null;
         }
 
-        public static bool IsChief
+        public bool IsAdmin()
         {
-            get
+            try
             {
-                try
-                {
-                    return Roles.IsUserInRole("Chief");
-                }
-                catch (Exception)
-                {
-                    WebSecurity.Logout();
-                    return false;
-                }
+                return Roles.IsUserInRole("Admin");
+            }
+            catch (Exception)
+            {
+                WebSecurity.Logout();
+                return false;
             }
         }
 
-        public static bool IsRecipient
+        public bool IsChief()
         {
-            get
+            try
             {
-                try
-                {
-                    return Roles.IsUserInRole("Recipient");
-                }
-                catch (Exception)
-                {
-                    WebSecurity.Logout();
-                    return false;
-                }
+                return Roles.IsUserInRole("Chief");
+            }
+            catch (Exception)
+            {
+                WebSecurity.Logout();
+                return false;
             }
         }
 
-        public static bool IsSender
+        public bool IsRecipient()
         {
-            get
+
+            try
             {
-                try
-                {
-                    return Roles.IsUserInRole("Sender");
-                }
-                catch (Exception)
-                {
-                    WebSecurity.Logout();
-                    return false;
-                }
+                return Roles.IsUserInRole("Recipient");
+            }
+            catch (Exception)
+            {
+                WebSecurity.Logout();
+                return false;
             }
         }
 
-        public static bool IsMasterChief
+        public bool IsSender()
         {
-            get
+            try
             {
-                try
-                {
-                    return Roles.IsUserInRole("MasterChief");
-                }
-                catch (Exception)
-                {
-                    WebSecurity.Logout();
-                    return false;
-                }
+                return Roles.IsUserInRole("Sender");
+            }
+            catch (Exception)
+            {
+                WebSecurity.Logout();
+                return false;
             }
         }
 
-        public static List<UserProfile> GetAllUsers()
+        public bool IsMasterChief()
+        {
+            try
+            {
+                return Roles.IsUserInRole("MasterChief");
+            }
+            catch (Exception)
+            {
+                WebSecurity.Logout();
+                return false;
+            }
+        }
+
+        public List<UserProfile> GetAllUsers()
         {
             using (var context = new TaskManagerContext())
             {
@@ -123,7 +108,7 @@ namespace TaskManager.DataAccess.Providers
             }
         }
 
-        public static IEnumerable<string> GetRolesForUser(string userName)
+        public IEnumerable<string> GetRolesForUser(string userName)
         {
             var roles = Roles.GetRolesForUser(userName).ToList();
             foreach (var role in roles)
@@ -142,7 +127,7 @@ namespace TaskManager.DataAccess.Providers
             }
         }
 
-        public static UserProfile GetUserByLogin(string login)
+        public UserProfile GetUserByLogin(string login)
         {
             UserProfile model;
             using (var context = new TaskManagerContext())
@@ -154,7 +139,7 @@ namespace TaskManager.DataAccess.Providers
             return model;
         }
 
-        public static UserProfile GetUserById(int id)
+        public UserProfile GetUserById(int id)
         {
             UserProfile model;
             using (var context = new TaskManagerContext())
@@ -164,7 +149,7 @@ namespace TaskManager.DataAccess.Providers
             return model;
         }
 
-        private static string[] GetRolesNamesArray(UserModel model)
+        private string[] GetRolesNamesArray(UserModel model)
         {
             List<string> list = new List<string>();
             if (model.IsAdmin) list.Add("Admin");
@@ -175,7 +160,7 @@ namespace TaskManager.DataAccess.Providers
             return list.ToArray();
         }
 
-        public static bool SaveEditedUser(UserModel model)
+        public bool SaveEditedUser(UserModel model)
         {
             try
             {
@@ -220,7 +205,7 @@ namespace TaskManager.DataAccess.Providers
             return false;
         }
 
-        public static bool DeleteUserById(int id)
+        public bool DeleteUserById(int id)
         {
             UserProfile user = null;
             try
@@ -255,15 +240,12 @@ namespace TaskManager.DataAccess.Providers
 
         }
 
-        public static bool IsUserInAnyRole
+        public bool IsUserInAnyRole()
         {
-            get
-            {
-                return IsAdmin || IsChief || IsMasterChief || IsRecipient || IsSender;
-            }
+            return IsAdmin() || IsChief() || IsMasterChief() || IsRecipient() || IsSender();
         }
 
-        public static int GetNewUsersCount()
+        public int GetNewUsersCount()
         {
             int count = 0;
             foreach (UserProfile user in GetAllUsers())
@@ -276,14 +258,86 @@ namespace TaskManager.DataAccess.Providers
             return count;
         }
 
-        public static bool IsNewUser(UserProfile user)
+        public bool IsNewUser(UserProfile user)
         {
             return !GetRolesForUser(user.UserName).Any();
         }
 
-        public static IEnumerable<UserProfile> GetChiefs()
+        public IEnumerable<UserProfile> GetChiefs()
         {
             return GetAllUsers().Where(user => Roles.IsUserInRole(user.UserName, "Chief"));
+        }
+
+        public IEnumerable<SelectListItem> GetPrioritiesSelectedList(string selectedPriorityId, TaskManagerContext context = null)
+        {
+            bool needToDispose = false;
+            if (context == null)
+            {
+                context = new TaskManagerContext();
+                needToDispose = true;
+            }
+            var priorities = context.Priorities.ToList();
+            var priorList = new List<SelectListItem>();
+            priorities.ForEach(x => priorList.Add(new SelectListItem
+            {
+                Text = x.PriorityName,
+                Value = x.PriorityId.ToString(),
+                Selected =
+                    selectedPriorityId.Equals("0", StringComparison.InvariantCultureIgnoreCase)
+                    ? x.PriorityName.Equals("Средний", StringComparison.InvariantCultureIgnoreCase)
+                    : x.PriorityId.ToString().Equals(selectedPriorityId, StringComparison.InvariantCultureIgnoreCase)
+            }));
+            if (needToDispose)
+            {
+                context.Dispose();
+            }
+            return priorList;
+        }
+
+        public IEnumerable<SelectListItem> GetRecipientsSelectedList(string firstElementTitle, string selectedRecipientId, TaskManagerContext context = null)
+        {
+            bool needToDispose = false;
+            if (context == null)
+            {
+                context = new TaskManagerContext();
+                needToDispose = true;
+            }
+            var recipients = context.Users.ToList().Where(user => Roles.IsUserInRole(user.UserName, "Recipient")).ToList();
+            var recipSelectList = new List<SelectListItem>();
+            recipSelectList.Add(new SelectListItem
+            {
+                Text = firstElementTitle,
+                Value = "0",
+                Selected = selectedRecipientId == "0"
+            });
+            recipients.ForEach(x => recipSelectList.Add(new SelectListItem
+            {
+                Text = x.UserFullName,
+                Value = x.UserId.ToString(),
+                Selected = selectedRecipientId == x.UserId.ToString()
+            }));
+            if (needToDispose)
+            {
+                context.Dispose();
+            }
+            return recipSelectList;
+        }
+
+        public UserProfile CheckUser(string username)
+        {
+            using (var context = new TaskManagerContext())
+            {
+                return context.Users.FirstOrDefault(
+                    x => x.UserName.Equals(username, StringComparison.InvariantCultureIgnoreCase));
+            }
+        }
+
+        public void SaveChages()
+        {
+            using (var context = new TaskManagerContext())
+            {
+                context.SaveChanges();
+            }
         }
     }
 }

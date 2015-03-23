@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TaskManager.Models.Task>
+﻿@model IEnumerable<TaskManager.Models.TaskViewModel>
 @using TaskManager.Helpers 
 
 @{
@@ -27,7 +27,7 @@
                 }
                 <tr class="@rowClass" onclick="window.location.href = '@Url.Action("Edit", new { taskId = task.TaskId })'">
                     <td>@task.TaskText</td>
-                    <td>@task.CreateDate.ToString(ModelHelper.DateTimeFormatFull)</td>
+                    <td>@task.CreateDate.ToString("dd.MM.yy  HH:mm")</td>
                     <td>@(task.TaskRecipient != null ? task.TaskRecipient.UserFullName : "не назначен")</td>
                     <td>@(task.CompleteDate.HasValue ? (!string.IsNullOrEmpty(task.ResultComment) ? Html.Raw(task.ResultComment) : Html.Raw("выполнено")) : Html.Raw(string.Empty))</td>
                 </tr>

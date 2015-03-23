@@ -1,128 +1,107 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using TaskManager.BusinessLogic.Converters;
+using TaskManager.BusinessLogic.Interfaces;
 using TaskManager.BusinessLogic.Models;
-using TaskManager.DataAccess;
+using TaskManager.DataAccess.Interfaces;
 using TaskManager.DataAccess.Providers;
 
 namespace TaskManager.BusinessLogic.Services
 {
-    public class UserService
+    public class UserService : IUserService
     {
+        private IUserProvider userProvider;
+
+        public UserService(UserProvider up)
+        {
+            userProvider = up;
+        }
 
         public UserProfileBL CurrentUser()
         {
-            return ConvertUserProfileToBl(UserProvider.CurrentUser);
+            return EntityConverter.ConverttoUserProfileBl(userProvider.CurrentUser);
         }
 
         public bool IsAdmin()
         {
-            return UserProvider.IsAdmin;
+            return userProvider.IsAdmin();
         }
 
         public bool IsChief()
         {
-            return UserProvider.IsChief;
+            return userProvider.IsChief();
         }
 
         public bool IsRecipient()
         {
-            return UserProvider.IsRecipient;
+            return userProvider.IsRecipient();
         }
 
         public bool IsSender()
         {
-            return UserProvider.IsSender;
+            return userProvider.IsSender();
         }
 
         public bool IsMasterChief()
         {
-            return UserProvider.IsMasterChief;
+            return userProvider.IsMasterChief();
         }
 
         public bool IsNewUser(UserProfileBL user)
         {
-            return UserProvider.IsNewUser(user);
+            return userProvider.IsNewUser(EntityConverter.ConverttoUserProfileDal(user));
         }
 
         public IEnumerable<UserProfileBL> GetChiefs()
         {
-            return UserProvider.GetChiefs().Select(ConvertUserProfileToBl);
+            return userProvider.GetChiefs().Select(EntityConverter.ConverttoUserProfileBl);
         }
 
         public List<UserProfileBL> GetAllUsers()
         {
-            return UserProvider.GetAllUsers().Select(ConvertUserProfileToBl).ToList();
+            return userProvider.GetAllUsers().Select(EntityConverter.ConverttoUserProfileBl).ToList();
         }
 
         public IEnumerable<string> GetRolesForUser(string userName)
         {
-            return UserProvider.GetRolesForUser(userName);
+            return userProvider.GetRolesForUser(userName);
         }
 
         public UserProfileBL GetUserByLogin(string username)
         {
-            return ConvertUserProfileToBl(UserProvider.GetUserByLogin(username));
+            return EntityConverter.ConverttoUserProfileBl(userProvider.GetUserByLogin(username));
         }
 
         public UserProfileBL GetUserById(int id)
         {
-            return ConvertUserProfileToBl(UserProvider.GetUserById(id));
+            return EntityConverter.ConverttoUserProfileBl(userProvider.GetUserById(id));
         }
 
         public bool SaveEditedUser(UserModelBl model)
         {
-            return UserProvider.SaveEditedUser(ConvertUserModelToDal(model));
+            return userProvider.SaveEditedUser(EntityConverter.ConverttoUserModelDal(model));
         }
 
         public bool DeleteUserById(int id)
         {
-            return UserProvider.DeleteUserById(id);
+            return userProvider.DeleteUserById(id);
         }
 
         public bool IsUserInAnyRole()
         {
-            return UserProvider.IsUserInAnyRole;
+            return userProvider.IsUserInAnyRole();
         }
 
         public int GetNewUsersCount()
         {
-            return UserProvider.GetNewUsersCount();
+            return userProvider.GetNewUsersCount();
         }
 
-        private UserModel ConvertUserModelToDal(UserModelBl userModelFromDal)
+        public UserProfileBL CheckUser(string username)
         {
-            return new UserModel
-            {
-                UserId = userModelFromDal.UserId,
-                UserName = userModelFromDal.UserName,
-                Login = userModelFromDal.Login,
-                ChiefId = userModelFromDal.ChiefId,
-                IsAdmin = userModelFromDal.IsAdmin,
-                IsChief = userModelFromDal.IsChief,
-                IsMasterChief = userModelFromDal.IsMasterChief,
-                IsRecipient = userModelFromDal.IsRecipient,
-                IsSender = userModelFromDal.IsSender,
-            };
-
+            return EntityConverter.ConverttoUserProfileBl(userProvider.CheckUser(username));
         }
 
-        private UserProfileBL ConvertUserProfileToBl(UserProfile profileFromDal)
-        {
-            return new UserProfileBL
-            {
-                UserId = profileFromDal.UserId,
-                UserName = profileFromDal.UserName,
-                UserFullName = profileFromDal.UserFullName,
-                Comments = profileFromDal.Comments,
-                IsActive = profileFromDal.IsActive,
-                Logs = profileFromDal.Logs,
-                RecipTasks = profileFromDal.RecipTasks,
-                SendedTasks = profileFromDal.SendedTasks,
-            };
-
-        }
     }
 }

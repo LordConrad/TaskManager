@@ -6,7 +6,7 @@ using System.Text;
 
 namespace TaskManager.Models
 {
-    public class RegisterModel
+    public class RegisterViewModel
     {
         [Required(AllowEmptyStrings = false, ErrorMessage = "Введите логин")]
         [Display(Name = "Логин (ivanov)")]
