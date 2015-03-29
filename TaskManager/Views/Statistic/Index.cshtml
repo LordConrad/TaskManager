@@ -6,7 +6,7 @@
 <script type="text/javascript" src="@Url.Content("../../Scripts/Chart.js")"></script>
 <script type="text/javascript" src="@Url.Content("../../Scripts/knockout-3.3.0.js")"></script>
 <script type="text/javascript">
-    var viewModel = {
+    var ViewModel = {
         selectedYear: ko.observable(new Date().getFullYear()),
         chartDataCompleteTasks: ko.observableArray([]),
         chartDataSendedTasks: ko.observableArray([]),
@@ -26,74 +26,138 @@
     }
 
     function chartDataUpdate() {
-        viewModel.chartDataCompleteTasks([]);
+        ViewModel.chartDataCompleteTasks([]);
+        ViewModel.chartDataSendedTasks([]);
+        ViewModel.lineChartData([]);
         for (var i = 0; i < 12; i++) {
-            viewModel.chartDataCompleteTasks.push(select(viewModel.selectedYear(), i));
+            ViewModel.chartDataCompleteTasks.push(select(ViewModel.selectedYear(), i, 'complete'));
+            ViewModel.chartDataSendedTasks.push(select(ViewModel.selectedYear(), i, 'send'));
         }
-        viewModel.lineChartData({
+        ViewModel.lineChartData({
             labels: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
                 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
             datasets: [
                 {
-                    label: "Выполненные заявки",
-                    fillColor: "rgba(220,220,220,0.2)",
-                    strokeColor: "rgba(220,220,220,1)",
-                    pointColor: "rgba(220,220,220,1)",
+                    label: "Поданные заявки",
+                    fillColor: "rgba(255, 160, 32, 0.2)",
+                    strokeColor: "rgba(255, 160, 32, 1)",
+                    pointColor: "rgba(255, 160, 32, 1)",
                     pointStrokeColor: "#fff",
                     pointHighlightFill: "#fff",
-                    pointHighlightStroke: "rgba(220,220,220,1)",
-                    data: viewModel.chartDataCompleteTasks()
+                    pointHighlightStroke: "rgba(255, 160, 32, 1)",
+                    data: ViewModel.chartDataSendedTasks()
+                },
+                {
+                    label: "Выполненные заявки",
+                    fillColor: "rgba(96, 255, 4, 0.2)",
+                    strokeColor: "rgba(96, 255, 4, 1)",
+                    pointColor: "rgba(96, 255, 4, 1)",
+                    pointStrokeColor: "#fff",
+                    pointHighlightFill: "#fff",
+                    pointHighlightStroke: "rgba(96, 255, 4, 1)",
+                    data: ViewModel.chartDataCompleteTasks()
                 }
             ]
         });
-        barChart = null;
-        var ctx = document.getElementById("statisticChart").getContext("2d");
-        barChart = new Chart(ctx).Bar(viewModel.lineChartData(), {
-            responsive: true
-        });
+        if (barChart != null && barChart != undefined) {
+            for (var i = 0; i < ViewModel.lineChartData().datasets.length; i++) {
+                for (var j = 0; j < barChart.datasets[i].bars.length; j++) {
+                    barChart.datasets[i].bars[j].value = ViewModel.lineChartData().datasets[i].data[j];
+                }
+            }
+            barChart.update();
+        }
+
     }
 
-    function select(year, month, user) {
+    function select(year, month, type, recipUser) {
         var count = 0;
         for (var i = 0; i < tasks.length; i++) {
-            if (year != undefined && month != undefined && user != undefined) {
-                if (tasks[i].acceptDate.getFullYear() == year
-                    && tasks[i].acceptDate.getMonth() == month
-                    && tasks[i].recipient == user) {
+            if (year != undefined && month != undefined && recipUser != undefined) {
+                if(type == 'complete'){
+                    if (tasks[i].acceptDate.getFullYear() == year
+                        && tasks[i].acceptDate.getMonth() == month
+                        && tasks[i].recipient == recipUser) {
+                        count++;
+                    }
+                }
+                if (type == 'send') {
+                    if (tasks[i].sendDate.getFullYear() == year
+                        && tasks[i].sendDate.getMonth() == month
+                        && tasks[i].recipient == recipUser) {
+                        count++;
+                    }
+                }
+            }
+            if (year != undefined && month != undefined && recipUser == undefined) {
+                if(type == 'complete'){
+                    if (tasks[i].acceptDate.getFullYear() == year
+                        && tasks[i].acceptDate.getMonth() == month) {
+                        count++;
+                    }
+                }
+                if (type == 'send') {
+                    if (tasks[i].sendDate.getFullYear() == year
+                        && tasks[i].sendDate.getMonth() == month) {
+                        count++;
+                    }
+                }
+            }
+            if (year != undefined && month == undefined && recipUser != undefined) {
+                if(type == 'complete'){
+                    if (tasks[i].acceptDate.getFullYear() == year
+                        && tasks[i].recipient == recipUser) {
+                        count++;
+                    }
+                }
+                if (type == 'send') {
+                    if (tasks[i].sendDate.getFullYear() == year
+                        && tasks[i].recipient == recipUser) {
+                        count++;
+                    }
+                }
+            }
+            if (year != undefined && month == undefined && recipUser == undefined) {
+                if(type == 'complete'){
+                    if (tasks[i].acceptDate.getFullYear() == year) {
+                        count++;
+                    }
+                }
+                if (type == 'send') {
+                    if (tasks[i].sendDate.getFullYear() == year) {
+                        count++;
+                    }
+                }
+            }
+            if (year == undefined && month == undefined && recipUser != undefined) {
+                if (tasks[i].recipient == recipUser) {
                     count++;
                 }
             }
-            if (year != undefined && month != undefined && user == undefined) {
-                if (tasks[i].acceptDate.getFullYear() == year
-                    && tasks[i].acceptDate.getMonth() == month) {
-                    count++;
+            if (year == undefined && month != undefined && recipUser == undefined) {
+                if(type == 'complete'){
+                    if (tasks[i].acceptDate.getMonth() == month) {
+                        count++;
+                    }
+                }
+                if (type == 'send') {
+                    if (tasks[i].sendDate.getMonth() == month) {
+                        count++;
+                    }
                 }
             }
-            if (year != undefined && month == undefined && user != undefined) {
-                if (tasks[i].acceptDate.getFullYear() == year
-                    && tasks[i].recipient == user) {
-                    count++;
+            if (year == undefined && month != undefined && recipUser != undefined) {
+                if(type == 'complete'){
+                    if (tasks[i].acceptDate.getMonth() == month
+                        && tasks[i].recipient == recipUser) {
+                        count++;
+                    }
                 }
-            }
-            if (year != undefined && month == undefined && user == undefined) {
-                if (tasks[i].acceptDate.getFullYear() == year) {
-                    count++;
-                }
-            }
-            if (year == undefined && month == undefined && user != undefined) {
-                if (tasks[i].recipient == user) {
-                    count++;
-                }
-            }
-            if (year == undefined && month != undefined && user == undefined) {
-                if (tasks[i].acceptDate.getMonth() == month) {
-                    count++;
-                }
-            }
-            if (year == undefined && month != undefined && user != undefined) {
-                if (tasks[i].acceptDate.getMonth() == month
-                    && tasks[i].recipient == user) {
-                    count++;
+                if (type == 'send') {
+                    if (tasks[i].sendDate.getMonth() == month
+                        && tasks[i].recipient == recipUser) {
+                        count++;
+                    }
                 }
             }
         }
@@ -110,7 +174,10 @@
 
     $(function () {
         chartDataUpdate();
-
+        var ctx = document.getElementById("statisticChart").getContext("2d");
+        barChart = new Chart(ctx).Bar(ViewModel.lineChartData(), {
+            responsive: true
+        });
 
         ko.applyBindings();
     });
@@ -120,9 +187,11 @@
 <div class="container">
     <h4 class="center">Статистика выполнения заявок</h4>
     <div class="center">
-        <div class="btn-group" role="group">
-            <button data-bind="click: function () { viewModel.selectedYear('2014'); chartDataUpdate(); }, css: { active: viewModel.selectedYear() == '2014' }" type="button" class="btn btn-default">2014</button>
-            <button data-bind="click: function () { viewModel.selectedYear('2015'); chartDataUpdate(); }, css: { active: viewModel.selectedYear() == '2015' }" type="button" class="btn btn-default">2015</button>
+        <div class="btn-group btn-group-sm" role="group">
+            @foreach (var year in Model.Where(x => x.AssignDateTime.HasValue).Select(x => x.AssignDateTime.Value.Year).Union(Model.Where(x => x.AcceptCpmpleteDate.HasValue).Select(x => x.AcceptCpmpleteDate.Value.Year)).Distinct().OrderBy(x => x))
+            {
+                <button data-bind="click: function () { viewModel.selectedYear('@year'); chartDataUpdate(); }, css: { active: viewModel.selectedYear() == '@year'    }" type="button" class="btn btn-default">@year</button>
+            }
         </div>
     </div>
     <canvas id="statisticChart" height="200" width="400"></canvas>

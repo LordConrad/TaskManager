@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
@@ -26,6 +27,9 @@ namespace TaskManager.Models
 
         [MaxLength(1000, ErrorMessage = "Максимальная длина комментария 1000 символов")]
         public string NewComment { get; set; }
+
+        [DisplayName("отметить как выполненную")]
+        public bool IsComplete { get; set; }
         
         public string ResultComment { get; set; }
 

@@ -35,6 +35,18 @@
         });
     }
     
+    function switchValidationErrorFor(isError, property, errorMessage) {
+        if(isError){
+            $("span[data-valmsg-for='" + property + "']").removeClass("field-validation-valid");
+            $("span[data-valmsg-for='" + property + "']").addClass("field-validation-error");
+            $("span[data-valmsg-for='" + property + "']").html(errorMessage);
+        } else {
+            $("span[data-valmsg-for='" + property + "']").html("");
+            $("span[data-valmsg-for='" + property + "']").removeClass("field-validation-error");
+            $("span[data-valmsg-for='" + property + "']").addClass("field-validation-valid");
+        }
+    }
+    
     function scrollToNewComment() {
         var target = $('.thread-item-sent:last');
         if (target.length) {

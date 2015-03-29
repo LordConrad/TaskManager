@@ -199,6 +199,7 @@
     <Content Include="Media\NewMessage.ogg" />
     <Content Include="Media\NewTask.mp3" />
     <Content Include="Media\NewTask.ogg" />
+    <Content Include="Scripts\bootstrap-popover.js" />
     <Content Include="Scripts\Chart.js" />
     <None Include="Scripts\jquery-2.1.1.intellisense.js" />
     <Content Include="Scripts\jquery-2.1.1.js" />

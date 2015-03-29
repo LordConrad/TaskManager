@@ -1,4 +1,5 @@
-﻿@using System.Web.UI.WebControls
+﻿@using System.Globalization
+@using System.Web.UI.WebControls
 @using TaskManager.Helpers
 @using TaskManager.Models
 @model TaskManager.Models.RecipTaskEditModel
@@ -6,11 +7,30 @@
     ViewBag.Title = "Просмотр заявки";
     Layout = "~/Views/Recipient/RecipientLayout.cshtml";
 }
+<script type="text/javascript" src="@Url.Content("~/Scripts/knockout-3.3.0.js")"></script>
 
+
+
+@if (!Model.IsComplete && DateTime.Now < new DateTime(2015, 03, 14))
+{
+    
+    <div data-bind="visible: isWarningVisible">
+
+         <div class='alert top-alert alert-warning alert-dismissible' role='alert'>
+            <button type='button' class='close' onclick="localStorage.setItem('isCheckBoxForCompleteTaskWarningShow', false)" data-dismiss='alert' aria-label='Close'>
+                <span aria-hidden='true'>&times;</span>
+            </button>
+            <strong>Внимание!</strong> Теперь для оповещения о выполнении заявки нужно отметить флажок "отметить как выполненную", написать комментарий с результатом выполнения (необязательно) и нажать кнопку "Отправить"
+        </div>
+    </div>
+}
 <div class="container">
     <div class="col-md-8">
         <div class="task-text-view">
-            <h4>Заявка #@Model.TaskId</h4>
+            <div class="task-text-header">
+                Заявка
+                <div class="grey inline-block">#@Model.TaskId</div>
+            </div>
             @Model.TaskText
         </div>
 
@@ -20,8 +40,21 @@
                 @Html.ValidationSummary(true)
                 @Html.TextAreaGroupFor(x => x.NewComment, String.Empty, "new-comment-id", "Новый комментарий к заявке", 120)
                 <div class="right">
-                    <button type="button" class=" btn btn-primary" onclick="addNewComment()">Отправить</button>
+                    @if (@Model.IsComplete)
+                    {
+                        <a href="#" class="btn btn-danger danger" style="margin-right: 25px" onclick="location.href = '@Url.Action("UndoComplete", new { taskId = Model.TaskId })'">Отменить выполнение</a>
+                    }
+                    else
+                    {
+                        <div class="checkbox inline-block margin-right-15 v-align-bottom">
+                            @Html.CheckBoxFor(x => x.IsComplete, new {data-bind="checked: isTaskComplete"})
+                            
+                            @Html.LabelFor(x => x.IsComplete, new { @id = "isCompleteLabel" })
+                        </div>
+                    }
+                    <button type="button" class=" btn btn-primary inline-block" onclick="addNewCommentOrComplete()">Отправить</button>
                 </div>
+
             </form>
         </div>
     </div>
@@ -48,15 +81,13 @@
                 </div>
             </div>
         </div>
-
-
-        <div class="panel panel-default">
+        @*<div class="panel panel-default">
             <div class="panel-heading">
                 <h5 class="panel-title">
-                    <a data-toggle="collapse" data-parent="#accordion" href="#complete">@(Model.CompleteDate == null ? Html.Raw("Отметить как выполненную") : Html.Raw("Изменить результат выполнения"))</a>
+                    <a data-toggle="collapse" data-parent="#accordion" href="#complete">История изменений</a>
                 </h5>
             </div>
-            <div id="complete" class="panel-collapse collapse">
+            <div id="complete" class="panel-collapse collapse in">
                 <div class="panel-body">
                     <form method="POST" action="@Url.Action("Edit")">
                         @Html.HiddenFor(x => x.TaskId)
@@ -74,19 +105,28 @@
                 </div>
             </div>
         </div>
+    </div>*@
     </div>
-
-
-
-
-
-
-
-
-
-
 </div>
 <script type="text/javascript">
+    
+   
+    var ViewModel = function(isWarningShow) {
+        var self = this;
+        self.isWarningVisible = ko.observable(isWarningShow);
+        self.isTaskComplete = ko.observable(@Model.IsComplete);
+    };
+    var isWarningShow = localStorage.getItem('isCheckBoxForCompleteTaskWarningShow');
+    var viewModel = new ViewModel(isWarningShow == null || isWarningShow == 'true');
+    ko.applyBindings(viewModel);
+
+    function addNewCommentOrComplete() {
+        addNewComment();
+        if (viewModel.isTaskComplete()) {
+            @Html.Action("Edit", Model)
+        }
+        
+    }
 
     function addNewComment() {
         $.ajax({
@@ -100,26 +140,20 @@
             contentType: 'application/json; charset=utf-8',
             accepts: 'application/json',
             success: function(data) {
-                if(data.result == "success") {
-                    switchValidationErrorFor(false, "NewComment", "");
-                    $('#new-comment-id').val('');
-                    commentsUpdate();
-                    scrollToNewComment();
-                } else if (data.result == "maxLenghtError") {
-                    switchValidationErrorFor(true, "NewComment", data.message);
-                } else {
-                    switchValidationErrorFor(false, "NewComment", "");
-                }
+                switchValidationErrorFor(false, "NewComment", "");
+                $('#new-comment-id').val('');
+                commentsUpdate();
+                scrollToNewComment();
             },
             complete: function() {
 
             },
             error: function() {
-                alert('Произошла ошибка при создании комментария');
-            }
+                alert('error creationg comment');
+            }                
         });
     }
-
+    
     function switchValidationErrorFor(isError, property, errorMessage) {
         if(isError){
             $("span[data-valmsg-for='" + property + "']").removeClass("field-validation-valid");
@@ -131,7 +165,7 @@
             $("span[data-valmsg-for='" + property + "']").addClass("field-validation-valid");
         }
     }
-
+    
     function scrollToNewComment() {
         var target = $('.thread-item-sent:last');
         if (target.length) {
@@ -141,22 +175,22 @@
         }
     }
 
+    // дополнительный апдейт комментов после добавления нового
     function commentsUpdate() {
         $.ajax({
             url: '@Url.Action("GetCommentsForTask", "Comment")',
             data: { taskId: '@Model.TaskId' },
-            success: function (data) {
+            success: function(data) {
                 $('#comments-update-panel').html(data);
             },
-            complete: function () {
-                                    
+            complete: function() {
+
             }
         });
     }
-
-    $(function() {
+        
+    $(function (){
         commentsUpdate();
     });
-    
-</script>
 
+</script>
