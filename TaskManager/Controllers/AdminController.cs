@@ -58,7 +58,7 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Edit(UserViewModel model)
         {
-            userService.SaveEditedUser(EntityConverter.ConverttoUserModelBl(model));
+            userService.SaveEditedUser(EntityConverter.ConvertToUserModelBl(model));
             return RedirectToAction("Index");
         }
         [HttpGet]

@@ -1,21 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using TaskManager.BusinessLogic.Models;
 
 namespace TaskManager.BusinessLogic.Interfaces
 {
     public interface ITasksService
     {
-        bool AddTask(TaskBL task);
-        IEnumerable<TaskBL> GetTasksBySender(int senderId);
-        TaskBL GetTasksById(int taskId);
-        IEnumerable<TaskBL> GetTasks();
-        void UpdateTaskText(TaskBL model);
+        bool AddTask(TaskBl task);
+        IEnumerable<TaskBl> GetTasksBySender(int senderId);
+        TaskBl GetTasksById(int taskId);
+        IEnumerable<TaskBl> GetTasks();
+        void UpdateTaskText(TaskBl model);
         void DeleteTask(int taskId);
         void ConfirmTask(int id);
         int SenderCompleteTasksCount();
-        List<TaskBL> GetTasksForCurrrentUser();
+        List<TaskBl> GetTasksForCurrrentUser();
     }
 }

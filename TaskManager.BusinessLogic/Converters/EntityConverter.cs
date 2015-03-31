@@ -1,17 +1,20 @@
 ﻿using System.Linq;
 using TaskManager.BusinessLogic.Models;
+using TaskManager.DataAccess;
+using TaskManager.DataAccess.Models;
 
-namespace TaskManager.DataAccess.Converters
+
+namespace TaskManager.BusinessLogic.Converters
 {
     public static class EntityConverter
     {
-        public static TaskBL ConverttoTaskBl(Task task)
+        public static TaskBl ConvertToTaskBl(Task task)
         {
-            return new TaskBL
+            return new TaskBl
             {
                 AcceptCpmpleteDate = task.AcceptCpmpleteDate,
                 AssignDateTime = task.AssignDateTime,
-                Comments = task.Comments.Select(ConverttoCommentBl).ToList(),
+                Comments = task.Comments.Select(ConvertToCommentBl).ToList(),
                 CompleteDate = task.CompleteDate,
                 CreateDate = task.CreateDate,
                 Deadline = task.Deadline,
@@ -20,22 +23,22 @@ namespace TaskManager.DataAccess.Converters
                 RecipientId = task.RecipientId,
                 ResultComment = task.ResultComment,
                 SenderId = task.SenderId,
-                TaskEeventLogs = task.TaskEeventLogs.Select(ConverttoTaskEventLogBl).ToList(),
+                TaskEeventLogs = task.TaskEeventLogs.Select(ConvertToTaskEventLogBl).ToList(),
                 TaskId = task.TaskId,
                 TaskPriority = ConvertoPriorityBl(task.TaskPriority),
-                TaskRecipient = ConverttoUserProfileBl(task.TaskRecipient),
-                TaskSender = ConverttoUserProfileBl(task.TaskSender),
+                TaskRecipient = ConvertToUserProfileBl(task.TaskRecipient),
+                TaskSender = ConvertToUserProfileBl(task.TaskSender),
                 TaskText = task.TaskText
             };
         }
 
-        public static Task ConverttoTaskDal(TaskBL task)
+        public static Task ConvertToTaskDal(TaskBl task)
         {
             return new Task
             {
                 AcceptCpmpleteDate = task.AcceptCpmpleteDate,
                 AssignDateTime = task.AssignDateTime,
-                Comments = task.Comments.Select(ConverttoCommentDal).ToList(),
+                Comments = task.Comments.Select(ConvertToCommentDal).ToList(),
                 CompleteDate = task.CompleteDate,
                 CreateDate = task.CreateDate,
                 Deadline = task.Deadline,
@@ -44,41 +47,41 @@ namespace TaskManager.DataAccess.Converters
                 RecipientId = task.RecipientId,
                 ResultComment = task.ResultComment,
                 SenderId = task.SenderId,
-                TaskEeventLogs = task.TaskEeventLogs.Select(ConverttoTaskEventLogDal).ToList(),
+                TaskEeventLogs = task.TaskEeventLogs.Select(ConvertToTaskEventLogDal).ToList(),
                 TaskId = task.TaskId,
                 TaskPriority = ConvertoPriorityDal(task.TaskPriority),
-                TaskRecipient = ConverttoUserProfileDal(task.TaskRecipient),
-                TaskSender = ConverttoUserProfileDal(task.TaskSender),
+                TaskRecipient = ConvertToUserProfileDal(task.TaskRecipient),
+                TaskSender = ConvertToUserProfileDal(task.TaskSender),
                 TaskText = task.TaskText
             };
         }
 
-        public static PriorityBL ConvertoPriorityBl(Priority priority)
+        public static PriorityBl ConvertoPriorityBl(Priority priority)
         {
-            return new PriorityBL
+            return new PriorityBl
             {
                 PriorityId = priority.PriorityId,
                 PriorityName = priority.PriorityName,
-                SamePriorityTasks = priority.SamePriorityTasks.Select(ConverttoTaskBl).ToList()
+                SamePriorityTasks = priority.SamePriorityTasks.Select(ConvertToTaskBl).ToList()
             };
         }
 
-        public static Priority ConvertoPriorityDal(PriorityBL priority)
+        public static Priority ConvertoPriorityDal(PriorityBl priority)
         {
             return new Priority
             {
                 PriorityId = priority.PriorityId,
                 PriorityName = priority.PriorityName,
-                SamePriorityTasks = priority.SamePriorityTasks.Select(ConverttoTaskDal).ToList()
+                SamePriorityTasks = priority.SamePriorityTasks.Select(ConvertToTaskDal).ToList()
             };
         }
 
-        public static CommentBL ConverttoCommentBl(Comment comment)
+        public static CommentBl ConvertToCommentBl(Comment comment)
         {
-            return new CommentBL
+            return new CommentBl
             {
-                Author = ConverttoUserModelBl(comment.Author),
-                Task = ConverttoTaskBl(comment.Task),
+                Author = ConvertToUserModelBl(comment.Author),
+                Task = ConvertToTaskBl(comment.Task),
                 TaskId = comment.TaskId,
                 AuthorId = comment.AuthorId,
                 CommentDate = comment.CommentDate,
@@ -87,12 +90,12 @@ namespace TaskManager.DataAccess.Converters
             };
         }
 
-        public static Comment ConverttoCommentDal(CommentBL comment)
+        public static Comment ConvertToCommentDal(CommentBl comment)
         {
             return new Comment
             {
-                Author = ConverttoUserProfileDal(comment.Author),
-                Task = ConverttoTaskDal(comment.Task),
+                Author = ConvertToUserProfileDal(comment.Author),
+                Task = ConvertToTaskDal(comment.Task),
                 TaskId = comment.TaskId,
                 AuthorId = comment.AuthorId,
                 CommentDate = comment.CommentDate,
@@ -101,69 +104,69 @@ namespace TaskManager.DataAccess.Converters
             };
         }
 
-        public static UserProfileBL ConverttoUserProfileBl(UserProfile userProfile)
+        public static UserProfileBl ConvertToUserProfileBl(UserProfile userProfile)
         {
-            return new UserProfileBL
+            return new UserProfileBl
             {
-                Comments = userProfile.Comments.Select(ConverttoCommentBl).ToList(),
+                Comments = userProfile.Comments.Select(ConvertToCommentBl).ToList(),
                 UserName = userProfile.UserName,
                 UserId = userProfile.UserId,
                 IsActive = userProfile.IsActive,
-                Logs = userProfile.Logs.Select(ConverttoTaskEventLogBl).ToList(),
-                RecipTasks = userProfile.RecipTasks.Select(ConverttoTaskBl).ToList(),
-                SendedTasks = userProfile.SendedTasks.Select(ConverttoTaskBl).ToList(),
+                Logs = userProfile.Logs.Select(ConvertToTaskEventLogBl).ToList(),
+                RecipTasks = userProfile.RecipTasks.Select(ConvertToTaskBl).ToList(),
+                SendedTasks = userProfile.SendedTasks.Select(ConvertToTaskBl).ToList(),
                 UserFullName = userProfile.UserFullName
             };
         }
 
-        public static UserProfile ConverttoUserProfileDal(UserProfileBL userProfile)
+        public static UserProfile ConvertToUserProfileDal(UserProfileBl userProfile)
         {
             return new UserProfile
             {
-                Comments = userProfile.Comments.Select(ConverttoCommentDal).ToList(),
+                Comments = userProfile.Comments.Select(ConvertToCommentDal).ToList(),
                 UserName = userProfile.UserName,
                 UserId = userProfile.UserId,
                 IsActive = userProfile.IsActive,
-                Logs = userProfile.Logs.Select(ConverttoTaskEventLogDal).ToList(),
-                RecipTasks = userProfile.RecipTasks.Select(ConverttoTaskDal).ToList(),
-                SendedTasks = userProfile.SendedTasks.Select(ConverttoTaskDal).ToList(),
+                Logs = userProfile.Logs.Select(ConvertToTaskEventLogDal).ToList(),
+                RecipTasks = userProfile.RecipTasks.Select(ConvertToTaskDal).ToList(),
+                SendedTasks = userProfile.SendedTasks.Select(ConvertToTaskDal).ToList(),
                 UserFullName = userProfile.UserFullName,
             };
         }
 
-        public static TaskEventLogBl ConverttoTaskEventLogBl(TaskEeventLog taskEeventLog)
+        public static TaskEventLogBl ConvertToTaskEventLogBl(TaskEeventLog taskEeventLog)
         {
             return new TaskEventLogBl
             {
                 EventDateTime = taskEeventLog.EventDateTime,
                 NewValue = taskEeventLog.NewValue,
-                Task = ConverttoTaskBl(taskEeventLog.Task),
+                Task = ConvertToTaskBl(taskEeventLog.Task),
                 UserId = taskEeventLog.UserId,
                 TaskId = taskEeventLog.TaskId,
                 OldValue = taskEeventLog.OldValue,
                 PropertyName = taskEeventLog.PropertyName,
                 TaskEventLogId = taskEeventLog.TaskEventLogId,
-                User = ConverttoUserProfileBl(taskEeventLog.User)
+                User = ConvertToUserProfileBl(taskEeventLog.User)
             };
         }
 
-        public static TaskEeventLog ConverttoTaskEventLogDal(TaskEventLogBl taskEeventLog)
+        public static TaskEeventLog ConvertToTaskEventLogDal(TaskEventLogBl taskEeventLog)
         {
             return new TaskEeventLog
             {
                 EventDateTime = taskEeventLog.EventDateTime,
                 NewValue = taskEeventLog.NewValue,
-                Task = ConverttoTaskDal(taskEeventLog.Task),
+                Task = ConvertToTaskDal(taskEeventLog.Task),
                 UserId = taskEeventLog.UserId,
                 TaskId = taskEeventLog.TaskId,
                 OldValue = taskEeventLog.OldValue,
                 PropertyName = taskEeventLog.PropertyName,
                 TaskEventLogId = taskEeventLog.TaskEventLogId,
-                User = ConverttoUserProfileDal(taskEeventLog.User)
+                User = ConvertToUserProfileDal(taskEeventLog.User)
             };
         }
 
-        public static UserModel ConverttoUserModelDal(UserModelBl userModelFromDal)
+        public static UserModel ConvertToUserModelDal(UserModelBl userModelFromDal)
         {
             return new UserModel
             {
@@ -180,7 +183,7 @@ namespace TaskManager.DataAccess.Converters
 
         }
 
-        public static UserModelBl ConverttoUserModelBl(UserModel userModelFromDal)
+        public static UserModelBl ConvertToUserModelBl(UserModel userModelFromDal)
         {
             return new UserModelBl
             {

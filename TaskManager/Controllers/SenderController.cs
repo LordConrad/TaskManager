@@ -24,7 +24,7 @@ namespace TaskManager.Controllers
         {
             var query = tasksService.GetTasksBySender(WebSecurity.CurrentUserId)
                 .Where(x => x.AcceptCpmpleteDate == null);
-            return View(query.Select(EntityConverter.ConverttoTaskUi));
+            return View(query.Select(EntityConverter.ConvertToTaskUi));
         }
 
         [HttpGet]
@@ -36,7 +36,7 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult NewTask(NewTaskViewModel model)
         {
-            var newTask = new TaskBL
+            var newTask = new TaskBl
             {
                 CreateDate = DateTime.Now,
                 SenderId = WebSecurity.CurrentUserId,
@@ -82,7 +82,7 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Edit(NewTaskViewModel model)
         {
-            tasksService.UpdateTaskText(new TaskBL
+            tasksService.UpdateTaskText(new TaskBl
             {
                 TaskId = model.TaskId,
                 TaskText = model.TaskText

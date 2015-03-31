@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
 using TaskManager.DataAccess.Interfaces;
+using TaskManager.DataAccess.Models;
 using WebMatrix.WebData;
 
 namespace TaskManager.DataAccess.Providers
@@ -14,7 +15,7 @@ namespace TaskManager.DataAccess.Providers
     {
         public static string[] RolesArray = { "Admin", "Sender", "Recipient", "Chief", "MasterChief" };
 
-        public UserProfile CurrentUser()
+        public UserProfile GetCurrentUser()
         {
             try
             {
@@ -149,7 +150,7 @@ namespace TaskManager.DataAccess.Providers
             return model;
         }
 
-        private string[] GetRolesNamesArray(UserModel model)
+        public string[] GetRolesNamesArray(UserModel model)
         {
             List<string> list = new List<string>();
             if (model.IsAdmin) list.Add("Admin");

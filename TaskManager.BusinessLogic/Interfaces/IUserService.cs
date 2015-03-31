@@ -1,29 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using TaskManager.BusinessLogic.Models;
 
 namespace TaskManager.BusinessLogic.Interfaces
 {
     public interface IUserService
     {
-        UserProfileBL CurrentUser();
+        UserProfileBl GetCurrentUser();
         bool IsAdmin();
         bool IsChief();
         bool IsRecipient();
         bool IsSender();
         bool IsMasterChief();
-        bool IsNewUser(UserProfileBL user);
-        IEnumerable<UserProfileBL> GetChiefs();
-        List<UserProfileBL> GetAllUsers();
+        bool IsNewUser(UserProfileBl user);
+        IEnumerable<UserProfileBl> GetChiefs();
+        List<UserProfileBl> GetAllUsers();
         IEnumerable<string> GetRolesForUser(string userName);
-        UserProfileBL GetUserByLogin(string username);
-        UserProfileBL GetUserById(int id);
+        UserProfileBl GetUserByLogin(string username);
+        UserProfileBl GetUserById(int id);
         bool SaveEditedUser(UserModelBl model);
         bool DeleteUserById(int id);
         bool IsUserInAnyRole();
         int GetNewUsersCount();
-        UserProfileBL CheckUser(string username);
+        UserProfileBl CheckUser(string username);
     }
 }

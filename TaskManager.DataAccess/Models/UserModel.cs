@@ -1,13 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace TaskManager.DataAccess
+namespace TaskManager.DataAccess.Models
 {
     public class UserModel
     {
         public int UserId { get; set; }
         [Required]
         [Display(Name = "Логин")]
-        
         public string Login { get; set; }
         [Required]
         [Display(Name = "Ф.И.О.")]

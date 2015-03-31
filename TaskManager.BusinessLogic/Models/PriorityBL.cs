@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace TaskManager.BusinessLogic.Models
 {
-    public class PriorityBL
+    public class PriorityBl
     {
-
         public int PriorityId { get; set; }
         public string PriorityName { get; set; }
-
-        virtual public ICollection<TaskBL> SamePriorityTasks { get; set; }
+        virtual public ICollection<TaskBl> SamePriorityTasks { get; set; }
     }
 
     public enum PriorityEnum

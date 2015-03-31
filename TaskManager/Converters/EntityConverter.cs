@@ -7,7 +7,7 @@ namespace TaskManager.Converters
     public static class EntityConverter
     {
 
-        public static RegisterModelBl ConverttoRegisterModelBl(RegisterViewModel model)
+        public static RegisterModelBl ConvertToRegisterModelBl(RegisterViewModel model)
         {
             return new RegisterModelBl
             {
@@ -18,7 +18,7 @@ namespace TaskManager.Converters
 
         }
 
-        public static RegisterViewModel ConverttoRegisterModelUi(RegisterModelBl model)
+        public static RegisterViewModel ConvertToRegisterModelUi(RegisterModelBl model)
         {
             return new RegisterViewModel
             {
@@ -29,13 +29,13 @@ namespace TaskManager.Converters
 
         }
 
-        public static TaskViewModel ConverttoTaskUi(TaskBL task)
+        public static TaskViewModel ConvertToTaskUi(TaskBl task)
         {
             return new TaskViewModel
             {
                 AcceptCpmpleteDate = task.AcceptCpmpleteDate,
                 AssignDateTime = task.AssignDateTime,
-                Comments = task.Comments.Select(ConverttoCommentUi).ToList(),
+                Comments = task.Comments.Select(ConvertToCommentUi).ToList(),
                 CompleteDate = task.CompleteDate,
                 CreateDate = task.CreateDate,
                 Deadline = task.Deadline,
@@ -47,14 +47,14 @@ namespace TaskManager.Converters
                 TaskEeventLogs = task.TaskEeventLogs.Select(ConvettoTaskEventLogUi).ToList(),
                 TaskId = task.TaskId,
                 TaskPriority = task.TaskPriority,
-                TaskRecipient = ConverttoUserModelBl(task.TaskRecipient),
+                TaskRecipient = ConvertToUserModelBl(task.TaskRecipient),
                 TaskSender = task.TaskSender,
                 TaskText = task.TaskText
             };
         }
-        public static TaskBL ConverttoTaskBl(TaskViewModel task)
+        public static TaskBl ConvertToTaskBl(TaskViewModel task)
         {
-            return new TaskBL
+            return new TaskBl
             {
                 AcceptCpmpleteDate = task.AcceptCpmpleteDate,
                 AssignDateTime = task.AssignDateTime,
@@ -98,7 +98,7 @@ namespace TaskManager.Converters
             {
                 EventDateTime = taskEventLog.EventDateTime,
                 NewValue = taskEventLog.NewValue,
-                Task = ConverttoTaskBl(taskEventLog.Task),
+                Task = ConvertToTaskBl(taskEventLog.Task),
                 UserId = taskEventLog.UserId,
                 TaskId = taskEventLog.TaskId,
                 OldValue = taskEventLog.OldValue,
@@ -108,12 +108,12 @@ namespace TaskManager.Converters
             };
         }
 
-        public static CommentBL ConverttoCommentBl(CommentViewModel comment)
+        public static CommentBL ConvertToCommentBl(CommentViewModel comment)
         {
             return new CommentBL
             {
-                Author = ConverttoUserProfileDal(comment.Author),
-                Task = ConverttoTaskDal(comment.Task),
+                Author = ConvertToUserProfileDal(comment.Author),
+                Task = ConvertToTaskDal(comment.Task),
                 TaskId = comment.TaskId,
                 AuthorId = comment.AuthorId,
                 CommentDate = comment.CommentDate,
@@ -122,12 +122,12 @@ namespace TaskManager.Converters
             };
         }
 
-        public static CommentViewModel ConverttoCommentUi(CommentBL comment)
+        public static CommentViewModel ConvertToCommentUi(CommentBL comment)
         {
             return new CommentViewModel
             {
                 Author = Convert(comment.Author),
-                Task = ConverttoTaskDal(comment.Task),
+                Task = ConvertToTaskDal(comment.Task),
                 TaskId = comment.TaskId,
                 AuthorId = comment.AuthorId,
                 CommentDate = comment.CommentDate,
@@ -136,7 +136,7 @@ namespace TaskManager.Converters
             };
         }
 
-        public static UserViewModel ConverttoUserModelUi(UserModelBl userModelBl)
+        public static UserViewModel ConvertToUserModelUi(UserModelBl userModelBl)
         {
             return new UserViewModel
             {
@@ -152,7 +152,7 @@ namespace TaskManager.Converters
             };
         }
 
-        public static UserModelBl ConverttoUserModelBl(UserViewModel userModelBl)
+        public static UserModelBl ConvertToUserModelBl(UserViewModel userModelBl)
         {
             return new UserModelBl
             {

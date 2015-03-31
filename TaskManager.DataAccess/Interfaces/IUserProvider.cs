@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Web.Mvc;
+using TaskManager.DataAccess.Models;
 
 namespace TaskManager.DataAccess.Interfaces
 {
     public interface IUserProvider
     {
-        UserProfile CurrentUser();
+        UserProfile GetCurrentUser();
         bool IsAdmin();
         bool IsChief();
         bool IsRecipient();

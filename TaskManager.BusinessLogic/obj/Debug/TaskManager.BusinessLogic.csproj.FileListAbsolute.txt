@@ -9,3 +9,4 @@ C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\TaskManager.DataAcce
 C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\EntityFramework.xml
 C:\Projects\TaskManager\TaskManager.BusinessLogic\bin\Debug\System.Web.Mvc.xml
 C:\Projects\TaskManager\TaskManager.BusinessLogic\obj\Debug\TaskManager.BusinessLogic.csprojResolveAssemblyReference.cache
+D:\Projects\TaskManager\TaskManager.BusinessLogic\obj\Debug\TaskManager.BusinessLogic.csprojResolveAssemblyReference.cache

@@ -87,13 +87,13 @@
     <Compile Include="Converters\EntityConverter.cs" />
     <Compile Include="Interfaces\ITasksService.cs" />
     <Compile Include="Interfaces\IUserService.cs" />
-    <Compile Include="Models\CommentBL.cs" />
-    <Compile Include="Models\PriorityBL.cs" />
+    <Compile Include="Models\CommentBl.cs" />
+    <Compile Include="Models\PriorityBl.cs" />
     <Compile Include="Models\RegisterModelBl.cs" />
-    <Compile Include="Models\TaskBL.cs" />
+    <Compile Include="Models\TaskBl.cs" />
     <Compile Include="Models\TaskEventLogBl.cs" />
     <Compile Include="Models\UserModelBl.cs" />
-    <Compile Include="Models\UserProfileBL.cs" />
+    <Compile Include="Models\UserProfileBl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\TasksService.cs" />
     <Compile Include="Services\UserService.cs" />

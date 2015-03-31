@@ -42,7 +42,6 @@ D:\Projects\TaskManager\TaskManager\bin\System.Web.Http.WebHost.dll
 D:\Projects\TaskManager\TaskManager\bin\System.Net.Http.Formatting.xml
 D:\Projects\TaskManager\TaskManager\bin\System.Web.Http.xml
 D:\Projects\TaskManager\TaskManager\bin\System.Web.Http.WebHost.xml
-D:\Projects\TaskManager\TaskManager\bin\DelegateDecompiler.dll
 D:\Projects\TaskManager\TaskManager\bin\Mono.Reflection.dll
 D:\Projects\TaskManager\TaskManager\bin\PerpetuumSoft.Knockout.dll
 c:\Projects\TaskManager\TaskManager\bin\TaskManager.dll.config

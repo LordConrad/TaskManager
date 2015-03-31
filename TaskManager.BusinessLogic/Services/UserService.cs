@@ -18,9 +18,9 @@ namespace TaskManager.BusinessLogic.Services
             userProvider = up;
         }
 
-        public UserProfileBL CurrentUser()
+        public UserProfileBl GetCurrentUser()
         {
-            return EntityConverter.ConverttoUserProfileBl(userProvider.CurrentUser);
+            return EntityConverter.ConvertToUserProfileBl(userProvider.GetCurrentUser());
         }
 
         public bool IsAdmin()
@@ -48,19 +48,19 @@ namespace TaskManager.BusinessLogic.Services
             return userProvider.IsMasterChief();
         }
 
-        public bool IsNewUser(UserProfileBL user)
+        public bool IsNewUser(UserProfileBl user)
         {
-            return userProvider.IsNewUser(EntityConverter.ConverttoUserProfileDal(user));
+            return userProvider.IsNewUser(EntityConverter.ConvertToUserProfileDal(user));
         }
 
-        public IEnumerable<UserProfileBL> GetChiefs()
+        public IEnumerable<UserProfileBl> GetChiefs()
         {
-            return userProvider.GetChiefs().Select(EntityConverter.ConverttoUserProfileBl);
+            return userProvider.GetChiefs().Select(EntityConverter.ConvertToUserProfileBl);
         }
 
-        public List<UserProfileBL> GetAllUsers()
+        public List<UserProfileBl> GetAllUsers()
         {
-            return userProvider.GetAllUsers().Select(EntityConverter.ConverttoUserProfileBl).ToList();
+            return userProvider.GetAllUsers().Select(EntityConverter.ConvertToUserProfileBl).ToList();
         }
 
         public IEnumerable<string> GetRolesForUser(string userName)
@@ -68,19 +68,19 @@ namespace TaskManager.BusinessLogic.Services
             return userProvider.GetRolesForUser(userName);
         }
 
-        public UserProfileBL GetUserByLogin(string username)
+        public UserProfileBl GetUserByLogin(string username)
         {
-            return EntityConverter.ConverttoUserProfileBl(userProvider.GetUserByLogin(username));
+            return EntityConverter.ConvertToUserProfileBl(userProvider.GetUserByLogin(username));
         }
 
-        public UserProfileBL GetUserById(int id)
+        public UserProfileBl GetUserById(int id)
         {
-            return EntityConverter.ConverttoUserProfileBl(userProvider.GetUserById(id));
+            return EntityConverter.ConvertToUserProfileBl(userProvider.GetUserById(id));
         }
 
         public bool SaveEditedUser(UserModelBl model)
         {
-            return userProvider.SaveEditedUser(EntityConverter.ConverttoUserModelDal(model));
+            return userProvider.SaveEditedUser(EntityConverter.ConvertToUserModelDal(model));
         }
 
         public bool DeleteUserById(int id)
@@ -98,9 +98,9 @@ namespace TaskManager.BusinessLogic.Services
             return userProvider.GetNewUsersCount();
         }
 
-        public UserProfileBL CheckUser(string username)
+        public UserProfileBl CheckUser(string username)
         {
-            return EntityConverter.ConverttoUserProfileBl(userProvider.CheckUser(username));
+            return EntityConverter.ConvertToUserProfileBl(userProvider.CheckUser(username));
         }
 
     }
