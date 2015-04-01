@@ -8,13 +8,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager", "TaskManager\
 		{217C3FE3-E159-4D62-920E-6F7FDB16042D} = {217C3FE3-E159-4D62-920E-6F7FDB16042D}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{ACAA8CF0-1992-4BC0-BEFC-5F1B6BA2B3FD}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\NuGet.Config = .nuget\NuGet.Config
-		.nuget\NuGet.exe = .nuget\NuGet.exe
-		.nuget\NuGet.targets = .nuget\NuGet.targets
-	EndProjectSection
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskManager.BusinessLogic", "TaskManager.BusinessLogic\TaskManager.BusinessLogic.csproj", "{217C3FE3-E159-4D62-920E-6F7FDB16042D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{5E44E309-CA6C-415D-9512-4373351BF4EF} = {5E44E309-CA6C-415D-9512-4373351BF4EF}

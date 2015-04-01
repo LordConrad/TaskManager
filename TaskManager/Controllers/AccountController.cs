@@ -17,11 +17,11 @@ namespace TaskManager.Controllers
     public class AccountController : Controller
     {
 
-        private IUserService userService;
+        private readonly IUserService _userService;
 
-        public AccountController(UserService us)
+        public AccountController(UserService userService)
         {
-            userService = us;
+			_userService = userService;
         }
 
         //
@@ -40,8 +40,8 @@ namespace TaskManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (userService.GetUserByLogin(model.UserName) != null
-                    && userService.GetUserByLogin(model.UserName).IsActive 
+                if (_userService.GetUserByLogin(model.UserName) != null
+                    && _userService.GetUserByLogin(model.UserName).IsActive 
                     && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
                 {
                     return RedirectToLocal(returnUrl);
@@ -84,7 +84,7 @@ namespace TaskManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = userService.CheckUser(model.UserName);
+                var user = _userService.CheckUser(model.UserName);
 
                     if (user != null && user.IsActive)
                     {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using TaskManager.BusinessLogic.Interfaces;
 using TaskManager.BusinessLogic.Services;
 using TaskManager.Converters;
 using TaskManager.Models;
@@ -12,17 +13,22 @@ using WebMatrix.WebData;
 
 namespace TaskManager.Controllers
 {
-    public class StatisticController : Controller
-    {
-        private TasksService tasksService = new TasksService();
+	public class StatisticController : Controller
+	{
+		private readonly ITasksService _tasksService;
 
-        //
-        // GET: /Statistic/
+		public StatisticController(ITasksService tasksService)
+		{
+			_tasksService = tasksService;
+		}
 
-        public ActionResult Index()
-        {
-            return View(tasksService.GetTasks().Select(EntityConverter.ConvertToTaskUi));
-        }
+		//
+		// GET: /Statistic/
 
-    }
+		public ActionResult Index()
+		{
+			return View(_tasksService.GetTasks().Select(EntityConverter.ConvertToTaskUi));
+		}
+
+	}
 }

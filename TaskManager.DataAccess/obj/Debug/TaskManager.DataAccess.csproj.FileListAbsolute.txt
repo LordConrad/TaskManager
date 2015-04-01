@@ -20,9 +20,6 @@ D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\TaskManager.DataAccess.
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\TaskManager.DataAccess.pdb
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\EntityFramework.dll
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\EntityFramework.SqlServer.dll
-D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\Microsoft.Practices.ServiceLocation.dll
-D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\Microsoft.Practices.Unity.Configuration.dll
-D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\Microsoft.Practices.Unity.dll
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\Microsoft.Web.Infrastructure.dll
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\System.Web.Helpers.dll
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\System.Web.Mvc.dll
@@ -30,13 +27,8 @@ D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\System.Web.Razor.dll
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\System.Web.WebPages.Deployment.dll
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\System.Web.WebPages.dll
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\System.Web.WebPages.Razor.dll
-D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\Unity.Mvc4.dll
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\EntityFramework.xml
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\EntityFramework.SqlServer.xml
-D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\Microsoft.Practices.ServiceLocation.pdb
-D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\Microsoft.Practices.ServiceLocation.xml
-D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\Microsoft.Practices.Unity.xml
-D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\Microsoft.Practices.Unity.Configuration.xml
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\System.Web.Helpers.xml
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\System.Web.Mvc.xml
 D:\Projects\TaskManager\TaskManager.DataAccess\bin\Debug\System.Web.Razor.xml

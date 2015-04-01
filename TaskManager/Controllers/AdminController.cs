@@ -17,11 +17,11 @@ namespace TaskManager.Controllers
     [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
-        private IUserService userService;
+        private readonly IUserService _userService;
 
-        public AdminController(UserService us)
+		public AdminController(UserService userService)
         {
-            userService = us;
+			_userService = userService;
         }
 
         //
@@ -34,7 +34,7 @@ namespace TaskManager.Controllers
 
         public ActionResult Edit(int id)
         {
-            var profileModel = userService.GetUserById(id);
+            var profileModel = _userService.GetUserById(id);
             if (profileModel == null)
             {
                 return null;
@@ -58,19 +58,19 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Edit(UserViewModel model)
         {
-            userService.SaveEditedUser(EntityConverter.ConvertToUserModelBl(model));
+            _userService.SaveEditedUser(EntityConverter.ConvertToUserModelBl(model));
             return RedirectToAction("Index");
         }
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            userService.DeleteUserById(id);
+            _userService.DeleteUserById(id);
             return RedirectToAction("Index");
         }
 
         public ActionResult NewUsersCount()
         {
-            var count = userService.GetNewUsersCount();
+            var count = _userService.GetNewUsersCount();
             var badge = new BadgeModel {Count = count};
             if (Session["NewUsersCount"] != null && ((int) Session["NewUsersCount"]) < count)
             {

@@ -11,51 +11,56 @@ namespace TaskManager.BusinessLogic.Services
 {
     public class TasksService : ITasksService
     {
-        private ITasksProvider taksProvider;
+        private readonly ITasksProvider _taksProvider;
 
-        public bool AddTask(TaskBl task)
+	    public TasksService(ITasksProvider taksProvider)
+	    {
+		    this._taksProvider = taksProvider;
+	    }
+
+	    public bool AddTask(TaskBl task)
         {
-            return taksProvider.AddTask(EntityConverter.ConvertToTaskDal(task));
+            return _taksProvider.AddTask(EntityConverter.ConvertToTaskDal(task));
         }
 
         public IEnumerable<TaskBl> GetTasksBySender(int senderId)
         {
-            return taksProvider.GetTasksBySender(senderId).Select(EntityConverter.ConvertToTaskBl);
+            return _taksProvider.GetTasksBySender(senderId).Select(EntityConverter.ConvertToTaskBl);
         }
 
         public TaskBl GetTasksById(int taskId)
         {
-            return EntityConverter.ConvertToTaskBl(taksProvider.GetTasksById(taskId));
+            return EntityConverter.ConvertToTaskBl(_taksProvider.GetTasksById(taskId));
         }
 
         public IEnumerable<TaskBl> GetTasks()
         {
-            return taksProvider.GetTasks().Select(EntityConverter.ConvertToTaskBl);
+            return _taksProvider.GetTasks().Select(EntityConverter.ConvertToTaskBl);
         }
 
         public void UpdateTaskText(TaskBl model)
         {
-            taksProvider.UpdateTaskText(EntityConverter.ConvertToTaskDal(model));
+            _taksProvider.UpdateTaskText(EntityConverter.ConvertToTaskDal(model));
         }
 
         public void DeleteTask(int taskId)
         {
-            taksProvider.DeleteTask(taskId);
+            _taksProvider.DeleteTask(taskId);
         }
 
         public void ConfirmTask(int id)
         {
-            taksProvider.DeleteTask(id);
+            _taksProvider.DeleteTask(id);
         }
 
         public int SenderCompleteTasksCount()
         {
-            return taksProvider.SenderCompleteTasksCount();
+            return _taksProvider.SenderCompleteTasksCount();
         }
 
         public List<TaskBl> GetTasksForCurrrentUser()
         {
-            return taksProvider.GetTasksForCurrrentUser().Select(EntityConverter.ConvertToTaskBl).ToList();
+            return _taksProvider.GetTasksForCurrrentUser().Select(EntityConverter.ConvertToTaskBl).ToList();
         } 
     }
 }

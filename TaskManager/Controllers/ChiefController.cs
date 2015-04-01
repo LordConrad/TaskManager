@@ -17,11 +17,11 @@ namespace TaskManager.Controllers
     [Authorize(Roles = "Chief")]
     public class ChiefController : Controller
     {
-        private ITasksService tasksService;
+        private readonly ITasksService _tasksService;
 
-        public ChiefController(ITasksService ts)
+		public ChiefController(ITasksService tasksService)
         {
-            tasksService = ts;
+			_tasksService = tasksService;
         }
 
         public ActionResult Index(ChiefTaskViewModel model)
@@ -49,7 +49,7 @@ namespace TaskManager.Controllers
                     SelectedRecipient = string.Empty
                 };
             }
-            List<TaskViewModel> tasks = tasksService.GetTasks();
+            List<TaskViewModel> tasks = _tasksService.GetTasks();
             try
             {
                 using (var context = new TaskManagerContext())

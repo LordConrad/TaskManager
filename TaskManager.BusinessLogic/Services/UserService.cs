@@ -11,7 +11,7 @@ namespace TaskManager.BusinessLogic.Services
 {
     public class UserService : IUserService
     {
-        private IUserProvider userProvider;
+        private readonly IUserProvider userProvider;
 
         public UserService(UserProvider up)
         {
