@@ -1,2 +1,0 @@
-D:\Projects\TaskManager\TaskManager.BusinessLogic\obj\Debug\TaskManager.BusinessLogic.csprojResolveAssemblyReference.cache
-C:\Projects\TaskManager\TaskManager.BusinessLogic\obj\Debug\TaskManager.BusinessLogic.csprojResolveAssemblyReference.cache
