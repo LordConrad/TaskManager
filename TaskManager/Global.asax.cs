@@ -36,22 +36,6 @@ namespace TaskManager
 			container.RegisterType<ITasksService, TasksService>();
 
 			DependencyResolver.SetResolver(new UnityDepResolver(container));
-			
-//			if (!Database.Exists("DefaultConnection"))
-//			{
-//				using (var context = new TaskManagerContext())
-//				{
-//					try
-//					{
-//						((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
-//					}
-//					catch (Exception)
-//					{
-//
-//					}
-//
-//				}
-//			}
 
 			if (!WebSecurity.Initialized)
 			{

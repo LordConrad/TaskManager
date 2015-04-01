@@ -16,8 +16,7 @@ namespace TaskManager.DataAccess.Interfaces
         IEnumerable<string> GetRolesForUser(string userName);
         UserProfile GetUserByLogin(string login);
         UserProfile GetUserById(int id);
-        string[] GetRolesNamesArray(UserModel model);
-        bool SaveEditedUser(UserModel model);
+	    bool SaveEditedUser(UserProfile model, string[] newRoles);
         bool DeleteUserById(int id);
         bool IsUserInAnyRole();
         int GetNewUsersCount();

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
 using TaskManager.DataAccess.Interfaces;
-
+using TaskManager.DataAccess.Models;
 using WebMatrix.WebData;
 
 namespace TaskManager.DataAccess.Providers
@@ -150,18 +150,7 @@ namespace TaskManager.DataAccess.Providers
             return model;
         }
 
-        public string[] GetRolesNamesArray(UserModel model)
-        {
-            List<string> list = new List<string>();
-            if (model.IsAdmin) list.Add("Admin");
-            if (model.IsChief) list.Add("Chief");
-            if (model.IsMasterChief) list.Add("MasterChief");
-            if (model.IsRecipient) list.Add("Recipient");
-            if (model.IsSender) list.Add("Sender");
-            return list.ToArray();
-        }
-
-        public bool SaveEditedUser(UserModel model)
+        public bool SaveEditedUser(UserProfile model, string[] newRoles)
         {
             try
             {
@@ -175,13 +164,13 @@ namespace TaskManager.DataAccess.Providers
                         {
                             Roles.RemoveUserFromRoles(editedUser.UserName, curRoles);
                         }
-                        var newRoles = GetRolesNamesArray(model);
+//                        var newRoles = GetRolesNamesArray(model);
                         if (newRoles.Length > 0)
                         {
                             Roles.AddUserToRoles(editedUser.UserName, newRoles);
                         }
-                        editedUser.UserName = model.Login;
-                        editedUser.UserFullName = model.UserName;
+                        editedUser.UserName = model.UserName;
+                        editedUser.UserFullName = model.UserFullName;
                         //if (!string.IsNullOrEmpty(model.ChiefId))
                         //{
                         //    int chiefId;

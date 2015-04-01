@@ -82,30 +82,18 @@
   <ItemGroup>
     <Compile Include="Interfaces\ITasksProvider.cs" />
     <Compile Include="Interfaces\IUserProvider.cs" />
-    <Compile Include="Migrations\201502261627085_InitialCreate.cs" />
-    <Compile Include="Migrations\201502261627085_InitialCreate.Designer.cs">
-      <DependentUpon>201502261627085_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201502262040548_extendUserProfile.cs" />
-    <Compile Include="Migrations\201502262040548_extendUserProfile.Designer.cs">
-      <DependentUpon>201502262040548_extendUserProfile.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\Configuration.cs" />
-    <Compile Include="Migrations\DatabaseInitializer.cs" />
+    <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Priority.cs" />
+    <Compile Include="Models\PriorityEnum.cs" />
+    <Compile Include="Models\Task.cs" />
+    <Compile Include="Models\TaskEeventLog.cs" />
     <Compile Include="TaskManagerContext.cs" />
+    <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\TasksProvider.cs" />
     <Compile Include="Providers\UserProvider.cs" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201502261627085_InitialCreate.resx">
-      <DependentUpon>201502261627085_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201502262040548_extendUserProfile.resx">
-      <DependentUpon>201502262040548_extendUserProfile.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />

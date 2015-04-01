@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using TaskManager.DataAccess.Models;
 
 namespace TaskManager.DataAccess.Interfaces
 {

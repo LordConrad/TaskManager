@@ -80,7 +80,7 @@ namespace TaskManager.BusinessLogic.Services
 
         public bool SaveEditedUser(UserModelBl model)
         {
-            return userProvider.SaveEditedUser(EntityConverter.ConvertToUserModelDal(model));
+			return userProvider.SaveEditedUser(EntityConverter.ConvertUserModelToUserProfileDal(model), GetRolesNamesArray(model));
         }
 
         public bool DeleteUserById(int id)
@@ -103,5 +103,15 @@ namespace TaskManager.BusinessLogic.Services
             return EntityConverter.ConvertToUserProfileBl(userProvider.CheckUser(username));
         }
 
+		private string[] GetRolesNamesArray(UserModelBl model)
+		{
+			List<string> list = new List<string>();
+			if (model.IsAdmin) list.Add("Admin");
+			if (model.IsChief) list.Add("Chief");
+			if (model.IsMasterChief) list.Add("MasterChief");
+			if (model.IsRecipient) list.Add("Recipient");
+			if (model.IsSender) list.Add("Sender");
+			return list.ToArray();
+		}
     }
 }

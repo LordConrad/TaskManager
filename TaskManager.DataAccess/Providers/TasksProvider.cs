@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
 using TaskManager.DataAccess.Interfaces;
+using TaskManager.DataAccess.Models;
 using WebMatrix.WebData;
 
 namespace TaskManager.DataAccess.Providers

@@ -134,6 +134,15 @@ namespace TaskManager.BusinessLogic.Converters
             };
         }
 
+		public static UserProfile ConvertUserModelToUserProfileDal(UserModelBl userProfile)
+		{
+			return new UserProfile
+			{
+				UserName = userProfile.UserName,
+				UserId = userProfile.UserId
+			};
+		}
+
         public static TaskEventLogBl ConvertToTaskEventLogBl(TaskEeventLog taskEeventLog)
         {
             return new TaskEventLogBl
@@ -164,40 +173,6 @@ namespace TaskManager.BusinessLogic.Converters
                 TaskEventLogId = taskEeventLog.TaskEventLogId,
                 User = ConvertToUserProfileDal(taskEeventLog.User)
             };
-        }
-
-        public static UserModel ConvertToUserModelDal(UserModelBl userModelFromDal)
-        {
-            return new UserModel
-            {
-                UserId = userModelFromDal.UserId,
-                UserName = userModelFromDal.UserName,
-                Login = userModelFromDal.Login,
-                ChiefId = userModelFromDal.ChiefId,
-                IsAdmin = userModelFromDal.IsAdmin,
-                IsChief = userModelFromDal.IsChief,
-                IsMasterChief = userModelFromDal.IsMasterChief,
-                IsRecipient = userModelFromDal.IsRecipient,
-                IsSender = userModelFromDal.IsSender,
-            };
-
-        }
-
-        public static UserModelBl ConvertToUserModelBl(UserModel userModelFromDal)
-        {
-            return new UserModelBl
-            {
-                UserId = userModelFromDal.UserId,
-                UserName = userModelFromDal.UserName,
-                Login = userModelFromDal.Login,
-                ChiefId = userModelFromDal.ChiefId,
-                IsAdmin = userModelFromDal.IsAdmin,
-                IsChief = userModelFromDal.IsChief,
-                IsMasterChief = userModelFromDal.IsMasterChief,
-                IsRecipient = userModelFromDal.IsRecipient,
-                IsSender = userModelFromDal.IsSender,
-            };
-
         }
     }
 }

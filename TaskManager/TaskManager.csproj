@@ -266,7 +266,6 @@
     <Content Include="Styles\theme.bootstrap.css" />
     <Content Include="Styles\theme.bootstrap_2.css" />
     <Content Include="Styles\theme.default.css" />
-    <Content Include="Unity.Mvc4.README.txt" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
