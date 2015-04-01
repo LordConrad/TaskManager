@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Security;
-using MvcPaging;
 using TaskManager.BusinessLogic.Interfaces;
-using TaskManager.Helpers;
 using TaskManager.Models;
 using WebMatrix.WebData;
 

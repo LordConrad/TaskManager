@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Validation;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TaskManager.DataAccess.Interfaces;
 using WebMatrix.WebData;
-using Task = TaskManager.DataAccess.Task;
 
 namespace TaskManager.DataAccess.Providers
 {

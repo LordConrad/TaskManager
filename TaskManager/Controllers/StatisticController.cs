@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Data.Entity;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using TaskManager.BusinessLogic.Interfaces;
-using TaskManager.BusinessLogic.Services;
 using TaskManager.Converters;
-using TaskManager.Models;
-using WebMatrix.WebData;
 
 namespace TaskManager.Controllers
 {

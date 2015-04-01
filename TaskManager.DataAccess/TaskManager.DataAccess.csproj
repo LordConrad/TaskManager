@@ -96,7 +96,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\TasksProvider.cs" />
     <Compile Include="Providers\UserProvider.cs" />
-    <Compile Include="Models\UserModel.cs" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

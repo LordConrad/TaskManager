@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using TaskManager.BusinessLogic.Interfaces;
-using TaskManager.BusinessLogic.Services;
-using TaskManager.Helpers;
 using TaskManager.Models;
 using WebMatrix.WebData;
 

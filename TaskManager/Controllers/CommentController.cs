@@ -1,11 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity.Core.Metadata.Edm;
-using System.Data.Entity.Validation;
-using System.Linq;
-using System.Data.Entity;
-using System.Web;
-using System.Web.Helpers;
 using System.Web.Mvc;
 using TaskManager.Models;
 

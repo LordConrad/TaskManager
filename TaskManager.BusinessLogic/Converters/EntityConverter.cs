@@ -80,7 +80,7 @@ namespace TaskManager.BusinessLogic.Converters
         {
             return new CommentBl
             {
-                Author = ConvertToUserModelBl(comment.Author),
+                Author = ConvertToUserProfileBl(comment.Author),
                 Task = ConvertToTaskBl(comment.Task),
                 TaskId = comment.TaskId,
                 AuthorId = comment.AuthorId,

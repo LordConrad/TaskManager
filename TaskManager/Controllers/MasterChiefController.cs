@@ -1,12 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
-using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
-using TaskManager.Helpers;
 using TaskManager.Models;
 
 namespace TaskManager.Controllers

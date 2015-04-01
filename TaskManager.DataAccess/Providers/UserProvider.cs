@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Security;
 using TaskManager.DataAccess.Interfaces;
-using TaskManager.DataAccess.Models;
+
 using WebMatrix.WebData;
 
 namespace TaskManager.DataAccess.Providers
