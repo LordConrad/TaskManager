@@ -12,11 +12,11 @@ namespace TaskManager.Controllers
 	[Authorize(Roles = "Sender")]
 	public class SenderController : Controller
 	{
-		private readonly ITasksService _tasksService;
+		private readonly ITaskService _taskService;
 
-		public SenderController(ITasksService tasksService)
+		public SenderController(ITaskService taskService)
 		{
-			_tasksService = tasksService;
+			_taskService = taskService;
 		}
 
 		//
@@ -24,7 +24,7 @@ namespace TaskManager.Controllers
 		[HttpGet]
 		public ActionResult Index()
 		{
-			var query = _tasksService.GetTasksBySender(WebSecurity.CurrentUserId)
+			var query = _taskService.GetTasksBySender(WebSecurity.CurrentUserId)
 				.Where(x => x.AcceptCpmpleteDate == null);
 			return System.Web.UI.WebControls.View(query.Select(EntityConverter.ConvertToTaskUi));
 		}
@@ -38,13 +38,13 @@ namespace TaskManager.Controllers
 		[HttpPost]
 		public ActionResult NewTask(NewTaskViewModel model)
 		{
-			var newTask = new TaskBl
+			var newTask = new Task
 			{
 				CreateDate = DateTime.Now,
 				SenderId = WebSecurity.CurrentUserId,
 				TaskText = model.TaskText.Trim()
 			};
-			if (!_tasksService.AddTask(newTask))
+			if (!_taskService.AddTask(newTask))
 			{
 				ModelState.AddModelError("", "Произошла ошибка при добавлении новой заявки. Повторите попытку позже или обратитесь к администратору.");
 				return View(model);
@@ -57,7 +57,7 @@ namespace TaskManager.Controllers
 
 		public ActionResult Edit(int taskId)
 		{
-			var task = _tasksService.GetTasksById(taskId);
+			var task = _taskService.GetTaskById(taskId);
 			if (task == null)
 			{
 				//ModelState.AddModelError("","Указанная заявка не найдена");
@@ -84,7 +84,7 @@ namespace TaskManager.Controllers
 		[HttpPost]
 		public ActionResult Edit(NewTaskViewModel model)
 		{
-			_tasksService.UpdateTaskText(new TaskBl
+			_taskService.UpdateTaskText(new Task
 			{
 				TaskId = model.TaskId,
 				TaskText = model.TaskText
@@ -94,19 +94,19 @@ namespace TaskManager.Controllers
 
 		public ActionResult Delete(int taskId)
 		{
-			_tasksService.DeleteTask(taskId);
+			_taskService.DeleteTask(taskId);
 			return RedirectToAction("Index");
 		}
 
 		public ActionResult ConfirmTask(int id)
 		{
-			_tasksService.ConfirmTask(id);
+			_taskService.ConfirmTask(id);
 			return RedirectToAction("Index");
 		}
 
 		public ActionResult SenderCompleteTasksCount()
 		{
-			var count = _tasksService.SenderCompleteTasksCount();
+			var count = _taskService.SenderCompleteTasksCount();
 
 			var badge = new BadgeModel { Count = count };
 			if (Session["SenderCompleteTasksCount"] != null && ((int)Session["SenderCompleteTasksCount"]) < count)

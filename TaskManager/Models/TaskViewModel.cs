@@ -33,11 +33,11 @@ namespace TaskManager.Models
         public bool IsRecipientViewed { get; set; }
 
         public int? PriorityId { get; set; }
-        public virtual PriorityViewModel TaskPriority { get; set; }
+        public Priority TaskPriority { get; set; }
 
         public string ResultComment { get; set; }
 
-        public virtual ICollection<CommentViewModel> Comments { get; set; }
-        public virtual ICollection<TaskEventLogViewModel> TaskEeventLogs { get; set; }
+        public IEnumerable<CommentViewModel> Comments { get; set; }
+        public IEnumerable<TaskEventLogViewModel> TaskEeventLogs { get; set; }
     }
 }

@@ -33,7 +33,7 @@ namespace TaskManager
 
 			UnityContainer container = new UnityContainer();
 			container.RegisterType<IUserService, UserService>();
-			container.RegisterType<ITasksService, TasksService>();
+			container.RegisterType<ITaskService, TaskService>();
 
 			DependencyResolver.SetResolver(new UnityDepResolver(container));
 
@@ -41,8 +41,7 @@ namespace TaskManager
 			{
 				WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", true);
 			}
-			DataAnnotationsModelValidatorProvider.RegisterAdapter(typeof(RequiredIfAttribute),
-				typeof(RequiredIfValidator));
+			
 		}
 
 		public class UnityDepResolver : IDependencyResolver

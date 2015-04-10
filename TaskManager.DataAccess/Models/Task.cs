@@ -49,6 +49,6 @@ namespace TaskManager.DataAccess.Models
 		[ForeignKey("AuthorId")]
 		public virtual ICollection<Comment> Comments { get; set; }
 		[ForeignKey("TaskLog")]
-		public virtual ICollection<TaskEeventLog> TaskEeventLogs { get; set; } 
+		public virtual ICollection<TaskEventLog> TaskEeventLogs { get; set; } 
 	}
 }

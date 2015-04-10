@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace TaskManager.DataAccess.Models
 {
 	[Table("TaskEventLog")]
-    public class TaskEeventLog
+    public class TaskEventLog
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

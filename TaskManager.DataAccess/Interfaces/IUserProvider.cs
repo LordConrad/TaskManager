@@ -13,6 +13,7 @@ namespace TaskManager.DataAccess.Interfaces
         bool IsSender();
         bool IsMasterChief();
         List<UserProfile> GetAllUsers();
+        IEnumerable<UserProfile> GetAllRecipients();
         IEnumerable<string> GetRolesForUser(string userName);
         UserProfile GetUserByLogin(string login);
         UserProfile GetUserById(int id);
@@ -25,6 +26,7 @@ namespace TaskManager.DataAccess.Interfaces
         IEnumerable<SelectListItem> GetPrioritiesSelectedList(string selectedPriorityId, TaskManagerContext context = null);
         IEnumerable<SelectListItem> GetRecipientsSelectedList(string firstElementTitle, string selectedRecipientId, TaskManagerContext context = null);
         UserProfile CheckUser(string username);
+        string[] GetRolesNamesArray(string model);
         void SaveChages();
     }
 }

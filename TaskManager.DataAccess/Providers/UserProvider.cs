@@ -109,6 +109,14 @@ namespace TaskManager.DataAccess.Providers
             }
         }
 
+        public IEnumerable<UserProfile> GetAllRecipients()
+        {
+            using (var context = new TaskManagerContext())
+            {
+                return context.Users.Where(x => Roles.GetRolesForUser(x.UserName).Contains("Recipient"));
+            }
+        }
+
         public IEnumerable<string> GetRolesForUser(string userName)
         {
             var roles = Roles.GetRolesForUser(userName).ToList();
@@ -148,6 +156,11 @@ namespace TaskManager.DataAccess.Providers
                 model = context.Users.FirstOrDefault(x => x.UserId == id);
             }
             return model;
+        }
+
+        public string[] GetRolesNamesArray(string userFullName)
+        {
+            return Roles.GetRolesForUser(userFullName);
         }
 
         public bool SaveEditedUser(UserProfile model, string[] newRoles)

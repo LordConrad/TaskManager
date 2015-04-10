@@ -29,7 +29,7 @@
                 @Html.LabelFor(model => model.IsAdmin)
             </div>
             var list = new List<SelectListItem>();
-            foreach (UserProfile chief in ModelHelper.GetChiefs())
+            foreach (UserProfile chief in ModelHelper.GetAllChiefs())
             {
                 list.Add(new SelectListItem
                 {

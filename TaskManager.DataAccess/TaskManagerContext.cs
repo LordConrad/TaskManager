@@ -17,13 +17,13 @@ namespace TaskManager.DataAccess
 				.HasForeignKey(f => f.SenderId)
 				.WillCascadeOnDelete(false);
 
-			modelBuilder.Entity<TaskEeventLog>()
+			modelBuilder.Entity<TaskEventLog>()
 				.HasRequired(x => x.Task)
 				.WithMany(x => x.TaskEeventLogs)
 				.HasForeignKey(x => x.TaskId)
 				.WillCascadeOnDelete(true);
 
-			modelBuilder.Entity<TaskEeventLog>()
+			modelBuilder.Entity<TaskEventLog>()
 				.HasRequired(x => x.User)
 				.WithMany(x => x.Logs)
 				.HasForeignKey(x => x.UserId)

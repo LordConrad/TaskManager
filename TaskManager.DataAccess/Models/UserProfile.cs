@@ -31,7 +31,7 @@ namespace TaskManager.DataAccess.Models
 		public virtual ICollection<Task> RecipTasks { get; set; }
 
 		[ForeignKey("LogUser")]
-		public virtual ICollection<TaskEeventLog> Logs { get; set; }
+		public virtual ICollection<TaskEventLog> Logs { get; set; }
         
 		//[ForeignKey("TaskChiefId")]
 		//public virtual ICollection<Task> ChiefTasks { get; set; }

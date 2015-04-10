@@ -1,30 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Web.Mvc;
+using TaskManager.BusinessLogic.Interfaces;
+using TaskManager.BusinessLogic.Models;
 using TaskManager.Models;
 
 namespace TaskManager.Controllers
 {
     public class CommentController : Controller
     {
-        //
-        // GET: /Comment/
+        private readonly ITaskService _taskService;
+
+        public CommentController(ITaskService taskService)
+        {
+            _taskService = taskService;
+        }
 
         public ActionResult GetCommentsForTask(int taskId)
         {
-            List<Comment> comments;
-            try
-            {
-                using (var context = new TaskManagerContext())
-                {
-                    comments = context.Comments.Include(x => x.Author).Where(x => x.TaskId == taskId).OrderBy(x => x.CommentDate).ToList();
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            var comments = _taskService.GetCommentsForTask(taskId);
+            
 
             return PartialView(comments);
         }

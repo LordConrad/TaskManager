@@ -172,7 +172,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helpers\BootstrapHtml.cs" />
-    <Compile Include="Helpers\RequiredIf.cs" />
+    <Compile Include="Helpers\Constants.cs" />
     <Compile Include="Models\BadgeModel.cs" />
     <Compile Include="Models\ChiefTaskEditViewModel.cs" />
     <Compile Include="Models\CommentAddModel.cs" />

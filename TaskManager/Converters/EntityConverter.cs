@@ -7,9 +7,9 @@ namespace TaskManager.Converters
     public static class EntityConverter
     {
 
-        public static RegisterModelBl ConvertToRegisterModelBl(RegisterViewModel model)
+        public static RegisterModel Convert(RegisterViewModel model)
         {
-            return new RegisterModelBl
+            return new RegisterModel
             {
                 UserName = model.UserName,
                 UserFullName = model.UserFullName,
@@ -18,7 +18,7 @@ namespace TaskManager.Converters
 
         }
 
-        public static RegisterViewModel ConvertToRegisterModelUi(RegisterModelBl model)
+        public static RegisterViewModel Convert(RegisterModel model)
         {
             return new RegisterViewModel
             {
@@ -29,13 +29,13 @@ namespace TaskManager.Converters
 
         }
 
-        public static TaskViewModel ConvertToTaskUi(TaskBl task)
+        public static TaskViewModel Convert(Task task)
         {
             return new TaskViewModel
             {
                 AcceptCpmpleteDate = task.AcceptCpmpleteDate,
                 AssignDateTime = task.AssignDateTime,
-                Comments = task.Comments.Select(ConvertToCommentUi).ToList(),
+                Comments = task.Comments.Select(Convert).ToList(),
                 CompleteDate = task.CompleteDate,
                 CreateDate = task.CreateDate,
                 Deadline = task.Deadline,
@@ -44,7 +44,7 @@ namespace TaskManager.Converters
                 RecipientId = task.RecipientId,
                 ResultComment = task.ResultComment,
                 SenderId = task.SenderId,
-                TaskEeventLogs = task.TaskEeventLogs.Select(ConvettoTaskEventLogUi).ToList(),
+                TaskEeventLogs = task.TaskEeventLogs.Select(Convet).ToList(),
                 TaskId = task.TaskId,
                 TaskPriority = task.TaskPriority,
                 TaskRecipient = ConvertToUserModelBl(task.TaskRecipient),
@@ -52,9 +52,9 @@ namespace TaskManager.Converters
                 TaskText = task.TaskText
             };
         }
-        public static TaskBl ConvertToTaskBl(TaskViewModel task)
+        public static Task Convert(TaskViewModel task)
         {
-            return new TaskBl
+            return new Task
             {
                 AcceptCpmpleteDate = task.AcceptCpmpleteDate,
                 AssignDateTime = task.AssignDateTime,
@@ -76,7 +76,7 @@ namespace TaskManager.Converters
             };
         }
 
-        public static TaskEventLogViewModel ConvettoTaskEventLogUi (TaskEventLogBl taskEventLog)
+        public static TaskEventLogViewModel Convet(TaskEventLog taskEventLog)
         {
             return new TaskEventLogViewModel
             {
@@ -92,13 +92,13 @@ namespace TaskManager.Converters
             };
         }
 
-        public static TaskEventLogBl ConvettoTaskEventLogUi(TaskEventLogViewModel taskEventLog)
+        public static TaskEventLog Convet(TaskEventLogViewModel taskEventLog)
         {
-            return new TaskEventLogBl
+            return new TaskEventLog
             {
                 EventDateTime = taskEventLog.EventDateTime,
                 NewValue = taskEventLog.NewValue,
-                Task = ConvertToTaskBl(taskEventLog.Task),
+                Task = Convert(taskEventLog.Task),
                 UserId = taskEventLog.UserId,
                 TaskId = taskEventLog.TaskId,
                 OldValue = taskEventLog.OldValue,
@@ -108,12 +108,12 @@ namespace TaskManager.Converters
             };
         }
 
-        public static CommentBL ConvertToCommentBl(CommentViewModel comment)
+        public static Comment Convert(CommentViewModel comment)
         {
-            return new CommentBL
+            return new Comment
             {
-                Author = ConvertToUserProfileDal(comment.Author),
-                Task = ConvertToTaskDal(comment.Task),
+                Author = Convert(comment.Author),
+                Task = Convert(comment.Task),
                 TaskId = comment.TaskId,
                 AuthorId = comment.AuthorId,
                 CommentDate = comment.CommentDate,
@@ -122,12 +122,12 @@ namespace TaskManager.Converters
             };
         }
 
-        public static CommentViewModel ConvertToCommentUi(CommentBL comment)
+        public static CommentViewModel Convert(Comment comment)
         {
             return new CommentViewModel
             {
                 Author = Convert(comment.Author),
-                Task = ConvertToTaskDal(comment.Task),
+                Task = Convert(comment.Task),
                 TaskId = comment.TaskId,
                 AuthorId = comment.AuthorId,
                 CommentDate = comment.CommentDate,
@@ -136,25 +136,25 @@ namespace TaskManager.Converters
             };
         }
 
-        public static UserViewModel ConvertToUserModelUi(UserModelBl userModelBl)
+        public static UserViewModel Convert(UserProfile userModel)
         {
             return new UserViewModel
             {
-                UserId = userModelBl.UserId,
-                UserName = userModelBl.UserName,
-                ChiefId = userModelBl.ChiefId,
-                IsAdmin = userModelBl.IsAdmin,
-                IsChief = userModelBl.IsChief,
-                IsMasterChief = userModelBl.IsMasterChief,
-                IsRecipient = userModelBl.IsMasterChief,
-                IsSender = userModelBl.IsSender,
-                Login = userModelBl.Login
+                UserId = userModel.UserId,
+                UserName = userModel.UserName,
+                ChiefId = userModel.ChiefId,
+                IsAdmin = userModel.IsAdmin,
+                IsChief = userModel.IsChief,
+                IsMasterChief = userModel.IsMasterChief,
+                IsRecipient = userModel.IsMasterChief,
+                IsSender = userModel.IsSender,
+                Login = userModel.Login
             };
         }
 
-        public static UserModelBl ConvertToUserModelBl(UserViewModel userModelBl)
+        public static UserProfile ConvertToUserModelBl(UserViewModel userModelBl)
         {
-            return new UserModelBl
+            return new UserProfile
             {
                 UserId = userModelBl.UserId,
                 UserName = userModelBl.UserName,

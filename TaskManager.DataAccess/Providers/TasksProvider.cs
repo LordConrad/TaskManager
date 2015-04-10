@@ -19,8 +19,8 @@ namespace TaskManager.DataAccess.Providers
                 using (var context = new TaskManagerContext())
                 {
                     var newTask = context.Tasks.Add(task);
-                    if (newTask.TaskEeventLogs == null) newTask.TaskEeventLogs = new List<TaskEeventLog>();
-                    newTask.TaskEeventLogs.Add(new TaskEeventLog
+                    if (newTask.TaskEeventLogs == null) newTask.TaskEeventLogs = new List<TaskEventLog>();
+                    newTask.TaskEeventLogs.Add(new TaskEventLog
                     {
                         EventDateTime = DateTime.Now,
                         PropertyName = "CreateDate",
@@ -108,7 +108,7 @@ namespace TaskManager.DataAccess.Providers
                 var task = context.Tasks.FirstOrDefault(x => x.TaskId == model.TaskId);
                 if (task != null && !task.TaskText.Trim().Equals(model.TaskText.Trim(), StringComparison.InvariantCultureIgnoreCase))
                 {
-                    task.TaskEeventLogs.Add(new TaskEeventLog
+                    task.TaskEeventLogs.Add(new TaskEventLog
                     {
                         EventDateTime = DateTime.Now,
                         PropertyName = "TaskText",
@@ -144,7 +144,7 @@ namespace TaskManager.DataAccess.Providers
                 var task = context.Tasks.FirstOrDefault(x => x.TaskId == id);
                 if (task != null)
                 {
-                    task.TaskEeventLogs.Add(new TaskEeventLog
+                    task.TaskEeventLogs.Add(new TaskEventLog
                     {
                         EventDateTime = DateTime.Now,
                         PropertyName = "AcceptCpmpleteDate",
@@ -164,6 +164,54 @@ namespace TaskManager.DataAccess.Providers
             {
                 return context.Tasks.Count(x => x.SenderId == WebSecurity.CurrentUserId && x.CompleteDate.HasValue && !x.AcceptCpmpleteDate.HasValue);
             }
-        } 
+        }
+
+        public int GetNotAssignedTasksCount()
+        {
+            using (var context = new TaskManagerContext())
+            {
+                return context.Tasks.Count(x => !x.RecipientId.HasValue);
+            }
+        }
+
+        public IEnumerable<Priority> GetPriorityList()
+        {
+            using (var context = new TaskManagerContext())
+            {
+                return context.Priorities;
+            }
+        }
+
+        public bool UpdateTask(Task task)
+        {
+            try
+            {
+                using (var context = new TaskManagerContext())
+                {
+                    context.Entry(task).State = EntityState.Modified;
+                    context.SaveChanges();
+                    return true;
+                }
+            }
+            catch (Exception)
+            {
+            }
+            return false;
+        }
+
+        public IEnumerable<Comment> GetCommentsForTask(int taskId)
+        {
+            try
+            {
+                using (var context = new TaskManagerContext())
+                {
+                    return context.Comments.Where(x => x.TaskId == taskId);
+                }
+            }
+            catch (Exception)
+            {
+            }
+            return null;
+        }
     }
 }

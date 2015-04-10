@@ -86,7 +86,7 @@
     <Compile Include="Models\Priority.cs" />
     <Compile Include="Models\PriorityEnum.cs" />
     <Compile Include="Models\Task.cs" />
-    <Compile Include="Models\TaskEeventLog.cs" />
+    <Compile Include="Models\TaskEventLog.cs" />
     <Compile Include="TaskManagerContext.cs" />
     <Compile Include="Models\UserProfile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

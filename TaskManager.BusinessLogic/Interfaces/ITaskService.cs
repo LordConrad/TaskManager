@@ -1,19 +1,19 @@
 ﻿using System.Collections.Generic;
-using TaskManager.DataAccess.Models;
+using TaskManager.BusinessLogic.Models;
 
-namespace TaskManager.DataAccess.Interfaces
+namespace TaskManager.BusinessLogic.Interfaces
 {
-    public interface ITasksProvider
+    public interface ITaskService
     {
         bool AddTask(Task task);
         IEnumerable<Task> GetTasksBySender(int senderId);
-        Task GetTasksById(int taskId);
+        Task GetTaskById(int taskId);
         IEnumerable<Task> GetTasks();
-        IList<Task> GetTasksForCurrrentUser();
         void UpdateTaskText(Task model);
         void DeleteTask(int taskId);
         void ConfirmTask(int id);
         int SenderCompleteTasksCount();
+        List<Task> GetTasksForCurrrentUser();
         int GetNotAssignedTasksCount();
         IEnumerable<Priority> GetPriorityList();
         bool UpdateTask(Task task);

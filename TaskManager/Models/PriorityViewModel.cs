@@ -1,20 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System.ComponentModel;
 
 namespace TaskManager.Models
 {
-    public class PriorityViewModel
+    public enum Priority
     {
-
-        public int PriorityId { get; set; }
-        public string PriorityName { get; set; }
-
-        virtual public ICollection<TaskViewModel> SamePriorityTasks { get; set; }
-    }
-
-    public enum PriorityEnum
-    {
+        [Description("высокий")]
         High,
+        [Description("обычный")]
         Medium,
+        [Description("низкий")]
         Low
     }
 

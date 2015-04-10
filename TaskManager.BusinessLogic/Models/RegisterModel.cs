@@ -5,7 +5,7 @@ using System.Text;
 
 namespace TaskManager.BusinessLogic.Models
 {
-    public class RegisterModelBl
+    public class RegisterModel
     {
 
         public string UserName { get; set; }

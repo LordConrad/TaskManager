@@ -7,11 +7,11 @@ namespace TaskManager.Controllers
 {
 	public class StatisticController : Controller
 	{
-		private readonly ITasksService _tasksService;
+		private readonly ITaskService _taskService;
 
-		public StatisticController(ITasksService tasksService)
+		public StatisticController(ITaskService taskService)
 		{
-			_tasksService = tasksService;
+			_taskService = taskService;
 		}
 
 		//
@@ -19,7 +19,7 @@ namespace TaskManager.Controllers
 
 		public ActionResult Index()
 		{
-			return View(_tasksService.GetTasks().Select(EntityConverter.ConvertToTaskUi));
+			return View(_taskService.GetTasks().Select(EntityConverter.ConvertToTaskUi));
 		}
 
 	}

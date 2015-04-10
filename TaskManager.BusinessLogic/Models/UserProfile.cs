@@ -2,7 +2,7 @@
 
 namespace TaskManager.BusinessLogic.Models
 {
-    public class UserProfileBl
+    public class UserProfile
     {
         public int UserId { get; set; }
         public string UserName { get; set; }
@@ -11,11 +11,11 @@ namespace TaskManager.BusinessLogic.Models
         //public int? ChiefId { get; set; }
         //public virtual UserProfile RecipChief { get; set; }
         //public virtual ICollection<UserProfile> ChiefRecipients { get; set; } 
-        public virtual ICollection<TaskBl> SendedTasks { get; set; }
-        public virtual ICollection<TaskBl> RecipTasks { get; set; }
-        public virtual ICollection<TaskEventLogBl> Logs { get; set; }
+        public virtual ICollection<Task> SendedTasks { get; set; }
+        public virtual ICollection<Task> RecipTasks { get; set; }
+        public virtual ICollection<TaskEventLog> Logs { get; set; }
         //[ForeignKey("TaskChiefId")]
         //public virtual ICollection<Task> ChiefTasks { get; set; }
-        public virtual ICollection<CommentBl> Comments { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
     }
 }

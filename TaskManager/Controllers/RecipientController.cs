@@ -12,11 +12,11 @@ namespace TaskManager.Controllers
 	[Authorize(Roles = "Recipient")]
 	public class RecipientController : Controller
 	{
-		private readonly ITasksService _tasksService;
+		private readonly ITaskService _taskService;
 
-		public RecipientController(ITasksService tasksService)
+		public RecipientController(ITaskService taskService)
 		{
-			_tasksService = tasksService;
+			_taskService = taskService;
 		}
 
 		//
@@ -29,7 +29,7 @@ namespace TaskManager.Controllers
 
 		public ActionResult Tasks()
 		{
-			var tasks = _tasksService.GetTasksForCurrrentUser();
+			var tasks = _taskService.GetTasksForCurrrentUser();
 
 			var tasksViewModelList = new List<RecipientTaskViewModel>();
 
