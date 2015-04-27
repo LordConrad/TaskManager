@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using TaskManager.BusinessLogic.Converters;
 using TaskManager.BusinessLogic.Interfaces;
 using TaskManager.BusinessLogic.Models;
@@ -70,7 +69,7 @@ namespace TaskManager.BusinessLogic.Services
 
         public IEnumerable<Priority> GetPriorityList()
         {
-            return _taskProvider.GetPriorityList().Select(EntityConverter.Convert);
+            return Enum.GetValues(typeof(Priority)).Cast<Priority>();
         }
 
         public bool UpdateTask(Task task)
@@ -81,6 +80,11 @@ namespace TaskManager.BusinessLogic.Services
         public IEnumerable<Comment> GetCommentsForTask(int taskId)
         {
             return _taskProvider.GetCommentsForTask(taskId).Select(EntityConverter.Convert);
+        }
+
+        public IEnumerable<Task> GetOverdueTasks()
+        {
+            return GetTasks().Where(x => x.Deadline < DateTime.Now);
         }
     }
 }

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace TaskManager.Models
 {
-    public class LoginViewModel
+    public class LoginViewModel : BaseViewModel
     {
         [Required(ErrorMessage = "Введите логин")]
         [Display(Name = "Логин")]

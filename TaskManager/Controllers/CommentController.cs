@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using TaskManager.BusinessLogic.Interfaces;
 using TaskManager.BusinessLogic.Models;
 using TaskManager.Models;
+using TaskManager.Converters;
 
 namespace TaskManager.Controllers
 {
@@ -19,7 +21,7 @@ namespace TaskManager.Controllers
         public ActionResult GetCommentsForTask(int taskId)
         {
             var comments = _taskService.GetCommentsForTask(taskId);
-            
+
 
             return PartialView(comments);
         }
@@ -36,37 +38,30 @@ namespace TaskManager.Controllers
             {
                 try
                 {
-                    using (var context = new TaskManagerContext())
+                    var task = _taskService.GetTaskById(model.TaskId);
+                    if (task != null)
                     {
-                        var task = context.Tasks.Include(x => x.Comments).FirstOrDefault(x => x.TaskId == model.TaskId);
-                        if (task != null)
+                        task.Comments.Add(new Comment
                         {
-                            task.Comments.Add(new Comment
-                            {
-                                AuthorId = model.AuthorId,
-                                CommentText = model.Text.Trim(),
-                                CommentDate = DateTime.Now
-                            });
-                            context.SaveChanges();
-                            return new JsonResult(){Data = new { result = "success" }};
-                        }
+                            AuthorId = model.AuthorId,
+                            CommentText = model.Text.Trim(),
+                            CommentDate = DateTime.Now
+                        });
+                        _taskService.UpdateTask(task);
+                        return new JsonResult() { Data = new { result = "success" } };
                     }
                 }
-                catch (DbEntityValidationException ex)
-                {
-                    
-                }
+
                 catch (Exception)
                 {
-                    
                     throw;
                 }
             }
             else
             {
-                
+
             }
-            return new JsonResult(){Data = new { result = "error"}};
+            return new JsonResult() { Data = new { result = "error" } };
         }
 
     }

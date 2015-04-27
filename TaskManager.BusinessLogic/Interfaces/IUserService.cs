@@ -23,5 +23,6 @@ namespace TaskManager.BusinessLogic.Interfaces
         bool IsUserInAnyRole();
         int GetNewUsersCount();
         UserProfile CheckUser(string username);
+        IEnumerable<string> GetRolesNames();
     }
 }

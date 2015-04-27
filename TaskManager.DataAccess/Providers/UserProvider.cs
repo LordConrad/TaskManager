@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -141,9 +142,12 @@ namespace TaskManager.DataAccess.Providers
             UserProfile model;
             using (var context = new TaskManagerContext())
             {
-                model =
-                    context.Users.FirstOrDefault(
-                        x => x.UserName.Equals(login, StringComparison.InvariantCultureIgnoreCase));
+                model = context.Users
+                    .Include(x => x.Comments)
+                    .Include(x => x.Logs)
+                    .Include(x => x.RecipTasks)
+                    .Include(x => x.SendedTasks)
+                    .FirstOrDefault(x => x.UserName.Equals(login, StringComparison.InvariantCultureIgnoreCase));
             }
             return model;
         }
@@ -153,7 +157,12 @@ namespace TaskManager.DataAccess.Providers
             UserProfile model;
             using (var context = new TaskManagerContext())
             {
-                model = context.Users.FirstOrDefault(x => x.UserId == id);
+                model = context.Users
+                    .Include(x => x.Comments)
+                    .Include(x => x.Logs)
+                    .Include(x => x.RecipTasks)
+                    .Include(x => x.SendedTasks)
+                    .FirstOrDefault(x => x.UserId == id);
             }
             return model;
         }
@@ -161,6 +170,11 @@ namespace TaskManager.DataAccess.Providers
         public string[] GetRolesNamesArray(string userFullName)
         {
             return Roles.GetRolesForUser(userFullName);
+        }
+
+        public IEnumerable<string> GetRolesNames()
+        {
+            return Roles.GetAllRoles();
         }
 
         public bool SaveEditedUser(UserProfile model, string[] newRoles)

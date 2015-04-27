@@ -18,7 +18,6 @@ namespace TaskManager.Controllers
         }
 
         //
-        // GET: /Account/
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
@@ -33,8 +32,9 @@ namespace TaskManager.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (_userService.GetUserByLogin(model.UserName) != null
-                    && _userService.GetUserByLogin(model.UserName).IsActive 
+                var user = _userService.GetUserByLogin(model.UserName);
+                if (user != null
+                    && user.IsActive 
                     && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
                 {
                     return RedirectToLocal(returnUrl);

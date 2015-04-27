@@ -18,5 +18,6 @@ namespace TaskManager.BusinessLogic.Interfaces
         IEnumerable<Priority> GetPriorityList();
         bool UpdateTask(Task task);
         IEnumerable<Comment> GetCommentsForTask(int taskId);
+        IEnumerable<Task> GetOverdueTasks();
     }
 }

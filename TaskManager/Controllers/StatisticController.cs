@@ -19,7 +19,7 @@ namespace TaskManager.Controllers
 
 		public ActionResult Index()
 		{
-			return View(_taskService.GetTasks().Select(EntityConverter.ConvertToTaskUi));
+			return View(_taskService.GetTasks().Select(EntityConverter.Convert));
 		}
 
 	}

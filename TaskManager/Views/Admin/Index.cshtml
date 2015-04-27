@@ -1,4 +1,5 @@
-﻿@using TaskManager.Helpers
+﻿@using TaskManager.BusinessLogic.Models
+@model TaskManager.Models.Admin.AdminManageUsersViewModel
 @{
     ViewBag.Title = "Администрирование";
     Layout = "~/Views/Admin/AdminLayout.cshtml";
@@ -16,21 +17,21 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (var user in ModelHelper.GetAllUsers().OrderByDescending(ModelHelper.IsNewUser).ThenBy(x => x.UserFullName))
+            @foreach (UserProfile user in Model.Users)
             {
                 if (!user.UserName.Equals("admin") && user.IsActive)
                 {
-                    string rowClass = ModelHelper.IsNewUser(user) ? "info" : "";
+                    string rowClass = (!user.IsAdmin && !user.IsChief && !user.IsMasterChief && !user.IsRecipient && !user.IsSender) ? "info" : "";
                 
                     <tr class="@rowClass">
                         <td>@user.UserFullName</td>
                         <td>@user.UserName</td>
-                        <td>@foreach (var role in ModelHelper.GetRolesForUser(user.UserName))
+                        <td>@foreach (var role in Roles.GetRolesForUser(user.UserName))
                             {
                                 <p>@role</p>
                             } </td>
                         <td>
-                            <button type="button" class="btn btn-sm btn-default" onclick=" location.href = '@Url.Action("Edit", new { id = user.UserId })' ">
+                            <button type="button" class="btn btn-sm btn-default" onclick="location.href = '@Url.Action("Edit", new { id = user.UserId })'">
                                 <span class="glyphicon glyphicon-pencil"></span>
                             </button>
                             <button class="btn btn-sm btn-default" data-toggle="modal" data-target="#modal-window" data-id="@user.UserFullName" data-href="@Url.Action("Delete", new { id = user.UserId })">

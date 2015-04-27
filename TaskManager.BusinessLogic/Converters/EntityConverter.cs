@@ -15,20 +15,15 @@ namespace TaskManager.BusinessLogic.Converters
             {
                 AcceptCpmpleteDate = task.AcceptCpmpleteDate,
                 AssignDateTime = task.AssignDateTime,
-                Comments = task.Comments.Select(Convert).ToList(),
                 CompleteDate = task.CompleteDate,
                 CreateDate = task.CreateDate,
                 Deadline = task.Deadline,
                 IsRecipientViewed = task.IsRecipientViewed,
-                PriorityId = task.PriorityId,
                 RecipientId = task.RecipientId,
                 ResultComment = task.ResultComment,
                 SenderId = task.SenderId,
-                TaskEeventLogs = task.TaskEeventLogs.Select(Convert).ToList(),
                 TaskId = task.TaskId,
-                TaskPriority = Convert(task.TaskPriority),
-                TaskRecipient = Convert(task.TaskRecipient),
-                TaskSender = Convert(task.TaskSender),
+                TaskPriority = (BL.Priority)task.TaskId,
                 TaskText = task.TaskText
             };
         }
@@ -39,41 +34,16 @@ namespace TaskManager.BusinessLogic.Converters
             {
                 AcceptCpmpleteDate = task.AcceptCpmpleteDate,
                 AssignDateTime = task.AssignDateTime,
-                Comments = task.Comments.Select(Convert).ToList(),
                 CompleteDate = task.CompleteDate,
                 CreateDate = task.CreateDate,
                 Deadline = task.Deadline,
                 IsRecipientViewed = task.IsRecipientViewed,
-                PriorityId = task.PriorityId,
+                PriorityId = (int)task.TaskPriority,
                 RecipientId = task.RecipientId,
                 ResultComment = task.ResultComment,
                 SenderId = task.SenderId,
-                TaskEeventLogs = task.TaskEeventLogs.Select(Convert).ToList(),
                 TaskId = task.TaskId,
-                TaskPriority = Convert(task.TaskPriority),
-                TaskRecipient = Convert(task.TaskRecipient),
-                TaskSender = Convert(task.TaskSender),
                 TaskText = task.TaskText
-            };
-        }
-
-        public static BL.Priority Convert(DAL.Priority priority)
-        {
-            return new BL.Priority
-            {
-                PriorityId = priority.PriorityId,
-                PriorityName = priority.PriorityName,
-                SamePriorityTasks = priority.SamePriorityTasks.Select(Convert).ToList()
-            };
-        }
-
-        public static DAL.Priority Convert(BL.Priority priority)
-        {
-            return new DataAccess.Models.Priority
-            {
-                PriorityId = priority.PriorityId,
-                PriorityName = priority.PriorityName,
-                SamePriorityTasks = priority.SamePriorityTasks.Select(Convert).ToList()
             };
         }
 
@@ -81,8 +51,6 @@ namespace TaskManager.BusinessLogic.Converters
         {
             return new BL.Comment
             {
-                Author = Convert(comment.Author),
-                Task = Convert(comment.Task),
                 TaskId = comment.TaskId,
                 AuthorId = comment.AuthorId,
                 CommentDate = comment.CommentDate,
@@ -95,8 +63,6 @@ namespace TaskManager.BusinessLogic.Converters
         {
             return new DataAccess.Models.Comment
             {
-                Author = Convert(comment.Author),
-                Task = Convert(comment.Task),
                 TaskId = comment.TaskId,
                 AuthorId = comment.AuthorId,
                 CommentDate = comment.CommentDate,
@@ -109,13 +75,9 @@ namespace TaskManager.BusinessLogic.Converters
         {
             return new BL.UserProfile
             {
-                Comments = userProfile.Comments.Select(Convert).ToList(),
                 UserName = userProfile.UserName,
                 UserId = userProfile.UserId,
                 IsActive = userProfile.IsActive,
-                Logs = userProfile.Logs.Select(Convert).ToList(),
-                RecipTasks = userProfile.RecipTasks.Select(Convert).ToList(),
-                SendedTasks = userProfile.SendedTasks.Select(Convert).ToList(),
                 UserFullName = userProfile.UserFullName
             };
         }
@@ -141,13 +103,11 @@ namespace TaskManager.BusinessLogic.Converters
             {
                 EventDateTime = taskEventLog.EventDateTime,
                 NewValue = taskEventLog.NewValue,
-                Task = Convert(taskEventLog.Task),
                 UserId = taskEventLog.UserId,
                 TaskId = taskEventLog.TaskId,
                 OldValue = taskEventLog.OldValue,
                 PropertyName = taskEventLog.PropertyName,
                 TaskEventLogId = taskEventLog.TaskEventLogId,
-                User = Convert(taskEventLog.User)
             };
         }
 
@@ -157,13 +117,11 @@ namespace TaskManager.BusinessLogic.Converters
             {
                 EventDateTime = taskEeventLog.EventDateTime,
                 NewValue = taskEeventLog.NewValue,
-                Task = Convert(taskEeventLog.Task),
                 UserId = taskEeventLog.UserId,
                 TaskId = taskEeventLog.TaskId,
                 OldValue = taskEeventLog.OldValue,
                 PropertyName = taskEeventLog.PropertyName,
                 TaskEventLogId = taskEeventLog.TaskEventLogId,
-                User = Convert(taskEeventLog.User)
             };
         }
     }

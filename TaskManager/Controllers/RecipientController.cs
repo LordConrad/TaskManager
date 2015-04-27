@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using System.Web.Mvc;
 using TaskManager.BusinessLogic.Interfaces;
+using TaskManager.BusinessLogic.Models;
+using TaskManager.Helpers;
 using TaskManager.Models;
 using WebMatrix.WebData;
 
@@ -59,23 +60,21 @@ namespace TaskManager.Controllers
 		{
 			try
 			{
-				using (var context = new TaskManagerContext())
-				{
-					var task = context.Tasks.Include(x => x.TaskEeventLogs).FirstOrDefault(x => x.TaskId == taskId);
-					if (task != null)
-					{
-						task.TaskEeventLogs.Add(new TaskEeventLog
-						{
-							EventDateTime = DateTime.Now,
-							PropertyName = "CompleteDate",
-							UserId = WebSecurity.CurrentUserId,
-							OldValue = task.CompleteDate.HasValue ? task.CompleteDate.Value.ToString(ModelHelper.DateTimeFormatFull) : null,
-							NewValue = null
-						});
-						task.CompleteDate = null;
-						context.SaveChanges();
-					}
-				}
+			    var task = _taskService.GetTaskById(taskId);
+			    if (task != null)
+			    {
+			        task.TaskEeventLogs.Add(new TaskEventLog
+			        {
+			            EventDateTime = DateTime.Now,
+			            PropertyName = "CompleteDate",
+			            UserId = WebSecurity.CurrentUserId,
+			            OldValue =
+			                task.CompleteDate.HasValue ? task.CompleteDate.Value.ToString(Constants.DateFullFormat) : null,
+			            NewValue = null
+			        });
+			        task.CompleteDate = null;
+			        _taskService.UpdateTask(task);
+			    }
 			}
 			catch (Exception)
 			{
@@ -87,64 +86,48 @@ namespace TaskManager.Controllers
 
 		public ActionResult RecipNewTasksCount()
 		{
-			int count = 0;
-			try
-			{
-				using (var context = new TaskManagerContext())
-				{
-					count = context.Tasks.Count(x => x.RecipientId == WebSecurity.CurrentUserId && x.IsRecipientViewed == false);
-				}
-			}
-			catch (Exception)
-			{
-			}
-			var badge = new BadgeModel { Count = count };
-			if (Session["RecipNewTasksCount"] != null && ((int)Session["RecipNewTasksCount"]) < count)
-			{
-				badge.IsPlay = true;
-			}
-			Session["RecipNewTasksCount"] = count;
+		    int count = 0;
+		    count =
+		        _taskService.GetTasks()
+		            .Count(x => x.RecipientId == WebSecurity.CurrentUserId && x.IsRecipientViewed == false);
+		    
+		    var badge = new BadgeModel {Count = count};
+		    if (Session["RecipNewTasksCount"] != null && ((int) Session["RecipNewTasksCount"]) < count)
+		    {
+		        badge.IsPlay = true;
+		    }
+		    Session["RecipNewTasksCount"] = count;
 
-			return PartialView(badge);
+		    return PartialView(badge);
 		}
 
-		public ActionResult Edit(int taskId)
+	    public ActionResult Edit(int taskId)
 		{
 			try
 			{
-				Task task;
-				using (var context = new TaskManagerContext())
-				{
-					task = context.Tasks.Include(x => x.TaskSender)
-						.Include(x => x.TaskPriority)
-						.Include(x => x.TaskSender)
-						.Include(x => x.Comments)
-						.FirstOrDefault(x => x.TaskId == taskId);
-					if (task != null)
-					{
-						task.IsRecipientViewed = true;
-						context.SaveChanges();
-					}
-
-
-				}
-				if (task != null)
-				{
-					var taskEdit = new RecipTaskEditModel
-					{
-						AssignDateTime = task.AssignDateTime.Value,
-						CreationDate = task.CreateDate,
-						Deadline = task.Deadline.Value,
-						PriorityName = task.TaskPriority.PriorityName,
-						SenderName = task.TaskSender.UserFullName,
-						TaskId = task.TaskId,
-						TaskText = task.TaskText,
-						ResultComment = task.ResultComment,
-						CompleteDate = task.CompleteDate,
-						CommentsCount = task.Comments.Count
-					};
-					return View(taskEdit);
-				}
+			    var task = _taskService.GetTaskById(taskId);
+			    if (task != null)
+			    {
+			        task.IsRecipientViewed = true;
+			        _taskService.UpdateTask(task);
+			    }
+			    if (task != null)
+			    {
+			        var taskEdit = new RecipTaskEditModel
+			        {
+			            AssignDateTime = task.AssignDateTime.Value,
+			            CreationDate = task.CreateDate,
+			            Deadline = task.Deadline.Value,
+			            PriorityName = task.TaskPriority.PriorityName,
+			            SenderName = task.TaskSender.UserFullName,
+			            TaskId = task.TaskId,
+			            TaskText = task.TaskText,
+			            ResultComment = task.ResultComment,
+			            CompleteDate = task.CompleteDate,
+			            CommentsCount = task.Comments.Count
+			        };
+			        return View(taskEdit);
+			    }
 			}
 			catch (Exception)
 			{
@@ -157,49 +140,43 @@ namespace TaskManager.Controllers
 		[HttpPost]
 		public ActionResult Edit(RecipTaskEditModel model)
 		{
-			try
-			{
-				using (var context = new TaskManagerContext())
-				{
-					var task = context.Tasks.Include(x => x.TaskEeventLogs).FirstOrDefault(x => x.TaskId == model.TaskId);
-					if (task != null)
-					{
-						if ((string.IsNullOrEmpty(task.ResultComment) && !string.IsNullOrEmpty(model.ResultComment))
-							|| (!string.IsNullOrEmpty(task.ResultComment) && !task.ResultComment.Equals(model.ResultComment, StringComparison.InvariantCultureIgnoreCase)))
-						{
-							task.TaskEeventLogs.Add(new TaskEeventLog
-							{
-								EventDateTime = DateTime.Now,
-								PropertyName = "ResultComment",
-								UserId = WebSecurity.CurrentUserId,
-								OldValue = task.ResultComment,
-								NewValue = model.ResultComment
-							});
-							task.ResultComment = model.ResultComment;
-						}
-						if (task.CompleteDate == null)
-						{
-							task.TaskEeventLogs.Add(new TaskEeventLog
-							{
-								EventDateTime = DateTime.Now,
-								PropertyName = "CompleteDate",
-								UserId = WebSecurity.CurrentUserId,
-								OldValue = task.CompleteDate.HasValue ? task.CompleteDate.Value.ToString(ModelHelper.DateTimeFormatFull) : null,
-								NewValue = DateTime.Now.ToString(ModelHelper.DateTimeFormatFull)
-							});
-							task.CompleteDate = DateTime.Now;
-						}
-						context.SaveChanges();
-					}
-				}
-			}
-			catch (Exception)
-			{
+		    var task = _taskService.GetTaskById(model.TaskId);
+		    if (task != null)
+		    {
+		        if ((string.IsNullOrEmpty(task.ResultComment) && !string.IsNullOrEmpty(model.ResultComment))
+		            ||
+		            (!string.IsNullOrEmpty(task.ResultComment) &&
+		             !task.ResultComment.Equals(model.ResultComment, StringComparison.InvariantCultureIgnoreCase)))
+		        {
+		            task.TaskEeventLogs.Add(new TaskEventLog
+		            {
+		                EventDateTime = DateTime.Now,
+		                PropertyName = "ResultComment",
+		                UserId = WebSecurity.CurrentUserId,
+		                OldValue = task.ResultComment,
+		                NewValue = model.ResultComment
+		            });
+		            task.ResultComment = model.ResultComment;
+		        }
+		        if (task.CompleteDate == null)
+		        {
+		            task.TaskEeventLogs.Add(new TaskEventLog
+		            {
+		                EventDateTime = DateTime.Now,
+		                PropertyName = "CompleteDate",
+		                UserId = WebSecurity.CurrentUserId,
+		                OldValue =
+		                    task.CompleteDate.HasValue
+		                        ? task.CompleteDate.Value.ToString(Constants.DateFormat)
+		                        : null,
+		                NewValue = DateTime.Now.ToString(Constants.DateFullFormat)
+		            });
+		            task.CompleteDate = DateTime.Now;
+		        }
+		        _taskService.UpdateTask(task);
+		    }
 
-				throw;
-			}
-
-			return RedirectToAction("Index");
+		    return RedirectToAction("Index");
 		}
 	}
 }

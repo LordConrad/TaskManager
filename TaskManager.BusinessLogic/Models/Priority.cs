@@ -3,14 +3,7 @@ using System.ComponentModel;
 
 namespace TaskManager.BusinessLogic.Models
 {
-    public class Priority
-    {
-        public int PriorityId { get; set; }
-        public string PriorityName { get; set; }
-        virtual public ICollection<Task> SamePriorityTasks { get; set; }
-    }
-
-    public enum PriorityEnum
+    public enum Priority
     {
         [Description("высокий")]
         High,

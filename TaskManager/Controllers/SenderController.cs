@@ -26,7 +26,7 @@ namespace TaskManager.Controllers
 		{
 			var query = _taskService.GetTasksBySender(WebSecurity.CurrentUserId)
 				.Where(x => x.AcceptCpmpleteDate == null);
-			return System.Web.UI.WebControls.View(query.Select(EntityConverter.ConvertToTaskUi));
+			return View(query.Select(EntityConverter.Convert));
 		}
 
 		[HttpGet]

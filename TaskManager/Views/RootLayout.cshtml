@@ -1,5 +1,4 @@
-﻿@using TaskManager.Helpers
-@using TaskManager.Models
+﻿@model TaskManager.Models.BaseViewModel
 @{
     Layout = null;
 }
@@ -62,14 +61,14 @@
     {
         <div id="top" class="navbar navbar-fixed-top">
             <div class="container">
-                @if (ModelHelper.CurrentUser != null)
+                @if (!string.IsNullOrEmpty(Model.CurrentUserName))
                 {
-                    <label class="navbar-brand">@ModelHelper.CurrentUser.UserFullName</label>
+                    <label class="navbar-brand">@Model.CurrentUserName</label>
                 }
 
                 <div class="collapse navbar-collapse" id="responsive-menu">
                     <ul class="nav navbar-nav" id="mainNav">
-                        @if (ModelHelper.IsMasterChief)
+                        @if (Model.UserRoles.Contains("MasterChief"))
                         {
                             <li id="masterChiefMenuButtonId"></li>
                             <script type="text/javascript">
@@ -86,7 +85,7 @@
                                 })();
                             </script>
                         }
-                        @if (ModelHelper.IsChief)
+                        @if (Model.UserRoles.Contains("Chief"))
                         {
                             <li id="chiefMenuButtonPlaceholderId"></li>
                             <script type="text/javascript">
@@ -105,7 +104,7 @@
 
                             
                         }
-                        @if (ModelHelper.IsRecipient)
+                        @if (Model.UserRoles.Contains("Recipient"))
                         {
                             <li id="recipMenuButtonPlaceholderId"></li>
                             <script type="text/javascript">
@@ -122,7 +121,7 @@
                                 })();
                             </script>
                         }
-                        @if (ModelHelper.IsSender)
+                        @if (Model.UserRoles.Contains("Sender"))
                         {
                             <li id="senderMenuButtonPlaceholderId"></li>
                             <script type="text/javascript">
@@ -141,7 +140,7 @@
                             <li>@Html.ActionLink("Новая заявка", "NewTask", "Sender")</li>
                         }
 
-                        @if (ModelHelper.IsAdmin)
+                        @if (Model.UserRoles.Contains("Admin"))
                         {
                             <li id="adminMenuButtonPlaceholderId"></li>
                             <script type="text/javascript">

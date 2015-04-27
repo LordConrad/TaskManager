@@ -43,9 +43,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DelegateDecompiler">
-      <HintPath>..\packages\DelegateDecompiler.0.9.1.0\lib\net40-Client\DelegateDecompiler.dll</HintPath>
-    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net40\EntityFramework.dll</HintPath>
     </Reference>
@@ -173,22 +170,21 @@
     </Compile>
     <Compile Include="Helpers\BootstrapHtml.cs" />
     <Compile Include="Helpers\Constants.cs" />
+    <Compile Include="Models\Admin\AdminManageUsersViewModel.cs" />
+    <Compile Include="Models\Admin\UserViewModel.cs" />
     <Compile Include="Models\BadgeModel.cs" />
+    <Compile Include="Models\BaseViewModel.cs" />
     <Compile Include="Models\ChiefTaskEditViewModel.cs" />
     <Compile Include="Models\CommentAddModel.cs" />
-    <Compile Include="Models\CommentViewModel.cs" />
     <Compile Include="Models\FilterTaskViewModel.cs" />
     <Compile Include="Models\LoginViewModel.cs" />
     <Compile Include="Models\MasterChiefViewModel.cs" />
     <Compile Include="Models\NewTaskViewModel.cs" />
     <Compile Include="Models\ChiefTaskViewModel.cs" />
-    <Compile Include="Models\PriorityViewModel.cs" />
     <Compile Include="Models\RecipientTaskViewModel.cs" />
     <Compile Include="Models\RecipTaskEditModel.cs" />
     <Compile Include="Models\RegisterViewModel.cs" />
-    <Compile Include="Models\TaskEventLogViewModel.cs" />
     <Compile Include="Models\TaskViewModel.cs" />
-    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

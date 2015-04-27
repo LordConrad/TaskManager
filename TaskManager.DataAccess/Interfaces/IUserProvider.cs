@@ -27,6 +27,7 @@ namespace TaskManager.DataAccess.Interfaces
         IEnumerable<SelectListItem> GetRecipientsSelectedList(string firstElementTitle, string selectedRecipientId, TaskManagerContext context = null);
         UserProfile CheckUser(string username);
         string[] GetRolesNamesArray(string model);
+        IEnumerable<string> GetRolesNames(); 
         void SaveChages();
     }
 }

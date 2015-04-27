@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using TaskManager.BusinessLogic.Interfaces;
+using TaskManager.BusinessLogic.Models;
+using TaskManager.Helpers;
 using TaskManager.Models;
 
 namespace TaskManager.Controllers
@@ -9,6 +12,15 @@ namespace TaskManager.Controllers
     [Authorize(Roles = "MasterChief")]
     public class MasterChiefController : Controller
     {
+        private readonly IUserService _userService;
+        private readonly ITaskService _taskService;
+
+        public MasterChiefController(IUserService userService, ITaskService taskService)
+        {
+            _userService = userService;
+            _taskService = taskService;
+        }
+
         public ActionResult Index(MasterChiefViewModel model)
         {
             if (model == null)
@@ -34,17 +46,15 @@ namespace TaskManager.Controllers
                     SelectedRecipient = string.Empty
                 };
             }
-            List<Task> tasks;
-            try
-            {
-                using (var context = new TaskManagerContext())
-                {
-                    tasks = context.Tasks.Where(x => model.FilterTaskViewModel.ArchiveFilter ? x.AcceptCpmpleteDate != null : x.AcceptCpmpleteDate == null)
-                        .Include(x => x.Comments)
-                        .Include(x => x.TaskSender)
-                        .Include(x => x.TaskRecipient)
-                        .Include(x => x.TaskPriority)
-                        .ToList();
+            List<Task> tasks =
+                _taskService.GetTasks()
+                    .Where(
+                        x =>
+                            model.FilterTaskViewModel.ArchiveFilter
+                                ? x.AcceptCpmpleteDate != null
+                                : x.AcceptCpmpleteDate == null)
+                    .ToList();
+                        
                     if (model.FilterTaskViewModel.CompleteFilter)
                     {
                         tasks = tasks.Where(x => x.CompleteDate != null).ToList();
@@ -73,14 +83,12 @@ namespace TaskManager.Controllers
                     {
                         tasks = tasks.Where(x => x.TaskText.ToLower().Contains(model.FilterTaskViewModel.SearchText.ToLower())).ToList();
                     }
-                    model.RecipientList = ModelHelper.GetRecipientsSelectedList("Все исполнители", "0", context);
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+                    model.RecipientList = new List<SelectListItem>(_userService.GetAllRecipients().Select(item => new SelectListItem
+                    {
+                        Text = item.UserFullName,
+                        Value = item.UserId.ToString()
+                    }));
+            
 
             tasks.ForEach(x => model.MasterChiefTaskList.Add(new MasterChiefTaskList
             {
@@ -108,72 +116,60 @@ namespace TaskManager.Controllers
 
         public ActionResult Edit(int taskId)
         {
-            try
+            Task task = _taskService.GetTaskById(taskId);
+
+            if (task != null)
             {
-                Task task;
-                using (var context = new TaskManagerContext())
+                var taskViewModel = new ChiefTaskEditViewModel
                 {
-                    task = context.Tasks
-                        .Include(x => x.TaskRecipient)
-                        .Include(x => x.TaskSender)
-                        .Include(x => x.TaskPriority)
-                        .FirstOrDefault(x => x.TaskId == taskId);
-                    if (task != null)
+                    AcceptCompleteDate = task.AcceptCpmpleteDate,
+                    CompleteDate = task.CompleteDate,
+                    CreationDate = task.CreateDate,
+                    Deadline =
+                        task.Deadline.HasValue ? task.Deadline.Value.ToString(Constants.DateFormat) : string.Empty,
+                    PriorityId = task.TaskPriority != null ? task.TaskPriority.PriorityId.ToString() : "2",
+                    PriorityName = task.TaskPriority != null ? task.TaskPriority.PriorityName : string.Empty,
+                    RecipientId = task.TaskRecipient != null ? task.TaskRecipient.UserId.ToString() : "0",
+                    RecipientName = task.TaskRecipient != null ? task.TaskRecipient.UserFullName : string.Empty,
+                    AssignDate =
+                        task.AssignDateTime.HasValue
+                            ? task.AssignDateTime.Value.ToString(Constants.DateFullFormat)
+                            : string.Empty,
+                    ResultComment = task.ResultComment,
+                    SenderName = task.TaskSender.UserFullName,
+                    TaskText = task.TaskText,
+                    TaskId = task.TaskId,
+                    CommentsCount = task.Comments.Count
+                };
+
+                taskViewModel.RecipientsList =
+                    new List<SelectListItem>(_userService.GetAllRecipients().Select(item => new SelectListItem
                     {
-                        var taskViewModel = new ChiefTaskEditViewModel
-                        {
-                            AcceptCompleteDate = task.AcceptCpmpleteDate,
-                            CompleteDate = task.CompleteDate,
-                            CreationDate = task.CreateDate,
-                            Deadline = task.Deadline.HasValue ? task.Deadline.Value.ToString(ModelHelper.DateFormat) : string.Empty,
-                            PriorityId = task.TaskPriority != null ? task.TaskPriority.PriorityId.ToString() : "2",
-                            PriorityName = task.TaskPriority != null ? task.TaskPriority.PriorityName : string.Empty,
-                            RecipientId = task.TaskRecipient != null ? task.TaskRecipient.UserId.ToString() : "0",
-                            RecipientName = task.TaskRecipient != null ? task.TaskRecipient.UserFullName : string.Empty,
-                            AssignDate = task.AssignDateTime.HasValue ? task.AssignDateTime.Value.ToString(ModelHelper.DateTimeFormatFull) : string.Empty,
-                            ResultComment = task.ResultComment,
-                            SenderName = task.TaskSender.UserFullName,
-                            TaskText = task.TaskText,
-                            TaskId = task.TaskId,
-                            CommentsCount = task.Comments.Count
-                        };
+                        Text = item.UserFullName,
+                        Value = item.UserId.ToString(),
+                        Selected = task.RecipientId == item.UserId
+                    }));
 
+                taskViewModel.PrioritiesList =
+                    new List<SelectListItem>(_taskService.GetPriorityList().Select(item => new SelectListItem
+                    {
+                        Text = item.PriorityName,
+                        Value = item.PriorityId.ToString(),
+                        Selected = task.PriorityId == item.PriorityId
+                    }));
 
-
-                        taskViewModel.RecipientsList = ModelHelper.GetRecipientsSelectedList("не назначен", taskViewModel.PriorityId, context);
-
-                        taskViewModel.PrioritiesList = ModelHelper.GetPrioritiesSelectedList(taskViewModel.PriorityId, context);
-
-
-                        return View(taskViewModel);
-                    }
-                }
+                return View(taskViewModel);
             }
-            catch (Exception)
-            {
-
-                throw;
-            }
+            
             return RedirectToAction("Index");
         }
 
         public ActionResult OverdueTasksCount()
         {
             int count;
-            try
-            {
-                using (var context = new TaskManagerContext())
-                {
-                    count = context.Tasks.Where(x => x.Deadline.HasValue).ToList().Count(y => y.Deadline.Value.Date < DateTime.Now.Date);
-                }
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            var res = new BadgeModel { Count = count };
-            if (Session["NewTasksForManage"] != null && ((int)Session["NewTasksForManage"]) < count)
+            count = _taskService.GetOverdueTasks().Count();
+            var res = new BadgeModel {Count = count};
+            if (Session["NewTasksForManage"] != null && ((int) Session["NewTasksForManage"]) < count)
             {
                 res.IsPlay = true;
             }

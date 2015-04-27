@@ -1,9 +1,13 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using System.Web.Security;
 using TaskManager.BusinessLogic.Interfaces;
+using TaskManager.BusinessLogic.Models;
 using TaskManager.BusinessLogic.Services;
 using TaskManager.Converters;
 using TaskManager.Models;
+using TaskManager.Models.Admin;
+using WebMatrix.WebData;
 
 namespace TaskManager.Controllers
 {
@@ -22,7 +26,12 @@ namespace TaskManager.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            return View(new AdminManageUsersViewModel
+            {
+                CurrentUserName = _userService.GetUserById(WebSecurity.CurrentUserId).UserFullName,
+                UserRoles = Roles.GetRolesForUser(WebSecurity.CurrentUserName),
+                Users = _userService.GetAllUsers() _user
+            });
         }
 
         public ActionResult Edit(int id)
@@ -33,12 +42,10 @@ namespace TaskManager.Controllers
                 return null;
             }
 
-            UserViewModel model = new UserViewModel
+            UserProfile model = new UserProfile
             {
                 UserId = profileModel.UserId,
-                Login = profileModel.UserName,
                 UserName = profileModel.UserFullName,
-                //ChiefId = profileModel.ChiefId.HasValue ? profileModel.ChiefId.Value.ToString() : string.Empty,
                 IsAdmin = Roles.IsUserInRole(profileModel.UserName, "Admin"),
                 IsChief = Roles.IsUserInRole(profileModel.UserName, "Chief"),
                 IsMasterChief = Roles.IsUserInRole(profileModel.UserName, "MasterChief"),
@@ -49,9 +56,9 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult Edit(UserViewModel model)
+        public ActionResult Edit(UserProfile model)
         {
-            _userService.SaveEditedUser(EntityConverter.ConvertToUserModelBl(model));
+            _userService.SaveEditedUser(model);
             return RedirectToAction("Index");
         }
         [HttpGet]
