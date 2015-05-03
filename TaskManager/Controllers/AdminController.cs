@@ -30,7 +30,7 @@ namespace TaskManager.Controllers
             {
                 CurrentUserName = _userService.GetUserById(WebSecurity.CurrentUserId).UserFullName,
                 UserRoles = Roles.GetRolesForUser(WebSecurity.CurrentUserName),
-                Users = _userService.GetAllUsers() _user
+                Users = _userService.GetAllUsers().ConvertAll(EntityConverter.Convert)
             });
         }
 
@@ -46,11 +46,6 @@ namespace TaskManager.Controllers
             {
                 UserId = profileModel.UserId,
                 UserName = profileModel.UserFullName,
-                IsAdmin = Roles.IsUserInRole(profileModel.UserName, "Admin"),
-                IsChief = Roles.IsUserInRole(profileModel.UserName, "Chief"),
-                IsMasterChief = Roles.IsUserInRole(profileModel.UserName, "MasterChief"),
-                IsRecipient = Roles.IsUserInRole(profileModel.UserName, "Recipient"),
-                IsSender = Roles.IsUserInRole(profileModel.UserName, "Sender")
             };
             return View(model);
         }

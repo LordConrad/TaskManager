@@ -5,66 +5,74 @@ using TaskManager.BusinessLogic.Converters;
 using TaskManager.BusinessLogic.Interfaces;
 using TaskManager.BusinessLogic.Models;
 using TaskManager.DataAccess.Interfaces;
+using TaskManager.DataAccess.Providers;
 
 namespace TaskManager.BusinessLogic.Services
 {
     public class TaskService : ITaskService
     {
-        private readonly ITasksProvider _taskProvider;
+        private ITaskProvider _taskProvider;
 
-	    public TaskService(ITasksProvider taskProvider)
-	    {
-		    _taskProvider = taskProvider;
-	    }
-
-	    public bool AddTask(Task task)
+        private ITaskProvider TaskProvider
         {
-            return _taskProvider.AddTask(EntityConverter.Convert(task));
+            get
+            {
+                if (_taskProvider == null)
+                {
+                    _taskProvider = new TaskProvider();
+                }
+                return _taskProvider;
+            }
+        }
+
+        public bool AddTask(Task task)
+        {
+            return TaskProvider.AddTask(EntityConverter.Convert(task));
         }
 
         public IEnumerable<Task> GetTasksBySender(int senderId)
         {
-            return _taskProvider.GetTasksBySender(senderId).Select(EntityConverter.Convert);
+            return TaskProvider.GetTasksBySender(senderId).Select(EntityConverter.Convert);
         }
 
         public Task GetTaskById(int taskId)
         {
-            return EntityConverter.Convert(_taskProvider.GetTasksById(taskId));
+            return EntityConverter.Convert(TaskProvider.GetTasksById(taskId));
         }
 
         public IEnumerable<Task> GetTasks()
         {
-            return _taskProvider.GetTasks().Select(EntityConverter.Convert);
+            return TaskProvider.GetTasks().Select(EntityConverter.Convert);
         }
 
         public void UpdateTaskText(Task model)
         {
-            _taskProvider.UpdateTaskText(EntityConverter.Convert(model));
+            TaskProvider.UpdateTaskText(EntityConverter.Convert(model));
         }
 
         public void DeleteTask(int taskId)
         {
-            _taskProvider.DeleteTask(taskId);
+            TaskProvider.DeleteTask(taskId);
         }
 
         public void ConfirmTask(int id)
         {
-            _taskProvider.DeleteTask(id);
+            TaskProvider.DeleteTask(id);
         }
 
         public int SenderCompleteTasksCount()
         {
-            return _taskProvider.SenderCompleteTasksCount();
+            return TaskProvider.SenderCompleteTasksCount();
         }
 
         public List<Task> GetTasksForCurrrentUser()
         {
-            return _taskProvider.GetTasksForCurrrentUser().Select(EntityConverter.Convert).ToList();
+            return TaskProvider.GetTasksForCurrrentUser().Select(EntityConverter.Convert).ToList();
         }
 
         public int GetNotAssignedTasksCount()
         {
-            return _taskProvider.GetNotAssignedTasksCount();
+            return TaskProvider.GetNotAssignedTasksCount();
         }
 
         public IEnumerable<Priority> GetPriorityList()
@@ -74,12 +82,17 @@ namespace TaskManager.BusinessLogic.Services
 
         public bool UpdateTask(Task task)
         {
-            return _taskProvider.UpdateTask(EntityConverter.Convert(task));
+            return TaskProvider.UpdateTask(EntityConverter.Convert(task));
         }
 
         public IEnumerable<Comment> GetCommentsForTask(int taskId)
         {
-            return _taskProvider.GetCommentsForTask(taskId).Select(EntityConverter.Convert);
+            return TaskProvider.GetCommentsForTask(taskId).Select(EntityConverter.Convert);
+        }
+
+        public void AddComment(Comment comment)
+        {
+            TaskProvider.AddComment(EntityConverter.Convert(comment));
         }
 
         public IEnumerable<Task> GetOverdueTasks()

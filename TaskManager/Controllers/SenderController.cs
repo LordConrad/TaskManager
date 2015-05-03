@@ -13,10 +13,12 @@ namespace TaskManager.Controllers
 	public class SenderController : Controller
 	{
 		private readonly ITaskService _taskService;
+	    private readonly IUserService _userService;
 
-		public SenderController(ITaskService taskService)
+		public SenderController(ITaskService taskService, IUserService userService)
 		{
 			_taskService = taskService;
+		    _userService = userService;
 		}
 
 		//
@@ -68,14 +70,14 @@ namespace TaskManager.Controllers
 				TaskId = taskId,
 				TaskText = task.TaskText,
 				IsComlete = task.CompleteDate.HasValue,
-				IsReadOnly = task.TaskRecipient != null,
-				RecipientName = task.TaskRecipient != null ? task.TaskRecipient.UserFullName : "не назначен",
+				IsReadOnly = task.RecipientId.HasValue,
+				RecipientName = task.RecipientId.HasValue ? _userService.GetUserById(task.RecipientId.Value).UserFullName : "не назначен",
 				AssignDate = task.AssignDateTime.HasValue ? task.AssignDateTime.Value.ToString("dd.MM.yy  HH:mm") : string.Empty,
 				CompleteDate = task.CompleteDate.HasValue ? task.CompleteDate.Value.ToString("dd.MM.yy  HH:mm") : string.Empty,
 				Deadline = task.Deadline.HasValue ? task.Deadline.Value.ToString("dd.MM.yy") : string.Empty,
 				ResultComment = (task.CompleteDate.HasValue && string.IsNullOrEmpty(task.ResultComment)) ? "выполнено" : task.ResultComment,
 				CreationDate = task.CreateDate.ToString("dd.MM.yy  HH:mm"),
-				CommentsCount = task.Comments.Count
+				CommentsCount = _taskService.GetCommentsForTask(taskId).Count()
 			};
 
 			return View(model);

@@ -11,106 +11,114 @@ namespace TaskManager.BusinessLogic.Services
 {
     public class UserService : IUserService
     {
-        private readonly IUserProvider _userProvider;
+        private IUserProvider _userProvider;
 
-        public UserService(UserProvider up)
+        private IUserProvider UserProvider
         {
-            _userProvider = up;
+            get
+            {
+                if (_userProvider == null)
+                {
+                    _userProvider = new UserProvider();
+                }
+                return _userProvider;
+            }
         }
-
+        
         public UserProfile GetCurrentUser()
         {
-            return EntityConverter.Convert(_userProvider.GetCurrentUser());
+            return EntityConverter.Convert(UserProvider.GetCurrentUser());
         }
 
         public bool IsAdmin()
         {
-            return _userProvider.IsAdmin();
+            return UserProvider.IsAdmin();
         }
 
         public bool IsChief()
         {
-            return _userProvider.IsChief();
+            return UserProvider.IsChief();
         }
 
         public bool IsRecipient()
         {
-            return _userProvider.IsRecipient();
+            return UserProvider.IsRecipient();
         }
 
         public bool IsSender()
         {
-            return _userProvider.IsSender();
+            return UserProvider.IsSender();
         }
 
         public bool IsMasterChief()
         {
-            return _userProvider.IsMasterChief();
+            return UserProvider.IsMasterChief();
         }
 
         public bool IsNewUser(UserProfile user)
         {
-            return _userProvider.IsNewUser(EntityConverter.Convert(user));
+            return UserProvider.IsNewUser(EntityConverter.Convert(user));
         }
 
         public IEnumerable<UserProfile> GetAllChiefs()
         {
-            return _userProvider.GetChiefs().Select(EntityConverter.Convert);
+            return UserProvider.GetChiefs().Select(EntityConverter.Convert);
         }
 
         public List<UserProfile> GetAllUsers()
         {
-            return _userProvider.GetAllUsers().Select(EntityConverter.Convert).ToList();
+            return UserProvider.GetAllUsers().Select(EntityConverter.Convert).ToList();
         }
 
         public IEnumerable<string> GetRolesForUser(string userName)
         {
-            return _userProvider.GetRolesForUser(userName);
+            return UserProvider.GetRolesForUser(userName);
         }
 
         public UserProfile GetUserByLogin(string username)
         {
-            return EntityConverter.Convert(_userProvider.GetUserByLogin(username));
+            return EntityConverter.Convert(UserProvider.GetUserByLogin(username));
         }
 
         public UserProfile GetUserById(int id)
         {
-            return EntityConverter.Convert(_userProvider.GetUserById(id));
+            return EntityConverter.Convert(UserProvider.GetUserById(id));
         }
 
         public bool SaveEditedUser(UserProfile model)
         {
-			return _userProvider.SaveEditedUser(EntityConverter.Convert(model), _userProvider.GetRolesNamesArray(model.UserFullName));
+			return UserProvider.SaveEditedUser(EntityConverter.Convert(model), UserProvider.GetRolesNamesArray(model.UserFullName));
         }
 
         public bool DeleteUserById(int id)
         {
-            return _userProvider.DeleteUserById(id);
+            return UserProvider.DeleteUserById(id);
         }
 
         public bool IsUserInAnyRole()
         {
-            return _userProvider.IsUserInAnyRole();
+            return UserProvider.IsUserInAnyRole();
         }
 
         public int GetNewUsersCount()
         {
-            return _userProvider.GetNewUsersCount();
+            return UserProvider.GetNewUsersCount();
         }
 
         public UserProfile CheckUser(string username)
         {
-            return EntityConverter.Convert(_userProvider.CheckUser(username));
+            return EntityConverter.Convert(UserProvider.CheckUser(username));
         }
 
         public IEnumerable<UserProfile> GetAllRecipients()
         {
-            return _userProvider.GetAllRecipients().Select(EntityConverter.Convert);
+            return UserProvider.GetAllRecipients().Select(EntityConverter.Convert);
+            
         }
 
         public IEnumerable<string> GetRolesNames()
         {
-            return _userProvider.GetRolesNames();
+            return UserProvider.GetRolesNames();
         }
 
 		

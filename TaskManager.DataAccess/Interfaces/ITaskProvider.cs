@@ -3,7 +3,7 @@ using TaskManager.DataAccess.Models;
 
 namespace TaskManager.DataAccess.Interfaces
 {
-    public interface ITasksProvider
+    public interface ITaskProvider
     {
         bool AddTask(Task task);
         IEnumerable<Task> GetTasksBySender(int senderId);
@@ -18,5 +18,6 @@ namespace TaskManager.DataAccess.Interfaces
         IEnumerable<Priority> GetPriorityList();
         bool UpdateTask(Task task);
         IEnumerable<Comment> GetCommentsForTask(int taskId);
+        void AddComment(Comment comment);
     }
 }

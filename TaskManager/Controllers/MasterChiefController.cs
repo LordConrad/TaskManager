@@ -96,16 +96,16 @@ namespace TaskManager.Controllers
                 CompleteDate = x.CompleteDate,
                 CreationDate = x.CreateDate,
                 Deadline = x.Deadline,
-                PriorityId = x.TaskPriority != null ? x.TaskPriority.PriorityId.ToString() : "0",
-                RecipientId = x.TaskRecipient != null ? x.TaskRecipient.UserId : (int?)null,
-                RecipientName = x.TaskRecipient != null ? x.TaskRecipient.UserFullName : "не назначен",
+                Priority = x.Priority,
+                RecipientId = x.RecipientId,
+                RecipientName = x.RecipientId.HasValue ? _userService.GetUserById(x.RecipientId.Value).UserFullName : "не назначен",
                 ResultComment = x.ResultComment,
-                SenderName = x.TaskSender.UserFullName,
+                SenderName = _userService.GetUserById(x.SenderId).UserFullName,
                 TaskText = x.TaskText,
                 TaskId = x.TaskId
             }));
 
-            model.MasterChiefTaskList = model.MasterChiefTaskList.OrderBy(x => x.RecipientId.HasValue).ThenByDescending(x => x.CreationDate).ThenBy(x => x.PriorityId).ThenBy(x => x.Deadline).ToList();
+            model.MasterChiefTaskList = model.MasterChiefTaskList.OrderBy(x => x.RecipientId.HasValue).ThenByDescending(x => x.CreationDate).ThenBy(x => x.Deadline).ToList();
 
             if (Request.IsAjaxRequest())
             {
@@ -127,19 +127,18 @@ namespace TaskManager.Controllers
                     CreationDate = task.CreateDate,
                     Deadline =
                         task.Deadline.HasValue ? task.Deadline.Value.ToString(Constants.DateFormat) : string.Empty,
-                    PriorityId = task.TaskPriority != null ? task.TaskPriority.PriorityId.ToString() : "2",
-                    PriorityName = task.TaskPriority != null ? task.TaskPriority.PriorityName : string.Empty,
-                    RecipientId = task.TaskRecipient != null ? task.TaskRecipient.UserId.ToString() : "0",
-                    RecipientName = task.TaskRecipient != null ? task.TaskRecipient.UserFullName : string.Empty,
+                    Priority = task.Priority,
+                    RecipientId = task.RecipientId.ToString(),
+                    RecipientName = task.RecipientId.HasValue ? _userService.GetUserById(task.RecipientId.Value).UserFullName : string.Empty,
                     AssignDate =
                         task.AssignDateTime.HasValue
                             ? task.AssignDateTime.Value.ToString(Constants.DateFullFormat)
                             : string.Empty,
                     ResultComment = task.ResultComment,
-                    SenderName = task.TaskSender.UserFullName,
+                    SenderName = _userService.GetUserById(task.SenderId).UserFullName,
                     TaskText = task.TaskText,
                     TaskId = task.TaskId,
-                    CommentsCount = task.Comments.Count
+                    CommentsCount = _taskService.GetCommentsForTask(task.TaskId).Count()
                 };
 
                 taskViewModel.RecipientsList =
@@ -148,14 +147,6 @@ namespace TaskManager.Controllers
                         Text = item.UserFullName,
                         Value = item.UserId.ToString(),
                         Selected = task.RecipientId == item.UserId
-                    }));
-
-                taskViewModel.PrioritiesList =
-                    new List<SelectListItem>(_taskService.GetPriorityList().Select(item => new SelectListItem
-                    {
-                        Text = item.PriorityName,
-                        Value = item.PriorityId.ToString(),
-                        Selected = task.PriorityId == item.PriorityId
                     }));
 
                 return View(taskViewModel);

@@ -57,7 +57,7 @@ namespace TaskManager.Converters
                 ResultComment = task.ResultComment,
                 SenderId = task.SenderId,
                 TaskId = task.TaskId,
-                TaskPriority = task.TaskPriority,
+                TaskPriority = task.Priority,
                 TaskText = task.TaskText
             };
         }
@@ -75,7 +75,7 @@ namespace TaskManager.Converters
                 ResultComment = task.ResultComment,
                 SenderId = task.SenderId,
                 TaskId = task.TaskId,
-                TaskPriority = task.TaskPriority,
+                Priority = task.TaskPriority,
                 TaskText = task.TaskText
             };
         }

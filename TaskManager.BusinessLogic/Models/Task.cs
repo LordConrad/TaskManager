@@ -14,7 +14,7 @@ namespace TaskManager.BusinessLogic.Models
         public DateTime? CompleteDate { get; set; }
         public DateTime? AcceptCpmpleteDate { get; set; }
         public bool IsRecipientViewed { get; set; }
-        public Priority TaskPriority { get; set; }
+        public Priority Priority { get; set; }
         public string ResultComment { get; set; }
     }
 }

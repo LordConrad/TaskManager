@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using TaskManager.BusinessLogic.Models;
 
 namespace TaskManager.Models
 {
@@ -22,7 +23,7 @@ namespace TaskManager.Models
 
         public DateTime? CompleteDate { get; set; }
 
-        public string PriorityName { get; set; }
+        public Priority Priority { get; set; }
 
         [MaxLength(1000, ErrorMessage = "Максимальная длина комментария 1000 символов")]
         public string NewComment { get; set; }

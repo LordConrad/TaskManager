@@ -1,4 +1,5 @@
 ﻿@using TaskManager.BusinessLogic.Models
+@using TaskManager.Models.Admin
 @model TaskManager.Models.Admin.AdminManageUsersViewModel
 @{
     ViewBag.Title = "Администрирование";
@@ -17,11 +18,11 @@
             </tr>
         </thead>
         <tbody>
-            @foreach (UserProfile user in Model.Users)
+            @foreach (UserViewModel user in Model.Users)
             {
                 if (!user.UserName.Equals("admin") && user.IsActive)
                 {
-                    string rowClass = (!user.IsAdmin && !user.IsChief && !user.IsMasterChief && !user.IsRecipient && !user.IsSender) ? "info" : "";
+                    string rowClass = !Roles.GetRolesForUser(user.UserName).Any() ? "info" : "";
                 
                     <tr class="@rowClass">
                         <td>@user.UserFullName</td>

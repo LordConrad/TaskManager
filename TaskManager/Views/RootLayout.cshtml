@@ -59,6 +59,7 @@
 <body  style="margin-bottom: 25px">
     @if (WebSecurity.IsAuthenticated)
     {
+        var roles = Roles.GetRolesForUser(WebSecurity.CurrentUserName);
         <div id="top" class="navbar navbar-fixed-top">
             <div class="container">
                 @if (!string.IsNullOrEmpty(Model.CurrentUserName))
@@ -68,7 +69,7 @@
 
                 <div class="collapse navbar-collapse" id="responsive-menu">
                     <ul class="nav navbar-nav" id="mainNav">
-                        @if (Model.UserRoles.Contains("MasterChief"))
+                        @if (roles.Contains("MasterChief"))
                         {
                             <li id="masterChiefMenuButtonId"></li>
                             <script type="text/javascript">
@@ -85,7 +86,7 @@
                                 })();
                             </script>
                         }
-                        @if (Model.UserRoles.Contains("Chief"))
+                        @if (roles.Contains("Chief"))
                         {
                             <li id="chiefMenuButtonPlaceholderId"></li>
                             <script type="text/javascript">
@@ -104,7 +105,7 @@
 
                             
                         }
-                        @if (Model.UserRoles.Contains("Recipient"))
+                        @if (roles.Contains("Recipient"))
                         {
                             <li id="recipMenuButtonPlaceholderId"></li>
                             <script type="text/javascript">
@@ -121,7 +122,7 @@
                                 })();
                             </script>
                         }
-                        @if (Model.UserRoles.Contains("Sender"))
+                        @if (roles.Contains("Sender"))
                         {
                             <li id="senderMenuButtonPlaceholderId"></li>
                             <script type="text/javascript">
@@ -140,7 +141,7 @@
                             <li>@Html.ActionLink("Новая заявка", "NewTask", "Sender")</li>
                         }
 
-                        @if (Model.UserRoles.Contains("Admin"))
+                        @if (roles.Contains("Admin"))
                         {
                             <li id="adminMenuButtonPlaceholderId"></li>
                             <script type="text/javascript">

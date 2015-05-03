@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using TaskManager.BusinessLogic.Models;
 
 namespace TaskManager.Models
 {
@@ -26,7 +27,7 @@ namespace TaskManager.Models
 
         public DateTime? AcceptCompleteDate { get; set; }
 
-        public string PriorityId { get; set; }
+        public Priority Priority { get; set; }
 
         public string ResultComment { get; set; }
     }

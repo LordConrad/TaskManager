@@ -12,10 +12,12 @@ namespace TaskManager.Controllers
     public class CommentController : Controller
     {
         private readonly ITaskService _taskService;
+        private readonly ILogService _logService;
 
-        public CommentController(ITaskService taskService)
+        public CommentController(ITaskService taskService, ILogService logService)
         {
             _taskService = taskService;
+            _logService = logService;
         }
 
         public ActionResult GetCommentsForTask(int taskId)
@@ -41,7 +43,7 @@ namespace TaskManager.Controllers
                     var task = _taskService.GetTaskById(model.TaskId);
                     if (task != null)
                     {
-                        task.Comments.Add(new Comment
+                        _taskService.AddComment(new Comment
                         {
                             AuthorId = model.AuthorId,
                             CommentText = model.Text.Trim(),

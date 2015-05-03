@@ -23,7 +23,7 @@ namespace TaskManager.BusinessLogic.Converters
                 ResultComment = task.ResultComment,
                 SenderId = task.SenderId,
                 TaskId = task.TaskId,
-                TaskPriority = (BL.Priority)task.TaskId,
+                Priority = (BL.Priority)task.TaskId,
                 TaskText = task.TaskText
             };
         }
@@ -38,7 +38,7 @@ namespace TaskManager.BusinessLogic.Converters
                 CreateDate = task.CreateDate,
                 Deadline = task.Deadline,
                 IsRecipientViewed = task.IsRecipientViewed,
-                PriorityId = (int)task.TaskPriority,
+                PriorityId = (int)task.Priority,
                 RecipientId = task.RecipientId,
                 ResultComment = task.ResultComment,
                 SenderId = task.SenderId,
@@ -86,13 +86,9 @@ namespace TaskManager.BusinessLogic.Converters
         {
             return new DAL.UserProfile
             {
-                Comments = userProfile.Comments.Select(Convert).ToList(),
                 UserName = userProfile.UserName,
                 UserId = userProfile.UserId,
                 IsActive = userProfile.IsActive,
-                Logs = userProfile.Logs.Select(Convert).ToList(),
-                RecipTasks = userProfile.RecipTasks.Select(Convert).ToList(),
-                SendedTasks = userProfile.SendedTasks.Select(Convert).ToList(),
                 UserFullName = userProfile.UserFullName,
             };
         }

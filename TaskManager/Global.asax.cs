@@ -27,15 +27,10 @@ namespace TaskManager
 			FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
 			RouteConfig.RegisterRoutes(RouteTable.Routes);
 
+		    Bootstrapper.Initialise();
 
 			//CultureInfo culture = new CultureInfo("ru-RU");
 			//Thread.CurrentThread.CurrentCulture = culture;
-
-			UnityContainer container = new UnityContainer();
-			container.RegisterType<IUserService, UserService>();
-			container.RegisterType<ITaskService, TaskService>();
-
-			DependencyResolver.SetResolver(new UnityDepResolver(container));
 
 			if (!WebSecurity.Initialized)
 			{
@@ -44,38 +39,6 @@ namespace TaskManager
 			
 		}
 
-		public class UnityDepResolver : IDependencyResolver
-		{
-			private IUnityContainer container;
-
-			public UnityDepResolver(IUnityContainer container)
-			{
-				this.container = container;
-			}
-
-			public object GetService(Type serviceType)
-			{
-				try
-				{
-					return container.Resolve(serviceType);
-				}
-				catch
-				{
-					return null;
-				}
-			}
-
-			public IEnumerable<object> GetServices(Type serviceType)
-			{
-				try
-				{
-					return container.ResolveAll(serviceType);
-				}
-				catch
-				{
-					return null;
-				}
-			}
-		}
+		
 	}
 }

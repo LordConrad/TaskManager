@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using TaskManager.BusinessLogic.Models;
 
 namespace TaskManager.Models
 {
@@ -23,9 +24,7 @@ namespace TaskManager.Models
 
         public string ResultComment { get; set; }
 
-        public int? PriorityId { get; set; }
-
-        public string PriorityName { get; set; }
+        public Priority Priority { get; set; }
 
         public bool IsViewed { get; set; }
 

@@ -9,7 +9,7 @@ using WebMatrix.WebData;
 
 namespace TaskManager.DataAccess.Providers
 {
-    public class TasksProvider : ITasksProvider
+    public class TaskProvider : ITaskProvider
     {
 
         public bool AddTask(Task task)
@@ -212,6 +212,24 @@ namespace TaskManager.DataAccess.Providers
             {
             }
             return null;
+        }
+
+        public void AddComment(Comment comment)
+        {
+            try
+            {
+                using (var context = new TaskManagerContext())
+                {
+                    context.Entry(comment).State = EntityState.Added;
+                    context.SaveChanges();
+
+                }
+            }
+            catch (Exception)
+            {
+                
+                throw;
+            }
         }
     }
 }

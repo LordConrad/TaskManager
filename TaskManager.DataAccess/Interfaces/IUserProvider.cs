@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Web.Mvc;
 using TaskManager.DataAccess.Models;
 
 namespace TaskManager.DataAccess.Interfaces
@@ -23,8 +22,6 @@ namespace TaskManager.DataAccess.Interfaces
         int GetNewUsersCount();
         bool IsNewUser(UserProfile user);
         IEnumerable<UserProfile> GetChiefs();
-        IEnumerable<SelectListItem> GetPrioritiesSelectedList(string selectedPriorityId, TaskManagerContext context = null);
-        IEnumerable<SelectListItem> GetRecipientsSelectedList(string firstElementTitle, string selectedRecipientId, TaskManagerContext context = null);
         UserProfile CheckUser(string username);
         string[] GetRolesNamesArray(string model);
         IEnumerable<string> GetRolesNames(); 

@@ -1,11 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using TaskManager.BusinessLogic.Converters;
+using TaskManager.BusinessLogic.Interfaces;
+using TaskManager.BusinessLogic.Models;
+using TaskManager.DataAccess.Interfaces;
+using TaskManager.DataAccess.Providers;
 
 namespace TaskManager.BusinessLogic.Services
 {
-    class LogService
+    public class LogService : ILogService
     {
+        private ILogProvider _logProvider;
+
+        private ILogProvider LogProvider
+        {
+            get
+            {
+                if (_logProvider == null)
+                {
+                    _logProvider = new LogProvider();
+                }
+                return _logProvider;
+            }
+        }
+
+        public void AddTaskEventLog(TaskEventLog log)
+        {
+            _logProvider.AddLog(EntityConverter.Convert(log));
+        }
     }
 }
